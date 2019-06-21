@@ -16,10 +16,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
         Parse.initialize(
             with: ParseClientConfiguration(block: { (configuration: ParseMutableClientConfiguration) -> Void in
-                configuration.applicationId = "Laundrify"
-                configuration.server = "http://laundrify.herokuapp.com/parse"
+                configuration.applicationId = "SmartRES"
+                configuration.server = "http://smart-res.herokuapp.com/parse"
             })
         )
         

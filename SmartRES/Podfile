@@ -7,8 +7,12 @@ target 'SmartRES' do
 
   # Pods for SmartRES
 
+  pod 'ImageSlideshow', '~> 1.8'
+  pod "YPImagePicker"
   pod "AlamofireImage"
+  pod "Alamofire"
   pod "Parse"
+  pod "ImageSlideshow/Alamofire"
 
   target 'SmartRESTests' do
     inherit! :search_paths

@@ -3,12 +3,15 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		3987584BF779DC41D21856C9 /* Pods_SmartRESUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72380A2AECC61409C62AE0E1 /* Pods_SmartRESUITests.framework */; };
 		759B48FC7E9773A17FCF1596 /* Pods_SmartRESTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D09D3F08E54FEC746AE9BF1 /* Pods_SmartRESTests.framework */; };
+		C611FF412283603A00704CD3 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C611FF402283603A00704CD3 /* MainViewController.swift */; };
+		C611FF43228362EB00704CD3 /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C611FF42228362EB00704CD3 /* UploadViewController.swift */; };
+		C611FF452283634200704CD3 /* PictureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C611FF442283634200704CD3 /* PictureCell.swift */; };
 		C645AE9E2282A56E006F2EF3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C645AE9D2282A56E006F2EF3 /* AppDelegate.swift */; };
 		C645AEA32282A56E006F2EF3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C645AEA12282A56E006F2EF3 /* Main.storyboard */; };
 		C645AEA52282A570006F2EF3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C645AEA42282A570006F2EF3 /* Assets.xcassets */; };
@@ -16,6 +19,24 @@
 		C645AEB32282A570006F2EF3 /* SmartRESTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C645AEB22282A570006F2EF3 /* SmartRESTests.swift */; };
 		C645AEBE2282A570006F2EF3 /* SmartRESUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C645AEBD2282A570006F2EF3 /* SmartRESUITests.swift */; };
 		C645AECC2282A668006F2EF3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C645AECB2282A668006F2EF3 /* LoginViewController.swift */; };
+		C69C3C7222BCB6D80056DE89 /* Lato-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69C3C6022BCB6D60056DE89 /* Lato-LightItalic.ttf */; };
+		C69C3C7322BCB6D80056DE89 /* Lato-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69C3C6122BCB6D60056DE89 /* Lato-Italic.ttf */; };
+		C69C3C7422BCB6D80056DE89 /* Lato-Hairline.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69C3C6222BCB6D60056DE89 /* Lato-Hairline.ttf */; };
+		C69C3C7522BCB6D80056DE89 /* Lato-SemiboldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69C3C6322BCB6D60056DE89 /* Lato-SemiboldItalic.ttf */; };
+		C69C3C7622BCB6D80056DE89 /* Lato-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69C3C6422BCB6D60056DE89 /* Lato-Medium.ttf */; };
+		C69C3C7722BCB6D80056DE89 /* Lato-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69C3C6522BCB6D60056DE89 /* Lato-ThinItalic.ttf */; };
+		C69C3C7822BCB6D80056DE89 /* Lato-Heavy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69C3C6622BCB6D60056DE89 /* Lato-Heavy.ttf */; };
+		C69C3C7922BCB6D80056DE89 /* Lato-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69C3C6722BCB6D60056DE89 /* Lato-Semibold.ttf */; };
+		C69C3C7A22BCB6D80056DE89 /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69C3C6822BCB6D70056DE89 /* Lato-Regular.ttf */; };
+		C69C3C7B22BCB6D80056DE89 /* Lato-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69C3C6922BCB6D70056DE89 /* Lato-MediumItalic.ttf */; };
+		C69C3C7C22BCB6D80056DE89 /* Lato-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69C3C6A22BCB6D70056DE89 /* Lato-BlackItalic.ttf */; };
+		C69C3C7D22BCB6D80056DE89 /* Lato-HeavyItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69C3C6B22BCB6D70056DE89 /* Lato-HeavyItalic.ttf */; };
+		C69C3C7E22BCB6D80056DE89 /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69C3C6C22BCB6D70056DE89 /* Lato-Bold.ttf */; };
+		C69C3C7F22BCB6D80056DE89 /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69C3C6D22BCB6D70056DE89 /* Lato-Light.ttf */; };
+		C69C3C8022BCB6D80056DE89 /* Lato-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69C3C6E22BCB6D70056DE89 /* Lato-BoldItalic.ttf */; };
+		C69C3C8122BCB6D80056DE89 /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69C3C6F22BCB6D70056DE89 /* Lato-Black.ttf */; };
+		C69C3C8222BCB6D80056DE89 /* Lato-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69C3C7022BCB6D80056DE89 /* Lato-Thin.ttf */; };
+		C69C3C8322BCB6D80056DE89 /* Lato-HairlineItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69C3C7122BCB6D80056DE89 /* Lato-HairlineItalic.ttf */; };
 		CF691A7C4AFC8FFF1DBB7E09 /* Pods_SmartRES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03A85B3380ABFD7A844949B3 /* Pods_SmartRES.framework */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +66,9 @@
 		85670700C39A472A07EF733D /* Pods-SmartRES.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartRES.release.xcconfig"; path = "Target Support Files/Pods-SmartRES/Pods-SmartRES.release.xcconfig"; sourceTree = "<group>"; };
 		8CB0D520032420A1A119B2BF /* Pods-SmartRESTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartRESTests.release.xcconfig"; path = "Target Support Files/Pods-SmartRESTests/Pods-SmartRESTests.release.xcconfig"; sourceTree = "<group>"; };
 		9E13CED52D54DE37E5497EF1 /* Pods-SmartRESTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartRESTests.debug.xcconfig"; path = "Target Support Files/Pods-SmartRESTests/Pods-SmartRESTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C611FF402283603A00704CD3 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		C611FF42228362EB00704CD3 /* UploadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
+		C611FF442283634200704CD3 /* PictureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureCell.swift; sourceTree = "<group>"; };
 		C645AE9A2282A56E006F2EF3 /* SmartRES.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartRES.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C645AE9D2282A56E006F2EF3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C645AEA22282A56E006F2EF3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -58,6 +82,24 @@
 		C645AEBD2282A570006F2EF3 /* SmartRESUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartRESUITests.swift; sourceTree = "<group>"; };
 		C645AEBF2282A570006F2EF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C645AECB2282A668006F2EF3 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		C69C3C6022BCB6D60056DE89 /* Lato-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-LightItalic.ttf"; sourceTree = "<group>"; };
+		C69C3C6122BCB6D60056DE89 /* Lato-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Italic.ttf"; sourceTree = "<group>"; };
+		C69C3C6222BCB6D60056DE89 /* Lato-Hairline.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Hairline.ttf"; sourceTree = "<group>"; };
+		C69C3C6322BCB6D60056DE89 /* Lato-SemiboldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-SemiboldItalic.ttf"; sourceTree = "<group>"; };
+		C69C3C6422BCB6D60056DE89 /* Lato-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Medium.ttf"; sourceTree = "<group>"; };
+		C69C3C6522BCB6D60056DE89 /* Lato-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-ThinItalic.ttf"; sourceTree = "<group>"; };
+		C69C3C6622BCB6D60056DE89 /* Lato-Heavy.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Heavy.ttf"; sourceTree = "<group>"; };
+		C69C3C6722BCB6D60056DE89 /* Lato-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Semibold.ttf"; sourceTree = "<group>"; };
+		C69C3C6822BCB6D70056DE89 /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Regular.ttf"; sourceTree = "<group>"; };
+		C69C3C6922BCB6D70056DE89 /* Lato-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-MediumItalic.ttf"; sourceTree = "<group>"; };
+		C69C3C6A22BCB6D70056DE89 /* Lato-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-BlackItalic.ttf"; sourceTree = "<group>"; };
+		C69C3C6B22BCB6D70056DE89 /* Lato-HeavyItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-HeavyItalic.ttf"; sourceTree = "<group>"; };
+		C69C3C6C22BCB6D70056DE89 /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Bold.ttf"; sourceTree = "<group>"; };
+		C69C3C6D22BCB6D70056DE89 /* Lato-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Light.ttf"; sourceTree = "<group>"; };
+		C69C3C6E22BCB6D70056DE89 /* Lato-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-BoldItalic.ttf"; sourceTree = "<group>"; };
+		C69C3C6F22BCB6D70056DE89 /* Lato-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Black.ttf"; sourceTree = "<group>"; };
+		C69C3C7022BCB6D80056DE89 /* Lato-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Thin.ttf"; sourceTree = "<group>"; };
+		C69C3C7122BCB6D80056DE89 /* Lato-HairlineItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-HairlineItalic.ttf"; sourceTree = "<group>"; };
 		CAA240497221ED8E8FE43740 /* Pods-SmartRESUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartRESUITests.release.xcconfig"; path = "Target Support Files/Pods-SmartRESUITests/Pods-SmartRESUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -115,6 +157,7 @@
 		C645AE912282A56E006F2EF3 = {
 			isa = PBXGroup;
 			children = (
+				C69C3C5F22BCB67A0056DE89 /* Fonts */,
 				C645AE9C2282A56E006F2EF3 /* SmartRES */,
 				C645AEB12282A570006F2EF3 /* SmartRESTests */,
 				C645AEBC2282A570006F2EF3 /* SmartRESUITests */,
@@ -143,6 +186,9 @@
 				C645AEA62282A570006F2EF3 /* LaunchScreen.storyboard */,
 				C645AEA92282A570006F2EF3 /* Info.plist */,
 				C645AECB2282A668006F2EF3 /* LoginViewController.swift */,
+				C611FF402283603A00704CD3 /* MainViewController.swift */,
+				C611FF42228362EB00704CD3 /* UploadViewController.swift */,
+				C611FF442283634200704CD3 /* PictureCell.swift */,
 			);
 			path = SmartRES;
 			sourceTree = "<group>";
@@ -163,6 +209,31 @@
 				C645AEBF2282A570006F2EF3 /* Info.plist */,
 			);
 			path = SmartRESUITests;
+			sourceTree = "<group>";
+		};
+		C69C3C5F22BCB67A0056DE89 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				C69C3C6F22BCB6D70056DE89 /* Lato-Black.ttf */,
+				C69C3C6A22BCB6D70056DE89 /* Lato-BlackItalic.ttf */,
+				C69C3C6C22BCB6D70056DE89 /* Lato-Bold.ttf */,
+				C69C3C6E22BCB6D70056DE89 /* Lato-BoldItalic.ttf */,
+				C69C3C6222BCB6D60056DE89 /* Lato-Hairline.ttf */,
+				C69C3C7122BCB6D80056DE89 /* Lato-HairlineItalic.ttf */,
+				C69C3C6622BCB6D60056DE89 /* Lato-Heavy.ttf */,
+				C69C3C6B22BCB6D70056DE89 /* Lato-HeavyItalic.ttf */,
+				C69C3C6122BCB6D60056DE89 /* Lato-Italic.ttf */,
+				C69C3C6D22BCB6D70056DE89 /* Lato-Light.ttf */,
+				C69C3C6022BCB6D60056DE89 /* Lato-LightItalic.ttf */,
+				C69C3C6422BCB6D60056DE89 /* Lato-Medium.ttf */,
+				C69C3C6922BCB6D70056DE89 /* Lato-MediumItalic.ttf */,
+				C69C3C6822BCB6D70056DE89 /* Lato-Regular.ttf */,
+				C69C3C6722BCB6D60056DE89 /* Lato-Semibold.ttf */,
+				C69C3C6322BCB6D60056DE89 /* Lato-SemiboldItalic.ttf */,
+				C69C3C7022BCB6D80056DE89 /* Lato-Thin.ttf */,
+				C69C3C6522BCB6D60056DE89 /* Lato-ThinItalic.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -237,13 +308,16 @@
 				TargetAttributes = {
 					C645AE992282A56E006F2EF3 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1020;
 					};
 					C645AEAD2282A570006F2EF3 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1020;
 						TestTargetID = C645AE992282A56E006F2EF3;
 					};
 					C645AEB82282A570006F2EF3 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1020;
 						TestTargetID = C645AE992282A56E006F2EF3;
 					};
 				};
@@ -273,9 +347,27 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C69C3C7F22BCB6D80056DE89 /* Lato-Light.ttf in Resources */,
+				C69C3C7B22BCB6D80056DE89 /* Lato-MediumItalic.ttf in Resources */,
+				C69C3C7822BCB6D80056DE89 /* Lato-Heavy.ttf in Resources */,
+				C69C3C8022BCB6D80056DE89 /* Lato-BoldItalic.ttf in Resources */,
+				C69C3C7C22BCB6D80056DE89 /* Lato-BlackItalic.ttf in Resources */,
+				C69C3C7322BCB6D80056DE89 /* Lato-Italic.ttf in Resources */,
+				C69C3C7922BCB6D80056DE89 /* Lato-Semibold.ttf in Resources */,
+				C69C3C7722BCB6D80056DE89 /* Lato-ThinItalic.ttf in Resources */,
+				C69C3C7622BCB6D80056DE89 /* Lato-Medium.ttf in Resources */,
+				C69C3C7E22BCB6D80056DE89 /* Lato-Bold.ttf in Resources */,
 				C645AEA82282A570006F2EF3 /* LaunchScreen.storyboard in Resources */,
+				C69C3C8322BCB6D80056DE89 /* Lato-HairlineItalic.ttf in Resources */,
+				C69C3C8122BCB6D80056DE89 /* Lato-Black.ttf in Resources */,
+				C69C3C7422BCB6D80056DE89 /* Lato-Hairline.ttf in Resources */,
+				C69C3C7A22BCB6D80056DE89 /* Lato-Regular.ttf in Resources */,
+				C69C3C7D22BCB6D80056DE89 /* Lato-HeavyItalic.ttf in Resources */,
 				C645AEA52282A570006F2EF3 /* Assets.xcassets in Resources */,
 				C645AEA32282A56E006F2EF3 /* Main.storyboard in Resources */,
+				C69C3C8222BCB6D80056DE89 /* Lato-Thin.ttf in Resources */,
+				C69C3C7222BCB6D80056DE89 /* Lato-LightItalic.ttf in Resources */,
+				C69C3C7522BCB6D80056DE89 /* Lato-SemiboldItalic.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -368,22 +460,11 @@
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SmartRES/Pods-SmartRES-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
-				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
-				"${BUILT_PRODUCTS_DIR}/Parse/Parse.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-SmartRES/Pods-SmartRES-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Parse.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-SmartRES/Pods-SmartRES-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -397,6 +478,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C611FF412283603A00704CD3 /* MainViewController.swift in Sources */,
+				C611FF43228362EB00704CD3 /* UploadViewController.swift in Sources */,
+				C611FF452283634200704CD3 /* PictureCell.swift in Sources */,
 				C645AECC2282A668006F2EF3 /* LoginViewController.swift in Sources */,
 				C645AE9E2282A56E006F2EF3 /* AppDelegate.swift in Sources */,
 			);
@@ -583,7 +667,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mtwynn.SmartRES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -602,7 +686,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mtwynn.SmartRES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -623,7 +707,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mtwynn.SmartRESTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SmartRES.app/SmartRES";
 			};
@@ -645,7 +729,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mtwynn.SmartRESTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SmartRES.app/SmartRES";
 			};
@@ -666,7 +750,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mtwynn.SmartRESUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = SmartRES;
 			};
@@ -687,7 +771,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mtwynn.SmartRESUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = SmartRES;
 			};

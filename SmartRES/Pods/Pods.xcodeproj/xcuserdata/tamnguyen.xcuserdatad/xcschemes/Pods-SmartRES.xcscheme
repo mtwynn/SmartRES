@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0930"
+   LastUpgradeVersion = "1100"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8FDB6FD548C12917979C8C324ACE2733"
+               BlueprintIdentifier = "E280C6672B28232A95848BCF61ECD560"
                BuildableName = "Pods_SmartRES.framework"
                BlueprintName = "Pods-SmartRES"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8FDB6FD548C12917979C8C324ACE2733"
+            BlueprintIdentifier = "E280C6672B28232A95848BCF61ECD560"
             BuildableName = "Pods_SmartRES.framework"
             BlueprintName = "Pods-SmartRES"
             ReferencedContainer = "container:Pods.xcodeproj">

@@ -3,28 +3,51 @@ PODS:
   - AlamofireImage (3.5.0):
     - Alamofire (~> 4.8)
   - Bolts/Tasks (1.9.0)
+  - ImageSlideshow (1.8.0):
+    - ImageSlideshow/Core (= 1.8.0)
+  - ImageSlideshow/Alamofire (1.8.0):
+    - AlamofireImage (~> 3.0)
+    - ImageSlideshow/Core
+  - ImageSlideshow/Core (1.8.0)
   - Parse (1.17.2):
     - Parse/Core (= 1.17.2)
   - Parse/Core (1.17.2):
     - Bolts/Tasks (~> 1.9)
+  - PryntTrimmerView (3.0.0)
+  - SteviaLayout (4.4.4)
+  - YPImagePicker (4.0.0):
+    - PryntTrimmerView (~> 3.0.0)
+    - SteviaLayout (~> 4.4.1)
 
 DEPENDENCIES:
+  - Alamofire
   - AlamofireImage
+  - ImageSlideshow (~> 1.8)
+  - ImageSlideshow/Alamofire
   - Parse
+  - YPImagePicker
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
     - AlamofireImage
     - Bolts
+    - ImageSlideshow
     - Parse
+    - PryntTrimmerView
+    - SteviaLayout
+    - YPImagePicker
 
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
   AlamofireImage: 1aea346f4dda2f6c67622fa5a89fcbb80d79cc16
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
+  ImageSlideshow: 197130fe349aafa9446f54277c792551d41eadf9
   Parse: 3b31a3dd1777b07ee7f0caee32fafbff544483a5
+  PryntTrimmerView: 53ac64053c7ce63cb3e27f54090f52da0734891d
+  SteviaLayout: 523469269059f2c6da02820bb2ff28a5fe0780aa
+  YPImagePicker: 8039f89ad79281545fa868486f32d9bf5d65ede1
 
-PODFILE CHECKSUM: c12e32c7d049a12c1298b7ecac64099eb35dd5b1
+PODFILE CHECKSUM: cc4d1b7c16b62868aa9821227f10208e51b8cd1f
 
-COCOAPODS: 1.6.0
+COCOAPODS: 1.7.2
