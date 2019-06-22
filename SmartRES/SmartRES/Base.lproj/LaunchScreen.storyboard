@@ -17,13 +17,30 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="iTunesArtwork-1" translatesAutoresizingMaskIntoConstraints="NO" id="i6I-qF-4hp">
+                                <rect key="frame" x="87.5" y="243.5" width="200" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="6p0-Vh-tNY"/>
+                                    <constraint firstAttribute="height" constant="200" id="cDp-wv-B4L"/>
+                                    <constraint firstAttribute="width" secondItem="i6I-qF-4hp" secondAttribute="height" multiplier="1:1" id="cPZ-M8-2fi"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="i6I-qF-4hp" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="TUe-T5-TKN"/>
+                            <constraint firstItem="i6I-qF-4hp" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="hWl-HY-4im"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52" y="374.66266866566718"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="iTunesArtwork-1" width="512" height="512"/>
+    </resources>
 </document>

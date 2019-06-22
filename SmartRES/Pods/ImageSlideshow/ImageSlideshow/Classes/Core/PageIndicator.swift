@@ -71,6 +71,8 @@ public class LabelPageIndicator: UILabel, PageIndicatorView {
 
     private func initialize() {
         self.textAlignment = .center
+        textColor = UIColor(red: 0.0, green: 151/255, blue: 69/255, alpha: 0.80)
+        font = UIFont(name: "Lato", size: 15)
     }
 
     private func updateLabel() {

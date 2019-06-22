@@ -20,10 +20,15 @@ class MainViewController: UIViewController {
     
     var refreshControl = UIRefreshControl()
     
-    @IBOutlet weak var uploadButtonView: UIButton!
+    
+    @IBAction func refreshButton(_ sender: Any) {
+        refresh()
+    }
     
     @IBOutlet weak var slideshow: ImageSlideshow!
+
     
+    @IBOutlet weak var uploadButtonView: UIButton!
     
     @IBAction func uploadButton(_ sender: Any) {
         var config = YPImagePickerConfiguration()
@@ -77,6 +82,9 @@ class MainViewController: UIViewController {
         uploadButtonView.layer.shadowOpacity = 1.0
         uploadButtonView.layer.shadowRadius = 3.0
         uploadButtonView.layer.masksToBounds = false
+        uploadButtonView.imageEdgeInsets = UIEdgeInsets(top: 5, left: 7, bottom: 5, right: 3)
+    
+        
         
         // Refresh control
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
@@ -89,11 +97,10 @@ class MainViewController: UIViewController {
         
         slideshow.slideshowInterval = 5.0
         slideshow.pageIndicatorPosition = .init(horizontal: .center, vertical: .under)
+        
         slideshow.contentScaleMode = UIViewContentMode.scaleAspectFill
         
-        let pageControl = UIPageControl()
-        pageControl.currentPageIndicatorTintColor = UIColor.lightGray
-        pageControl.pageIndicatorTintColor = UIColor.black
+        let pageControl = LabelPageIndicator()
         slideshow.pageIndicator = pageControl
         
         // optional way to show activity indicator during image load (skipping the line will show no activity indicator)
@@ -117,7 +124,7 @@ class MainViewController: UIViewController {
     @objc func refresh() {
         let query = PFQuery(className: "Pictures")
         query.includeKey("author")
-        
+        print(imageSource.count)
         query.findObjectsInBackground() { (posts, error) in
             if posts != nil {
                 for post in posts! {
@@ -125,9 +132,11 @@ class MainViewController: UIViewController {
                     let urlString = imageFile.url!
                     let url = URL(string: urlString)!
                     self.imageSource.append(AlamofireSource(url: url))
+                    print(self.imageSource.count)
                 }
             }
         }
+        slideshow.setImageInputs(imageSource)
         slideshow.setNeedsDisplay()
     }
 }

@@ -16,6 +16,16 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var loginButtonView: UIButton!
     
+    // Show button
+    var iconClick = true
+    @IBAction func showPasswordButton(_ sender: Any) {
+        if (iconClick == true) {
+            passwordField.isSecureTextEntry = false
+        } else {
+            passwordField.isSecureTextEntry = true
+        }
+        iconClick = !iconClick
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         

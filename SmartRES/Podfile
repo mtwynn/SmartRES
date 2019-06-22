@@ -13,6 +13,7 @@ target 'SmartRES' do
   pod "Alamofire"
   pod "Parse"
   pod "ImageSlideshow/Alamofire"
+  pod "ImageSlideshow/Parse"
 
   target 'SmartRESTests' do
     inherit! :search_paths
