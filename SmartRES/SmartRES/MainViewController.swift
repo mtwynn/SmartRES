@@ -123,11 +123,11 @@ class MainViewController: UIViewController {
     
     @objc func refresh() {
         let query = PFQuery(className: "Pictures")
-        query.includeKey("author")
-        print(imageSource.count)
+        query.whereKey("agent", equalTo: PFUser.current())
         query.findObjectsInBackground() { (posts, error) in
             if posts != nil {
                 for post in posts! {
+                    print (post["agent"])
                     let imageFile = post["image"] as! PFFileObject
                     let urlString = imageFile.url!
                     let url = URL(string: urlString)!

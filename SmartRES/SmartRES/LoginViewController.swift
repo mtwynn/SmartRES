@@ -63,25 +63,20 @@ class LoginViewController: UIViewController {
             if user != nil {
                 self.performSegue(withIdentifier: "mainSegue", sender: nil)
             } else {
-                print("No user")
+                let alert = UIAlertController(title: "Message", message: "Incorrect username/password or no user exists", preferredStyle: UIAlertController.Style.alert)
+                
+                alert.addAction(UIAlertAction(title: "Sign up", style: UIAlertAction.Style.default, handler: self.signupButton))
+                alert.addAction(UIAlertAction(title: "Try again", style: UIAlertAction.Style.cancel, handler: nil))
+                
+                
+                self.present(alert, animated: true, completion: nil)
             }
         }
     }
     
     
     @IBAction func signupButton(_ sender: Any) {
-        let user = PFUser()
-        user.username = usernameField.text
-        user.password = passwordField.text
-        
-        user.signUpInBackground { (success, error) in
-            if success {
-                print("Successfully signed up")
-                self.performSegue(withIdentifier: "mainSegue", sender: nil)
-            } else {
-                print("Failed to sign up")
-            }
-        }
+        self.performSegue(withIdentifier: "signupSegue", sender: nil)
     }
     
     
