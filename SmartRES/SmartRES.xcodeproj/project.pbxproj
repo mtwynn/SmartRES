@@ -11,7 +11,6 @@
 		759B48FC7E9773A17FCF1596 /* Pods_SmartRESTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D09D3F08E54FEC746AE9BF1 /* Pods_SmartRESTests.framework */; };
 		C611FF412283603A00704CD3 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C611FF402283603A00704CD3 /* MainViewController.swift */; };
 		C611FF43228362EB00704CD3 /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C611FF42228362EB00704CD3 /* UploadViewController.swift */; };
-		C611FF452283634200704CD3 /* PictureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C611FF442283634200704CD3 /* PictureCell.swift */; };
 		C645AE9E2282A56E006F2EF3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C645AE9D2282A56E006F2EF3 /* AppDelegate.swift */; };
 		C645AEA32282A56E006F2EF3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C645AEA12282A56E006F2EF3 /* Main.storyboard */; };
 		C645AEA52282A570006F2EF3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C645AEA42282A570006F2EF3 /* Assets.xcassets */; };
@@ -20,6 +19,8 @@
 		C645AEBE2282A570006F2EF3 /* SmartRESUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C645AEBD2282A570006F2EF3 /* SmartRESUITests.swift */; };
 		C645AECC2282A668006F2EF3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C645AECB2282A668006F2EF3 /* LoginViewController.swift */; };
 		C64A223922C228400041C764 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64A223822C228400041C764 /* SignupViewController.swift */; };
+		C64A223B22C3531B0041C764 /* PropertiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64A223A22C3531B0041C764 /* PropertiesViewController.swift */; };
+		C64A223D22C356590041C764 /* PropertyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64A223C22C356590041C764 /* PropertyCell.swift */; };
 		C69C3C7222BCB6D80056DE89 /* Lato-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69C3C6022BCB6D60056DE89 /* Lato-LightItalic.ttf */; };
 		C69C3C7322BCB6D80056DE89 /* Lato-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69C3C6122BCB6D60056DE89 /* Lato-Italic.ttf */; };
 		C69C3C7422BCB6D80056DE89 /* Lato-Hairline.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69C3C6222BCB6D60056DE89 /* Lato-Hairline.ttf */; };
@@ -69,7 +70,6 @@
 		9E13CED52D54DE37E5497EF1 /* Pods-SmartRESTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartRESTests.debug.xcconfig"; path = "Target Support Files/Pods-SmartRESTests/Pods-SmartRESTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C611FF402283603A00704CD3 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		C611FF42228362EB00704CD3 /* UploadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
-		C611FF442283634200704CD3 /* PictureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureCell.swift; sourceTree = "<group>"; };
 		C645AE9A2282A56E006F2EF3 /* SmartRES.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartRES.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C645AE9D2282A56E006F2EF3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C645AEA22282A56E006F2EF3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -84,6 +84,8 @@
 		C645AEBF2282A570006F2EF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C645AECB2282A668006F2EF3 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		C64A223822C228400041C764 /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
+		C64A223A22C3531B0041C764 /* PropertiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertiesViewController.swift; sourceTree = "<group>"; };
+		C64A223C22C356590041C764 /* PropertyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyCell.swift; sourceTree = "<group>"; };
 		C69C3C6022BCB6D60056DE89 /* Lato-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-LightItalic.ttf"; sourceTree = "<group>"; };
 		C69C3C6122BCB6D60056DE89 /* Lato-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Italic.ttf"; sourceTree = "<group>"; };
 		C69C3C6222BCB6D60056DE89 /* Lato-Hairline.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Hairline.ttf"; sourceTree = "<group>"; };
@@ -184,6 +186,8 @@
 			children = (
 				C645AE9D2282A56E006F2EF3 /* AppDelegate.swift */,
 				C645AEA12282A56E006F2EF3 /* Main.storyboard */,
+				C64A223C22C356590041C764 /* PropertyCell.swift */,
+				C64A223A22C3531B0041C764 /* PropertiesViewController.swift */,
 				C64A223822C228400041C764 /* SignupViewController.swift */,
 				C645AEA42282A570006F2EF3 /* Assets.xcassets */,
 				C645AEA62282A570006F2EF3 /* LaunchScreen.storyboard */,
@@ -191,7 +195,6 @@
 				C645AECB2282A668006F2EF3 /* LoginViewController.swift */,
 				C611FF402283603A00704CD3 /* MainViewController.swift */,
 				C611FF42228362EB00704CD3 /* UploadViewController.swift */,
-				C611FF442283634200704CD3 /* PictureCell.swift */,
 			);
 			path = SmartRES;
 			sourceTree = "<group>";
@@ -483,8 +486,9 @@
 			files = (
 				C64A223922C228400041C764 /* SignupViewController.swift in Sources */,
 				C611FF412283603A00704CD3 /* MainViewController.swift in Sources */,
+				C64A223D22C356590041C764 /* PropertyCell.swift in Sources */,
 				C611FF43228362EB00704CD3 /* UploadViewController.swift in Sources */,
-				C611FF452283634200704CD3 /* PictureCell.swift in Sources */,
+				C64A223B22C3531B0041C764 /* PropertiesViewController.swift in Sources */,
 				C645AECC2282A668006F2EF3 /* LoginViewController.swift in Sources */,
 				C645AE9E2282A56E006F2EF3 /* AppDelegate.swift in Sources */,
 			);
@@ -672,6 +676,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mtwynn.SmartRES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
+				SWIFT_WHOLE_MODULE_OPTIMIZATION = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -691,6 +696,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mtwynn.SmartRES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
+				SWIFT_WHOLE_MODULE_OPTIMIZATION = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

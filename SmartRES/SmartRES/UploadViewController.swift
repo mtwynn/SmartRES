@@ -19,7 +19,7 @@ class UploadViewController: UIViewController {
         super.viewDidLoad()
         profilePicView.layer.masksToBounds = true
         profilePicView.layer.cornerRadius = profilePicView.frame.height / 2
-        profilePicView.af_setImage(withURL: URL(string: "https://lh3.googleusercontent.com/OCiNH6oPdYtU5d_nYxG35nhl2mZWMlz7XwtdfQgf6RQIwb70vgE1IfMGXjxSM57o9trY4Exj5JYL6K4epB2MGbrz2bc91CM8ui2Pb8qvP4dX12shhk6vsO4rlu-3Fb5EqUaRhZZJ86pZMIqgKd77FpzA5q9lGWhEHdb5XbvpqxJjoBdhY39FHrcJxXlQGgNYMzGiAys93IX_DOzVBBM8gTrYh_FNukThhMBsZ-11ftS4A-J-zQ5b911goPkFfTy39b1NxTSKxjWUvbuY7mA1avunSUjdubXg9eX9yK-YXJB8D4lvV9YMazMnSdiENB4famYw9jz3UTSUXRO7rhH9sFyBPnqG6dcJ50vJ-TwdtvzImcErvQLzSB9rCzSDq6cJttIhunOuVBVFPVHil9MTv0YQ_WIIbNbZhDdXyH4tHm6om-510yScl1spJMSMCvt3wHXHZJeX-yRVQiMnAhjO4GYA6AMu3vCjkFOyteAqJ4Fhli-vIgu9pyaB75udeCo3PLWSouAf0W_4wusja3vpTJ4c9GBorFSeyW5ZZmaXdPBwFywXqFhgarl3rwLGDofXqKFuucvXkIh8kPbnnX8w-mkT_pLfdju_YdU5U8gsJW13sYrG0Lj35VeA9TvZdhWgVRQVfN9WRvOzRuQZBiqcwhlhJk3N0Yc=w2278-h1518-no")!)
+        profilePicView.af_setImage(withURL: URL(string: "https://scontent-sjc3-1.xx.fbcdn.net/v/t1.0-9/60851350_2569104719791117_9094202935537041408_o.jpg?_nc_cat=107&_nc_oc=AQkpbQIrKhVH7-S3PVqsclxZmhAHKeCJiPeERxeLTE20haxqH2X0WwqgzA4u63u2Owo&_nc_ht=scontent-sjc3-1.xx&oh=3e4b3c92f3df8f215833a88e00782cc7&oe=5DC6B722")!)
         
     }
     
