@@ -40,29 +40,36 @@ class MainViewController: UIViewController {
         config.library.mediaType = YPlibraryMediaType.photoAndVideo
         let picker = YPImagePicker(configuration: config)
         picker.didFinishPicking { [unowned picker] items, _ in
-            if let photo = items.singlePhoto {
-                let post = PFObject(className: "Pictures")
-                
-                post["agent"] = PFUser.current()!
-                
-                let imageData = photo.image.pngData()
-                let file = PFFileObject(data: imageData!)
-                post["image"] = file
-                
-                post.saveInBackground() { (success, error) in
-                    if success {
-                        let alert = UIAlertController(title: "Success", message: "Upload complete!", preferredStyle: UIAlertController.Style.alert)
-                        
-                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-                        self.present(alert, animated: true, completion: nil)
-                    } else {
-                        let alert = UIAlertController(title: "Error", message: "Upload failed.", preferredStyle: UIAlertController.Style.alert)
-                        
-                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-                        self.present(alert, animated: true, completion: nil)
+            for item in items {
+                switch item {
+                case .photo(let photo):
+                    let post = PFObject(className: "Pictures")
+                    
+                    post["agent"] = PFUser.current()!
+                    
+                    let imageData = photo.image.pngData()
+                    let file = PFFileObject(data: imageData!)
+                    post["image"] = file
+                    
+                    post.saveInBackground() { (success, error) in
+                        if success {
+                            let alert = UIAlertController(title: "Success", message: "Upload complete! Please refresh to see changes.", preferredStyle: UIAlertController.Style.alert)
+                            
+                            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                            self.present(alert, animated: true, completion: nil)
+                        } else {
+                            let alert = UIAlertController(title: "Error", message: "Upload failed.", preferredStyle: UIAlertController.Style.alert)
+                            
+                            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                            self.present(alert, animated: true, completion: nil)
+                        }
                     }
+                    
+                // TODO 
+                case .video(let video):
+                    print("uploading video...")
                 }
-                self.refresh()
+                
             }
             picker.dismiss(animated: true, completion: nil)
         }
@@ -150,6 +157,8 @@ class MainViewController: UIViewController {
                 }
             }
             self.imageSource = self.updatedList
+            self.slideshow.setImageInputs(self.imageSource)
+            self.slideshow.setNeedsDisplay()
         }
         downloadGroup.leave()
         
@@ -159,8 +168,7 @@ class MainViewController: UIViewController {
             
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             
-            self.slideshow.setImageInputs(self.imageSource)
-            self.slideshow.setNeedsDisplay()
+            
             self.present(alert, animated: true, completion: nil)
         })
     }
