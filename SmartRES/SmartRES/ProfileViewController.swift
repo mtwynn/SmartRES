@@ -9,9 +9,9 @@
 import UIKit
 import Alamofire
 import ImageSlideshow
+import Parse
 
-
-class UploadViewController: UIViewController {
+class ProfileViewController: UIViewController {
 
     @IBOutlet weak var profilePicView: UIImageView!
     
@@ -21,6 +21,18 @@ class UploadViewController: UIViewController {
         profilePicView.layer.cornerRadius = profilePicView.frame.height / 2
         profilePicView.af_setImage(withURL: URL(string: "https://scontent-sjc3-1.xx.fbcdn.net/v/t1.0-9/60851350_2569104719791117_9094202935537041408_o.jpg?_nc_cat=107&_nc_oc=AQkpbQIrKhVH7-S3PVqsclxZmhAHKeCJiPeERxeLTE20haxqH2X0WwqgzA4u63u2Owo&_nc_ht=scontent-sjc3-1.xx&oh=3e4b3c92f3df8f215833a88e00782cc7&oe=5DC6B722")!)
         
+    }
+    
+    @IBAction func logoutButton(_ sender: Any) {
+        PFUser.logOut()
+        
+        let main = UIStoryboard(name: "Main", bundle: nil)
+        
+        let loginViewController = main.instantiateViewController(withIdentifier: "LoginViewController")
+        
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        
+        delegate.window?.rootViewController = loginViewController
     }
     
 }

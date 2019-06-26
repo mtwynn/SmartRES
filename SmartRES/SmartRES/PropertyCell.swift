@@ -12,4 +12,5 @@ class PropertyCell: UICollectionViewCell {
     
     @IBOutlet weak var propertyCellView: UIImageView!
     
+    
 }

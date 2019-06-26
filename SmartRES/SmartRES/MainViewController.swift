@@ -60,17 +60,6 @@ class MainViewController: UIViewController {
         self.present(picker, animated: true, completion: nil)
     }
     
-    @IBAction func logoutButton(_ sender: Any) {
-        PFUser.logOut()
-        
-        let main = UIStoryboard(name: "Main", bundle: nil)
-        
-        let loginViewController = main.instantiateViewController(withIdentifier: "LoginViewController")
-        
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        
-        delegate.window?.rootViewController = loginViewController
-    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -104,7 +93,7 @@ class MainViewController: UIViewController {
         
         // optional way to show activity indicator during image load (skipping the line will show no activity indicator)
         slideshow.activityIndicator = DefaultActivityIndicator()
-        slideshow.delegate = self as! ImageSlideshowDelegate
+        slideshow.delegate = self as ImageSlideshowDelegate
         
         // can be used with other sample sources as `afNetworkingSource`, `alamofireSource` or `sdWebImageSource` or `kingfisherSource`
         slideshow.setImageInputs(imageSource)
@@ -122,11 +111,11 @@ class MainViewController: UIViewController {
     
     @objc func refresh() {
         let query = PFQuery(className: "Pictures")
-        query.whereKey("agent", equalTo: PFUser.current())
+        query.whereKey("agent", equalTo: PFUser.current()!)
         query.findObjectsInBackground() { (posts, error) in
             if posts != nil {
                 for post in posts! {
-                    print (post["agent"])
+                    print (post["agent"]!)
                     let imageFile = post["image"] as! PFFileObject
                     let urlString = imageFile.url!
                     let url = URL(string: urlString)!
