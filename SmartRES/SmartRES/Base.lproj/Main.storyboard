@@ -169,9 +169,9 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$Price" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WDZ-bV-x0q">
-                                                    <rect key="frame" x="16" y="139" width="147" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
+                                                    <rect key="frame" x="16" y="140" width="147" height="20"/>
+                                                    <fontDescription key="fontDescription" name="Lato-Light" family="Lato" pointSize="17"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -200,7 +200,7 @@
                     <navigationItem key="navigationItem" title="Properties" id="Fv8-hd-cO6"/>
                     <connections>
                         <outlet property="propertyCollectionView" destination="3PV-5a-HRH" id="N4T-4y-h4f"/>
-                        <segue destination="tOa-50-mLJ" kind="show" id="siC-0c-ztV"/>
+                        <segue destination="tOa-50-mLJ" kind="show" identifier="propertySegue" id="siC-0c-ztV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nep-Pn-vLw" userLabel="First Responder" sceneMemberID="firstResponder"/>

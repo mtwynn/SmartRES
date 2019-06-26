@@ -15,7 +15,9 @@ import YPImagePicker
 
 class MainViewController: UIViewController {
     
-    var imageSource = [AlamofireSource(urlString: "https://images.unsplash.com/photo-1432679963831-2dab49187847?w=1080")!, AlamofireSource(urlString: "https://images.unsplash.com/photo-1447746249824-4be4e1b76d66?w=1080")!, AlamofireSource(urlString: "https://images.unsplash.com/photo-1463595373836-6e0b0a8ee322?w=1080")!]
+    /*var imageSource = [AlamofireSource(urlString: "https://images.unsplash.com/photo-1432679963831-2dab49187847?w=1080")!, AlamofireSource(urlString: "https://images.unsplash.com/photo-1447746249824-4be4e1b76d66?w=1080")!, AlamofireSource(urlString: "https://images.unsplash.com/photo-1463595373836-6e0b0a8ee322?w=1080")!]*/
+    var imageSource = [ParseSource]()
+    var updatedList = [ParseSource]()
     
     var refreshControl = UIRefreshControl()
     
@@ -49,11 +51,18 @@ class MainViewController: UIViewController {
                 
                 post.saveInBackground() { (success, error) in
                     if success {
-                        self.refresh()
+                        let alert = UIAlertController(title: "Success", message: "Upload complete!", preferredStyle: UIAlertController.Style.alert)
+                        
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
                     } else {
-                        print("Error!")
+                        let alert = UIAlertController(title: "Error", message: "Upload failed.", preferredStyle: UIAlertController.Style.alert)
+                        
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
                     }
                 }
+                self.refresh()
             }
             picker.dismiss(animated: true, completion: nil)
         }
@@ -62,6 +71,21 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let query = PFQuery(className: "Pictures")
+        query.whereKey("agent", equalTo: PFUser.current()!)
+        query.findObjectsInBackground() { (posts, error) in
+            if posts != nil {
+                for post in posts! {
+                    let imageFile = post["image"] as! PFFileObject
+                    self.updatedList.append(ParseSource(file: imageFile))
+                }
+            }
+            self.imageSource = self.updatedList
+            self.slideshow.setImageInputs(self.imageSource)
+            self.slideshow.setNeedsDisplay()
+        }
+        
         
         // Button stylings
         uploadButtonView.layer.cornerRadius = 0.5 * uploadButtonView.bounds.size.width
@@ -111,21 +135,34 @@ class MainViewController: UIViewController {
     
     @objc func refresh() {
         let query = PFQuery(className: "Pictures")
+        
+        let downloadGroup = DispatchGroup()
+        
+        self.updatedList.removeAll(keepingCapacity: true)
+        
+        downloadGroup.enter()
         query.whereKey("agent", equalTo: PFUser.current()!)
         query.findObjectsInBackground() { (posts, error) in
             if posts != nil {
                 for post in posts! {
-                    print (post["agent"]!)
                     let imageFile = post["image"] as! PFFileObject
-                    let urlString = imageFile.url!
-                    let url = URL(string: urlString)!
-                    self.imageSource.append(AlamofireSource(url: url))
-                    print(self.imageSource.count)
+                    self.updatedList.append(ParseSource(file: imageFile))
                 }
             }
+            self.imageSource = self.updatedList
         }
-        slideshow.setImageInputs(imageSource)
-        slideshow.setNeedsDisplay()
+        downloadGroup.leave()
+        
+        
+        downloadGroup.notify(queue: DispatchQueue.main, execute: {
+            let alert = UIAlertController(title: "Refresh", message: "Refreshed successfully!", preferredStyle: UIAlertController.Style.alert)
+            
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            
+            self.slideshow.setImageInputs(self.imageSource)
+            self.slideshow.setNeedsDisplay()
+            self.present(alert, animated: true, completion: nil)
+        })
     }
 }
 

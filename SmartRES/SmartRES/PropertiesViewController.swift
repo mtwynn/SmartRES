@@ -44,5 +44,10 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
         return cell;
         
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath)
+        self.performSegue(withIdentifier: "propertySegue", sender: self)
+    }
 
 }
