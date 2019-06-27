@@ -51,7 +51,7 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
     }
 
     @IBAction func addProperty(_ sender: Any) {
-        
+        self.performSegue(withIdentifier: "addPropertySegue", sender: self)
     }
     
 }
