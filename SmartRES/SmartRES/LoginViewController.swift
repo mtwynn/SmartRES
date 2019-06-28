@@ -58,18 +58,20 @@ class LoginViewController: UIViewController {
     @IBAction func loginButton(_ sender: Any) {
         let username = usernameField.text!
         let password = passwordField.text!
+        let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
+        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
+        loadingIndicator.style = UIActivityIndicatorView.Style.gray
+        loadingIndicator.startAnimating();
+        
+        alert.view.addSubview(loadingIndicator)
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: { action in
+            self.dismiss(animated: false, completion: nil)
+        }))
+        self.present(alert, animated: true, completion: nil)
+        
         PFUser.logInWithUsername(inBackground: username, password: password) { (user, error) in
             
-            let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
-            let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
-            loadingIndicator.style = UIActivityIndicatorView.Style.gray
-            loadingIndicator.startAnimating();
             
-            alert.view.addSubview(loadingIndicator)
-            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: { action in
-                    self.dismiss(animated: false, completion: nil)
-            }))
-            self.present(alert, animated: true, completion: nil)
             
             if user != nil {
                 self.dismiss(animated: true) {

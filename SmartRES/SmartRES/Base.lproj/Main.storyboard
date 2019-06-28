@@ -211,7 +211,8 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                         <constraints>
                             <constraint firstItem="FVZ-u4-Kb0" firstAttribute="leading" secondItem="1C7-MG-RHb" secondAttribute="leading" constant="40" id="1Yh-gV-Moy"/>
                             <constraint firstItem="P7t-b1-22l" firstAttribute="leading" secondItem="sFe-Xv-ww7" secondAttribute="trailing" constant="8" id="2ud-z1-SHT"/>
@@ -239,7 +240,10 @@
                         <viewLayoutGuide key="safeArea" id="1C7-MG-RHb"/>
                     </view>
                     <connections>
+                        <outlet property="addressField" destination="O8Q-8Q-Ryh" id="JTv-g5-D1l"/>
+                        <outlet property="cityField" destination="0gZ-19-iE6" id="IN8-dV-pd2"/>
                         <outlet property="stateField" destination="nSk-3k-X2S" id="F8N-0K-Gk6"/>
+                        <outlet property="zipField" destination="Cft-u0-lG6" id="F3J-AQ-El8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qp4-QL-jYR" userLabel="First Responder" sceneMemberID="firstResponder"/>
