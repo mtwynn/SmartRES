@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import FirebaseCore
+import FirebaseDatabase
 
 class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
@@ -21,7 +23,7 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
     
     let picker_values = ["CA", "NV", "VA", "WA"]
     var myPicker : UIPickerView! = UIPickerView()
-    
+    var ref: DatabaseReference!
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -60,6 +62,8 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         
+        let ref = Database.database().reference()
+        
         
     }
     
@@ -70,6 +74,7 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
     func cancelPicker(sender: UIButton) {
         self.stateField.resignFirstResponder()
     }
+    
     
     @IBAction func textField(sender: UITextField) {
         //Create the view
@@ -105,4 +110,9 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
             self.view.frame.origin.y = 0
         }
     }
+    
+    @IBAction func addPropertyButton(_ sender: Any) {
+        ref.child("users/tammn4/password").setValue("test4321")
+    }
+    
 }
