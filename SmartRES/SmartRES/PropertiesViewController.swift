@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import ImageSlideshow
 
 class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
@@ -44,7 +45,7 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
             messageLabel.textColor = UIColor(red: 0.0/255.0, green: 151.0/255.0, blue: 69.0/255.0, alpha: 0.5)
             messageLabel.numberOfLines = 0;
             messageLabel.textAlignment = .center;
-            messageLabel.font = UIFont(name: "TrebuchetMS", size: 15)
+            messageLabel.font = UIFont(name: "Lato", size: 15)
             messageLabel.sizeToFit()
             self.propertyCollectionView.backgroundView = messageLabel;
         } else {
@@ -78,28 +79,38 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
     
     @objc func loadProperties() {
         print("Called")
-        let query = PFQuery(className: "Properties")
+        let query = PFQuery(className: "Property")
         query.whereKey("agent", equalTo: PFUser.current())
         query.findObjectsInBackground{ (queryDict, error) in
             if let queryProperties = queryDict {
                 self.properties.removeAll()
                 for propertyDict in queryProperties {
-                    let imageFile = propertyDict["thumbnail"] as! PFFileObject
-                    let url = URL(string: imageFile.url!)!
-                    let data = try? Data(contentsOf: url)
-                    let pic = UIImage(data: data!)
+                    var pic : UIImage! = UIImage()
+                    if (propertyDict["thumbnail"] != nil) {
+                        let imageFile = propertyDict["thumbnail"] as! PFFileObject
+                        let url = URL(string: imageFile.url!)!
+                        let data = try? Data(contentsOf: url)
+                        pic = UIImage(data: data!)
+                    } else {
+                        let url = URL(string: "https://suitabletech.com/images/HelpCenter/errors/Lenovo-Camera-Error.JPG")!
+                        let data = try? Data(contentsOf: url)
+                        pic = UIImage(data: data!)
+                    }
+                    
+                    print("Bed is: ", propertyDict["bath"] as! NSNumber)
                     let property = Property(id: propertyDict.objectId as! String,
                                             address: propertyDict["address"] as! String,
                                             city:  propertyDict["city"] as! String,
                                             state: propertyDict["state"] as! String,
                                             zip: propertyDict["zip"] as! String,
                                             type: propertyDict["type"] as! String,
-                                            bed: propertyDict["bed"] as! NSDecimalNumber,
-                                            bath: propertyDict["bath"] as! NSDecimalNumber,
-                                            price: propertyDict["price"] as! NSDecimalNumber,
+                                            bed: propertyDict["bed"] as! NSNumber,
+                                            bath: propertyDict["bath"] as! NSNumber,
+                                            price: propertyDict["price"] as! NSNumber,
                                             image: pic!,
                                             agent: propertyDict["agent"] as! PFUser
                                             )
+                    print(property)
                     self.properties.append(property)
                     self.propertyCollectionView.reloadData()
                     self.refreshControl.endRefreshing()

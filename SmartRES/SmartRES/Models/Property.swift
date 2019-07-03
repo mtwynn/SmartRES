@@ -17,9 +17,9 @@ struct Property {
     let state: String
     let zip: String
     let type: String
-    let bed: NSDecimalNumber
-    let bath: NSDecimalNumber
-    let price: NSDecimalNumber
+    let bed: NSNumber
+    let bath: NSNumber
+    let price: NSNumber
     var image: UIImage
     let agent: PFUser
 }
