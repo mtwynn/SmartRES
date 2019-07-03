@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>327508227956-9vm35m8amv14cl0sbh6v2j5pujo70t07.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.327508227956-9vm35m8amv14cl0sbh6v2j5pujo70t07</string>
+	<key>API_KEY</key>
+	<string>AIzaSyB__KBVImlV_nVTfyS-QfEuAZl_Kmg6DnI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>327508227956</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.smartres</string>
+	<key>PROJECT_ID</key>
+	<string>smartrealestatesigns</string>
+	<key>STORAGE_BUCKET</key>
+	<string>smartrealestatesigns.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:327508227956:ios:45c565e1bfee8a4b</string>
+	<key>DATABASE_URL</key>
+	<string>https://smartrealestatesigns.firebaseio.com</string>
+</dict>
+</plist>
