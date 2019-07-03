@@ -14,7 +14,7 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
     
     var properties = [Property]()
     let refreshControl = UIRefreshControl()
-    
+    //let dispatchGroup = DispatchGroup()
     @IBOutlet weak var propertyCollectionView: UICollectionView!
     
     
@@ -23,20 +23,8 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
 
         propertyCollectionView.dataSource = self
         propertyCollectionView.delegate = self
-        
         refreshControl.addTarget(self, action: #selector(loadProperties), for: .valueChanged)
         propertyCollectionView.refreshControl = refreshControl
-        loadProperties()
-        
-        let layout = propertyCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        
-        layout.minimumLineSpacing = 0
-        layout.minimumInteritemSpacing = 0
-        
-        let width = view.frame.size.width / 2
-        
-        layout.itemSize = CGSize(width: width, height: width)
-        
         if self.properties.count == 0 {
             print("Here")
             let rect = CGRect(origin: CGPoint(x: 0,y :0), size: CGSize(width: self.view.bounds.size.width, height: self.view.bounds.size.height))
@@ -51,6 +39,36 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
         } else {
             self.propertyCollectionView.backgroundView = nil
         }
+        
+        let layout = propertyCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        
+        let width = view.frame.size.width / 2
+        
+        layout.itemSize = CGSize(width: width, height: width)
+        
+        
+        let alert = UIAlertController(title: nil, message: "Loading properties...", preferredStyle: .alert)
+        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
+        loadingIndicator.style = UIActivityIndicatorView.Style.gray
+        loadingIndicator.startAnimating();
+        
+        alert.view.addSubview(loadingIndicator)
+        self.present(alert, animated: true, completion: nil)
+
+        loadProperties { error in
+            if let error = error {
+                print("Oops! Something went wrong...")
+            } else {
+                print("Done!!")
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
+        
+        
+        
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -77,12 +95,20 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
         self.performSegue(withIdentifier: "addPropertySegue", sender: self)
     }
     
-    @objc func loadProperties() {
-        print("Called")
+    @objc func loadProperties(completion: @escaping (Error?) -> Void) {
         let query = PFQuery(className: "Property")
-        query.whereKey("agent", equalTo: PFUser.current())
+        query.whereKey("agent", equalTo: PFUser.current()!)
         query.findObjectsInBackground{ (queryDict, error) in
+            let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
+            let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
+            loadingIndicator.style = UIActivityIndicatorView.Style.gray
+            loadingIndicator.startAnimating();
+            
+            alert.view.addSubview(loadingIndicator)
+            
+            self.present(alert, animated: true, completion: nil)
             if let queryProperties = queryDict {
+                
                 self.properties.removeAll()
                 for propertyDict in queryProperties {
                     var pic : UIImage! = UIImage()
@@ -109,13 +135,12 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
                                             image: pic!,
                                             agent: propertyDict["agent"] as! PFUser
                                             )
-                    print(property)
                     self.properties.append(property)
-                    self.propertyCollectionView.reloadData()
-                    self.refreshControl.endRefreshing()
+                    
                 }
+                self.propertyCollectionView.reloadData()
+                self.refreshControl.endRefreshing()
             }
         }
     }
-    
 }

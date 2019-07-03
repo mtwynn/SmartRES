@@ -18,9 +18,11 @@ class MainViewController: UIViewController {
     /*var imageSource = [AlamofireSource(urlString: "https://images.unsplash.com/photo-1432679963831-2dab49187847?w=1080")!, AlamofireSource(urlString: "https://images.unsplash.com/photo-1447746249824-4be4e1b76d66?w=1080")!, AlamofireSource(urlString: "https://images.unsplash.com/photo-1463595373836-6e0b0a8ee322?w=1080")!]*/
     var imageSource = [ParseSource]()
     var updatedList = [ParseSource]()
-    
     var refreshControl = UIRefreshControl()
     
+    @IBOutlet weak var priceLabel: UILabel!
+    
+    var propertyId: String! = String()
     
     @IBAction func refreshButton(_ sender: Any) {
         refresh()
@@ -50,7 +52,7 @@ class MainViewController: UIViewController {
                     let imageData = photo.image.pngData()
                     let file = PFFileObject(data: imageData!)
                     post["image"] = file
-                    
+                    post["propertyId"] = self.propertyId
                     post.saveInBackground() { (success, error) in
                         if success {
                             let alert = UIAlertController(title: "Success", message: "Upload complete! Please refresh to see changes.", preferredStyle: UIAlertController.Style.alert)
@@ -67,7 +69,7 @@ class MainViewController: UIViewController {
                     
                 // TODO 
                 case .video(let video):
-                    print("uploading video...")
+                    print("uploading video...", video)
                 }
                 
             }
@@ -81,6 +83,7 @@ class MainViewController: UIViewController {
         
         let query = PFQuery(className: "Pictures")
         query.whereKey("agent", equalTo: PFUser.current()!)
+        query.whereKey("propertyId", equalTo: self.propertyId!)
         query.findObjectsInBackground() { (posts, error) in
             if posts != nil {
                 for post in posts! {
@@ -91,6 +94,7 @@ class MainViewController: UIViewController {
             self.imageSource = self.updatedList
             self.slideshow.setImageInputs(self.imageSource)
             self.slideshow.setNeedsDisplay()
+            self.slideshow.bringSubviewToFront(self.priceLabel)
         }
         
         
@@ -159,6 +163,7 @@ class MainViewController: UIViewController {
             self.imageSource = self.updatedList
             self.slideshow.setImageInputs(self.imageSource)
             self.slideshow.setNeedsDisplay()
+            self.slideshow.bringSubviewToFront(self.priceLabel)
         }
         downloadGroup.leave()
         

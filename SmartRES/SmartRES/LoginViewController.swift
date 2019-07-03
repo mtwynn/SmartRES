@@ -82,13 +82,15 @@ class LoginViewController: UIViewController {
                 }
                 
             } else {
-                let alert = UIAlertController(title: "Message", message: "Incorrect username/password or no user exists", preferredStyle: UIAlertController.Style.alert)
-                
-                alert.addAction(UIAlertAction(title: "Sign up", style: UIAlertAction.Style.default, handler: self.signupButton))
-                alert.addAction(UIAlertAction(title: "Try again", style: UIAlertAction.Style.cancel, handler: nil))
-                
-                
-                self.present(alert, animated: true, completion: nil)
+                self.dismiss(animated: true) {
+                    let alert = UIAlertController(title: "Message", message: "Incorrect username/password or no user exists", preferredStyle: UIAlertController.Style.alert)
+                    
+                    alert.addAction(UIAlertAction(title: "Sign up", style: UIAlertAction.Style.default, handler: self.signupButton))
+                    alert.addAction(UIAlertAction(title: "Try again", style: UIAlertAction.Style.cancel, handler: nil))
+                    
+                    
+                    self.present(alert, animated: true, completion: nil)
+                }
             }
         }
     }

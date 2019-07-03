@@ -10,6 +10,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="Lato-Bold.ttf">
+            <string>Lato-Bold</string>
+        </array>
         <array key="Lato-Light.ttf">
             <string>Lato-Light</string>
         </array>
@@ -473,13 +476,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4G6-29-bkW">
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4G6-29-bkW">
                                 <rect key="frame" x="301" y="544" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.0" green="0.59215686274509804" blue="0.27058823529411763" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="CrO-zE-WTD"/>
-                                    <constraint firstAttribute="width" constant="50" id="tkI-AS-9I9"/>
-                                </constraints>
                                 <state key="normal" image="photo">
                                     <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
@@ -488,25 +488,104 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nOu-9g-bvT" customClass="ImageSlideshow" customModule="ImageSlideshow">
-                                <rect key="frame" x="0.0" y="64" width="375" height="300"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="250"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.84999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$400,000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MW8-js-LzZ">
+                                        <rect key="frame" x="0.0" y="20" width="150" height="24"/>
+                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="150" id="OmQ-J7-P4p"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="20"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="300" id="alg-GO-d4U"/>
-                                    <constraint firstAttribute="width" constant="375" id="t1I-ys-rIM"/>
+                                    <constraint firstItem="MW8-js-LzZ" firstAttribute="top" secondItem="nOu-9g-bvT" secondAttribute="top" constant="20" id="BbV-aW-GXP"/>
+                                    <constraint firstAttribute="height" constant="250" id="Jt7-au-hXC"/>
+                                    <constraint firstItem="MW8-js-LzZ" firstAttribute="leading" secondItem="nOu-9g-bvT" secondAttribute="leading" id="Mh8-kv-are"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="32502 Arroyo Drive" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u0g-XG-Wyr">
+                                <rect key="frame" x="16" y="339" width="177" height="24"/>
+                                <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mMw-rZ-T30">
+                                <rect key="frame" x="16" y="326" width="343" height="1"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="wiD-om-pCh"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Irvine, CA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ro9-zB-rjW">
+                                <rect key="frame" x="16" y="371" width="77" height="22"/>
+                                <fontDescription key="fontDescription" name="Lato-Light" family="Lato" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="92617" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qdq-mT-IHA">
+                                <rect key="frame" x="16" y="401" width="53" height="22"/>
+                                <fontDescription key="fontDescription" name="Lato-Light" family="Lato" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7Nx-XA-fwO">
+                                <rect key="frame" x="16" y="431" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="Ug6-Sg-7g2"/>
+                                    <constraint firstAttribute="height" constant="30" id="h9w-j0-lk5"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IGl-ZV-v9Y">
+                                <rect key="frame" x="16" y="469" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="H3j-9v-CPp"/>
+                                    <constraint firstAttribute="width" constant="30" id="KD9-wc-MMO"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aux-fe-3rN">
+                                <rect key="frame" x="54" y="438" width="22.5" height="16"/>
+                                <fontDescription key="fontDescription" name="Lato-Light" family="Lato" pointSize="13"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bath" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zB5-0q-8Hg">
+                                <rect key="frame" x="54" y="476" width="26" height="16"/>
+                                <fontDescription key="fontDescription" name="Lato-Light" family="Lato" pointSize="13"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="bGh-6T-OZw" firstAttribute="bottom" secondItem="4G6-29-bkW" secondAttribute="bottom" constant="24" id="9dJ-tC-k7V"/>
-                            <constraint firstItem="nOu-9g-bvT" firstAttribute="trailing" secondItem="bGh-6T-OZw" secondAttribute="trailing" id="FWS-3a-GYx"/>
-                            <constraint firstItem="bGh-6T-OZw" firstAttribute="trailing" secondItem="4G6-29-bkW" secondAttribute="trailing" constant="24" id="eUp-eI-KYO"/>
-                            <constraint firstItem="nOu-9g-bvT" firstAttribute="top" secondItem="bGh-6T-OZw" secondAttribute="top" id="jiQ-Wi-8Im"/>
-                            <constraint firstItem="nOu-9g-bvT" firstAttribute="leading" secondItem="bGh-6T-OZw" secondAttribute="leading" id="ln3-C5-syN"/>
+                            <constraint firstItem="u0g-XG-Wyr" firstAttribute="top" secondItem="mMw-rZ-T30" secondAttribute="bottom" constant="12" id="0Ju-Bf-EPa"/>
+                            <constraint firstItem="nOu-9g-bvT" firstAttribute="leading" secondItem="bGh-6T-OZw" secondAttribute="leading" id="0bU-4g-dOD"/>
+                            <constraint firstItem="aux-fe-3rN" firstAttribute="centerY" secondItem="7Nx-XA-fwO" secondAttribute="centerY" id="7UM-BY-1hj"/>
+                            <constraint firstItem="aux-fe-3rN" firstAttribute="leading" secondItem="7Nx-XA-fwO" secondAttribute="trailing" constant="8" id="AW4-al-eyi"/>
+                            <constraint firstItem="IGl-ZV-v9Y" firstAttribute="leading" secondItem="bGh-6T-OZw" secondAttribute="leading" constant="16" id="Dk8-Sy-TJO"/>
+                            <constraint firstItem="Qdq-mT-IHA" firstAttribute="top" secondItem="ro9-zB-rjW" secondAttribute="bottom" constant="8" id="KfK-rS-amf"/>
+                            <constraint firstItem="7Nx-XA-fwO" firstAttribute="top" secondItem="Qdq-mT-IHA" secondAttribute="bottom" constant="8" id="MuQ-nR-Pri"/>
+                            <constraint firstItem="ro9-zB-rjW" firstAttribute="top" secondItem="u0g-XG-Wyr" secondAttribute="bottom" constant="8" id="RCJ-02-1Q8"/>
+                            <constraint firstItem="mMw-rZ-T30" firstAttribute="leading" secondItem="l3W-5R-aQu" secondAttribute="leading" constant="16" id="SFP-bM-dII"/>
+                            <constraint firstItem="mMw-rZ-T30" firstAttribute="top" secondItem="nOu-9g-bvT" secondAttribute="bottom" constant="12" id="aiL-oL-Sxp"/>
+                            <constraint firstItem="zB5-0q-8Hg" firstAttribute="centerY" secondItem="IGl-ZV-v9Y" secondAttribute="centerY" id="bNx-Ru-EYf"/>
+                            <constraint firstItem="IGl-ZV-v9Y" firstAttribute="top" secondItem="7Nx-XA-fwO" secondAttribute="bottom" constant="8" id="hgz-GI-Ab8"/>
+                            <constraint firstItem="nOu-9g-bvT" firstAttribute="trailing" secondItem="bGh-6T-OZw" secondAttribute="trailing" id="irQ-yR-bVz"/>
+                            <constraint firstItem="ro9-zB-rjW" firstAttribute="leading" secondItem="bGh-6T-OZw" secondAttribute="leading" constant="16" id="nXu-W5-Lsh"/>
+                            <constraint firstItem="nOu-9g-bvT" firstAttribute="top" secondItem="bGh-6T-OZw" secondAttribute="top" id="pA9-D7-Ebo"/>
+                            <constraint firstAttribute="trailing" secondItem="mMw-rZ-T30" secondAttribute="trailing" constant="16" id="rhx-Cu-eeT"/>
+                            <constraint firstItem="7Nx-XA-fwO" firstAttribute="leading" secondItem="bGh-6T-OZw" secondAttribute="leading" constant="16" id="u65-3O-9sd"/>
+                            <constraint firstItem="Qdq-mT-IHA" firstAttribute="leading" secondItem="bGh-6T-OZw" secondAttribute="leading" constant="16" id="x3i-hz-A6W"/>
+                            <constraint firstItem="u0g-XG-Wyr" firstAttribute="leading" secondItem="bGh-6T-OZw" secondAttribute="leading" constant="16" id="xJs-ZL-NBb"/>
+                            <constraint firstItem="zB5-0q-8Hg" firstAttribute="leading" secondItem="IGl-ZV-v9Y" secondAttribute="trailing" constant="8" id="xyd-wW-a7d"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="bGh-6T-OZw"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Property Name" id="CE7-eR-4Ip">
+                    <navigationItem key="navigationItem" title="32502 Arroyo" id="CE7-eR-4Ip">
                         <barButtonItem key="rightBarButtonItem" title="Refresh" id="X0d-5d-gnF">
                             <connections>
                                 <action selector="refreshButton:" destination="tOa-50-mLJ" id="oH1-GG-CzN"/>
@@ -514,13 +593,14 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="priceLabel" destination="MW8-js-LzZ" id="OlV-gW-pw6"/>
                         <outlet property="slideshow" destination="nOu-9g-bvT" id="zxC-q8-tUU"/>
                         <outlet property="uploadButtonView" destination="4G6-29-bkW" id="DYB-7R-vuz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c9d-ck-NNQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4846" y="-134"/>
+            <point key="canvasLocation" x="4845.6000000000004" y="-134.48275862068968"/>
         </scene>
         <!--Profile-->
         <scene sceneID="BU9-Vj-cHd">
