@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
@@ -74,7 +75,7 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
                             "Wyoming": "WY"]
     
     var sortedStates = [String]()
-    var types = ["House", "Apartment", "Land"]
+    var typesArray = ["House", "Apartment", "Land"]
     var statePicker : UIPickerView! = UIPickerView()
     var typePicker : UIPickerView! = UIPickerView()
     
@@ -83,21 +84,32 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return stateDictionary.count
+        return (pickerView.tag == 1) ? stateDictionary.count : typesArray.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return self.sortedStates[row]
+        return (pickerView.tag == 1) ? self.sortedStates[row] : typesArray[row]
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        stateField.text = stateDictionary[self.sortedStates[row]]!
+        if (pickerView.tag == 1) {
+            stateField.text = stateDictionary[self.sortedStates[row]]!
+        } else {
+            typeField.text = typesArray[row]
+        }
+        
     }
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.statePicker = UIPickerView(frame: CGRect(x: 0, y: 40, width: 0, height: 0))
+        self.typePicker = UIPickerView(frame: CGRect(x: 0, y: 40, width: 0, height: 0))
+        self.typePicker.delegate = self
+        self.typePicker.dataSource = self
+        
+        self.statePicker.tag = 1
+        self.typePicker.tag = 2
         self.stateField.delegate = self
         self.statePicker.delegate = self
         self.statePicker.dataSource = self
@@ -127,7 +139,9 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
         toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
         toolBar.isUserInteractionEnabled = true
         self.stateField.inputView = self.statePicker
+        self.typeField.inputView = self.typePicker
         self.stateField.inputAccessoryView = toolBar
+        self.typeField.inputAccessoryView = toolBar
         self.sortedStates = (Array(stateDictionary.keys).sorted())
         
         // Keyboard functions
@@ -161,6 +175,42 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
     @objc func donePicker() {
         
         stateField.resignFirstResponder()
-        
+        typeField.resignFirstResponder()
     }
+    
+    @IBAction func addButton(_ sender: Any) {
+        let property = PFObject(className: "Property")
+        property["agent"] = PFUser.current()!
+        property["address"] = self.addressField.text!
+        property["city"] = self.cityField.text!
+        property["state"] = self.stateField.text!
+        property["zip"] = self.zipField.text!
+        property["type"] = self.typeField.text!
+        if let intBed = Int(self.bedField.text!) {
+            property["bed"] = NSNumber(value:intBed)
+        }
+        if let intBath = Int(self.bathField.text!) {
+            property["bath"] = NSNumber(value:intBath)
+        }
+        
+        let formatter = NumberFormatter()
+        formatter.generatesDecimalNumbers = true
+        
+        property["price"] = formatter.number(from: self.priceField.text!) as? NSDecimalNumber ?? 0
+    
+        property.saveInBackground() { (success, error) in
+            if success {
+                let alert = UIAlertController(title: "Success", message: "Property added! Please refresh to see changes.", preferredStyle: UIAlertController.Style.alert)
+                
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            } else {
+                let alert = UIAlertController(title: "Error", message: "Adding property failed.", preferredStyle: UIAlertController.Style.alert)
+                
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+    }
+    
 }
