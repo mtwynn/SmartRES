@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3987584BF779DC41D21856C9 /* Pods_SmartRESUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72380A2AECC61409C62AE0E1 /* Pods_SmartRESUITests.framework */; };
 		759B48FC7E9773A17FCF1596 /* Pods_SmartRESTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D09D3F08E54FEC746AE9BF1 /* Pods_SmartRESTests.framework */; };
+		C60D9C7B22CC542800B0A2FF /* Property.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60D9C7A22CC542800B0A2FF /* Property.swift */; };
 		C611FF412283603A00704CD3 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C611FF402283603A00704CD3 /* MainViewController.swift */; };
 		C611FF43228362EB00704CD3 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C611FF42228362EB00704CD3 /* ProfileViewController.swift */; };
 		C645AE9E2282A56E006F2EF3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C645AE9D2282A56E006F2EF3 /* AppDelegate.swift */; };
@@ -70,6 +71,7 @@
 		85670700C39A472A07EF733D /* Pods-SmartRES.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartRES.release.xcconfig"; path = "Target Support Files/Pods-SmartRES/Pods-SmartRES.release.xcconfig"; sourceTree = "<group>"; };
 		8CB0D520032420A1A119B2BF /* Pods-SmartRESTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartRESTests.release.xcconfig"; path = "Target Support Files/Pods-SmartRESTests/Pods-SmartRESTests.release.xcconfig"; sourceTree = "<group>"; };
 		9E13CED52D54DE37E5497EF1 /* Pods-SmartRESTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartRESTests.debug.xcconfig"; path = "Target Support Files/Pods-SmartRESTests/Pods-SmartRESTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C60D9C7A22CC542800B0A2FF /* Property.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Property.swift; sourceTree = "<group>"; };
 		C611FF402283603A00704CD3 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		C611FF42228362EB00704CD3 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		C645AE9A2282A56E006F2EF3 /* SmartRES.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartRES.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -162,6 +164,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		C60D9C7922CC53ED00B0A2FF /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C60D9C7A22CC542800B0A2FF /* Property.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		C645AE912282A56E006F2EF3 = {
 			isa = PBXGroup;
 			children = (
@@ -188,6 +198,7 @@
 		C645AE9C2282A56E006F2EF3 /* SmartRES */ = {
 			isa = PBXGroup;
 			children = (
+				C60D9C7922CC53ED00B0A2FF /* Models */,
 				C67D60CB22C96390001C7149 /* GoogleService-Info.plist */,
 				C645AE9D2282A56E006F2EF3 /* AppDelegate.swift */,
 				C645AEA12282A56E006F2EF3 /* Main.storyboard */,
@@ -491,6 +502,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C60D9C7B22CC542800B0A2FF /* Property.swift in Sources */,
 				C64A223922C228400041C764 /* SignupViewController.swift in Sources */,
 				C611FF412283603A00704CD3 /* MainViewController.swift in Sources */,
 				C64A223D22C356590041C764 /* PropertyCell.swift in Sources */,

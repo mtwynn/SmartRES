@@ -251,9 +251,20 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
         property.saveInBackground() { (success, error) in
             if success {
                 let alert = UIAlertController(title: "Success", message: "Property added! Please refresh to see changes.", preferredStyle: UIAlertController.Style.alert)
+                self.addressField.text = ""
+                self.cityField.text = ""
+                self.stateField.text = ""
+                self.zipField.text = ""
+                self.typeField.text = ""
+                self.bedField.text = ""
+                self.bathField.text = ""
+                self.priceField.text = ""
+                self.thumbnailView.isHidden = true
+                self.addThumbnailView.isHidden = false
                 
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
+                
             } else {
                 let alert = UIAlertController(title: "Error", message: "Adding property failed.", preferredStyle: UIAlertController.Style.alert)
                 
@@ -274,6 +285,7 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
         picker.didFinishPicking { [unowned picker] items, _ in
             if let photo = items.singlePhoto {
                 self.thumbnailView.image = photo.image
+                self.thumbnailView.isHidden = false
             }
             self.addThumbnailView.isHidden = true
             picker.dismiss(animated: true, completion: nil)

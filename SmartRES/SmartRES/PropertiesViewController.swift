@@ -11,7 +11,8 @@ import Parse
 
 class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
-    var properties = [[String:Any]]()
+    var properties = [Property]()
+    let refreshControl = UIRefreshControl()
     
     @IBOutlet weak var propertyCollectionView: UICollectionView!
     
@@ -22,6 +23,10 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
         propertyCollectionView.dataSource = self
         propertyCollectionView.delegate = self
         
+        refreshControl.addTarget(self, action: #selector(loadProperties), for: .valueChanged)
+        propertyCollectionView.refreshControl = refreshControl
+        loadProperties()
+        
         let layout = propertyCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
         
         layout.minimumLineSpacing = 0
@@ -30,17 +35,34 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
         let width = view.frame.size.width / 2
         
         layout.itemSize = CGSize(width: width, height: width)
+        
+        if self.properties.count == 0 {
+            print("Here")
+            let rect = CGRect(origin: CGPoint(x: 0,y :0), size: CGSize(width: self.view.bounds.size.width, height: self.view.bounds.size.height))
+            let messageLabel = UILabel(frame: rect)
+            messageLabel.text = "You don't have any properties yet.\nPlease click the + sign to add one."
+            messageLabel.textColor = UIColor(red: 0.0/255.0, green: 151.0/255.0, blue: 69.0/255.0, alpha: 0.5)
+            messageLabel.numberOfLines = 0;
+            messageLabel.textAlignment = .center;
+            messageLabel.font = UIFont(name: "TrebuchetMS", size: 15)
+            messageLabel.sizeToFit()
+            self.propertyCollectionView.backgroundView = messageLabel;
+        } else {
+            self.propertyCollectionView.backgroundView = nil
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return properties.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = propertyCollectionView.dequeueReusableCell(withReuseIdentifier: "PropertyCell", for: indexPath) as! PropertyCell
         
-        cell.propertyCellView.af_setImage(withURL: URL(string: "https://scontent-sjc3-1.xx.fbcdn.net/v/t1.0-9/60851350_2569104719791117_9094202935537041408_o.jpg?_nc_cat=107&_nc_oc=AQkpbQIrKhVH7-S3PVqsclxZmhAHKeCJiPeERxeLTE20haxqH2X0WwqgzA4u63u2Owo&_nc_ht=scontent-sjc3-1.xx&oh=3e4b3c92f3df8f215833a88e00782cc7&oe=5DC6B722")!)
+        let property = properties[indexPath.item]
+        cell.propertyCellView.image = property.image
+        
         return cell;
         
     }
@@ -52,6 +74,38 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
 
     @IBAction func addProperty(_ sender: Any) {
         self.performSegue(withIdentifier: "addPropertySegue", sender: self)
+    }
+    
+    @objc func loadProperties() {
+        print("Called")
+        let query = PFQuery(className: "Properties")
+        query.whereKey("agent", equalTo: PFUser.current())
+        query.findObjectsInBackground{ (queryDict, error) in
+            if let queryProperties = queryDict {
+                self.properties.removeAll()
+                for propertyDict in queryProperties {
+                    let imageFile = propertyDict["thumbnail"] as! PFFileObject
+                    let url = URL(string: imageFile.url!)!
+                    let data = try? Data(contentsOf: url)
+                    let pic = UIImage(data: data!)
+                    let property = Property(id: propertyDict.objectId as! String,
+                                            address: propertyDict["address"] as! String,
+                                            city:  propertyDict["city"] as! String,
+                                            state: propertyDict["state"] as! String,
+                                            zip: propertyDict["zip"] as! String,
+                                            type: propertyDict["type"] as! String,
+                                            bed: propertyDict["bed"] as! NSDecimalNumber,
+                                            bath: propertyDict["bath"] as! NSDecimalNumber,
+                                            price: propertyDict["price"] as! NSDecimalNumber,
+                                            image: pic!,
+                                            agent: propertyDict["agent"] as! PFUser
+                                            )
+                    self.properties.append(property)
+                    self.propertyCollectionView.reloadData()
+                    self.refreshControl.endRefreshing()
+                }
+            }
+        }
     }
     
 }
