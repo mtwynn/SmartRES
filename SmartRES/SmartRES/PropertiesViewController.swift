@@ -97,7 +97,6 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
                         pic = UIImage(data: data!)
                     }
                     
-                    print("Bed is: ", propertyDict["bath"] as! NSNumber)
                     let property = Property(id: propertyDict.objectId as! String,
                                             address: propertyDict["address"] as! String,
                                             city:  propertyDict["city"] as! String,

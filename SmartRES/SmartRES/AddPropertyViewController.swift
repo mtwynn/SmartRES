@@ -231,16 +231,14 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
         property["state"] = self.stateField.text!
         property["zip"] = self.zipField.text!
         property["type"] = self.typeField.text!
-        if let intBed = Int(self.bedField.text!) {
-            property["bed"] = NSNumber(value:intBed)
-        }
-        if let intBath = Int(self.bathField.text!) {
-            property["bath"] = NSNumber(value:intBath)
-        }
+        
+        
         
         let formatter = NumberFormatter()
         formatter.generatesDecimalNumbers = true
         
+        property["bed"] = formatter.number(from: self.bedField.text!) as? NSDecimalNumber ?? 0
+        property["bath"] = formatter.number(from: self.bathField.text!) as? NSDecimalNumber ?? 0
         property["price"] = formatter.number(from: self.priceField.text!) as? NSDecimalNumber ?? 0
         
         if (thumbnailView.image != nil) {

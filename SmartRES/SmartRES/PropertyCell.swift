@@ -12,9 +12,8 @@ class PropertyCell: UICollectionViewCell {
     
     @IBOutlet weak var propertyCellView: UIImageView!
     
-    override func awakeFromNib() {
+    /*override func awakeFromNib() {
         propertyCellView.contentMode = .scaleAspectFit
-        self.contentView.sendSubviewToBack(propertyCellView)
-    }
+        self.contentView.sendSubviewToBack(propertyCellView)*/
     
 }
