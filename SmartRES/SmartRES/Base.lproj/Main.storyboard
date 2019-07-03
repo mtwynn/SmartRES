@@ -300,6 +300,9 @@
                                 <state key="normal" title="Add a thumbnail">
                                     <color key="titleColor" red="0.0" green="0.47843137254901957" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="addThumbnail:" destination="azX-rF-hKO" eventType="touchUpInside" id="8M4-yL-eEE"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -365,12 +368,14 @@
                         <viewLayoutGuide key="safeArea" id="1C7-MG-RHb"/>
                     </view>
                     <connections>
+                        <outlet property="addThumbnailView" destination="vHU-gn-3fv" id="7dV-Fa-Qga"/>
                         <outlet property="addressField" destination="O8Q-8Q-Ryh" id="JTv-g5-D1l"/>
                         <outlet property="bathField" destination="d7s-Ln-h0S" id="obX-md-iZ0"/>
                         <outlet property="bedField" destination="PdT-0g-AZF" id="f1S-e7-pDT"/>
                         <outlet property="cityField" destination="0gZ-19-iE6" id="IN8-dV-pd2"/>
                         <outlet property="priceField" destination="1nI-KI-Gyq" id="0iO-Zw-DdI"/>
                         <outlet property="stateField" destination="nSk-3k-X2S" id="F8N-0K-Gk6"/>
+                        <outlet property="thumbnailView" destination="XOK-UI-i9W" id="VdS-Im-eYe"/>
                         <outlet property="typeField" destination="AP9-RS-cVo" id="uCD-GK-nuW"/>
                         <outlet property="zipField" destination="Cft-u0-lG6" id="F3J-AQ-El8"/>
                     </connections>

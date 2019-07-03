@@ -10,6 +10,8 @@ import UIKit
 import Parse
 import FirebaseCore
 import FirebaseDatabase
+import Alamofire
+import YPImagePicker
 
 class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
@@ -24,6 +26,8 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
     @IBOutlet weak var bedField: UITextField!
     @IBOutlet weak var bathField: UITextField!
     @IBOutlet weak var priceField: UITextField!
+    @IBOutlet weak var thumbnailView: UIImageView!
+    @IBOutlet weak var addThumbnailView: UIButton!
     
     var stateDictionary = ["Alabama": "AL",
                             "Alaska": "AK",
@@ -84,6 +88,7 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
     let picker_values = ["CA", "NV", "VA", "WA"]
     var myPicker : UIPickerView! = UIPickerView()
     var ref: DatabaseReference!
+    var thumbnail: UIImage! = UIImage()
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -237,7 +242,12 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
         formatter.generatesDecimalNumbers = true
         
         property["price"] = formatter.number(from: self.priceField.text!) as? NSDecimalNumber ?? 0
-    
+        
+        if (thumbnailView.image != nil) {
+            let imageData = thumbnailView.image?.pngData()
+            let file = PFFileObject(data: imageData!)
+            property["thumbnail"] = file
+        }
         property.saveInBackground() { (success, error) in
             if success {
                 let alert = UIAlertController(title: "Success", message: "Property added! Please refresh to see changes.", preferredStyle: UIAlertController.Style.alert)
@@ -252,6 +262,26 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
             }
         }
     }
+    
+    @IBAction func addThumbnail(_ sender: Any) {
+        var config = YPImagePickerConfiguration()
+        config.screens = [.library, .photo]
+        config.albumName = "SmartRES"
+        config.startOnScreen = YPPickerScreen.library
+        config.library.maxNumberOfItems = 1
+        config.library.mediaType = YPlibraryMediaType.photo
+        let picker = YPImagePicker(configuration: config)
+        picker.didFinishPicking { [unowned picker] items, _ in
+            if let photo = items.singlePhoto {
+                self.thumbnailView.image = photo.image
+            }
+            self.addThumbnailView.isHidden = true
+            picker.dismiss(animated: true, completion: nil)
+        }
+        present(picker, animated: true, completion: nil)
+        
+    }
+    
 }
     /*func addPropertyButton(_ sender: Any) {
         ref.child("users/tammn4/password").setValue("test4321")
