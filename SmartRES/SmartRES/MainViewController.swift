@@ -19,19 +19,100 @@ class MainViewController: UIViewController {
     var imageSource = [ParseSource]()
     var updatedList = [ParseSource]()
     var refreshControl = UIRefreshControl()
+    var property: Property?
+    let downloadGroup = DispatchGroup()
     
     @IBOutlet weak var priceLabel: UILabel!
+    @IBOutlet weak var addressLabel: UILabel!
+    @IBOutlet weak var cityStateLabel: UILabel!
+    @IBOutlet weak var zipLabel: UILabel!
+    @IBOutlet weak var bedLabel: UILabel!
+    @IBOutlet weak var bathLabel: UILabel!
+    
     
     var propertyId: String! = String()
     
     @IBAction func refreshButton(_ sender: Any) {
+        downloadGroup.enter()
         refresh()
+        downloadGroup.leave()
+        downloadGroup.notify(queue: DispatchQueue.main, execute: {
+            let alert = UIAlertController(title: "Refresh", message: "Refreshed successfully!", preferredStyle: UIAlertController.Style.alert)
+            
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            
+            
+            self.present(alert, animated: true, completion: nil)
+        })
+        
     }
     
     @IBOutlet weak var slideshow: ImageSlideshow!
     
     
     @IBOutlet weak var uploadButtonView: UIButton!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        priceLabel.text = "$\(property!.price.stringValue)"
+        addressLabel.text = property!.address
+        cityStateLabel.text = property!.city + ", " + property!.state
+        zipLabel.text = property!.zip
+        bedLabel.text = property!.bed.stringValue
+        bathLabel.text = property!.bath.stringValue
+        
+        let query = PFQuery(className: "Pictures")
+        query.whereKey("agent", equalTo: PFUser.current()!)
+        query.whereKey("propertyId", equalTo: self.propertyId!)
+        query.findObjectsInBackground() { (posts, error) in
+            if posts != nil {
+                for post in posts! {
+                    let imageFile = post["image"] as! PFFileObject
+                    self.updatedList.append(ParseSource(file: imageFile))
+                }
+            }
+            self.imageSource = self.updatedList
+            self.slideshow.setImageInputs(self.imageSource)
+            self.slideshow.setNeedsDisplay()
+            self.slideshow.bringSubviewToFront(self.priceLabel)
+        }
+        
+        
+        // Button stylings
+        uploadButtonView.layer.cornerRadius = 0.5 * uploadButtonView.bounds.size.width
+        uploadButtonView.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
+        uploadButtonView.layer.shadowOffset = CGSize(width: 2.0, height: 3.0)
+        uploadButtonView.layer.shadowOpacity = 1.0
+        uploadButtonView.layer.shadowRadius = 3.0
+        uploadButtonView.layer.masksToBounds = false
+        uploadButtonView.imageEdgeInsets = UIEdgeInsets(top: 5, left: 7, bottom: 5, right: 3)
+        
+        
+        
+        // Refresh control
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        
+        slideshow.slideshowInterval = 5.0
+        slideshow.pageIndicatorPosition = .init(horizontal: .center, vertical: .under)
+        
+        slideshow.contentScaleMode = UIViewContentMode.scaleAspectFill
+        
+        let pageControl = LabelPageIndicator()
+        slideshow.pageIndicator = pageControl
+        
+        // optional way to show activity indicator during image load (skipping the line will show no activity indicator)
+        slideshow.activityIndicator = DefaultActivityIndicator()
+        slideshow.delegate = self as ImageSlideshowDelegate
+        
+        // can be used with other sample sources as `afNetworkingSource`, `alamofireSource` or `sdWebImageSource` or `kingfisherSource`
+        slideshow.setImageInputs(imageSource)
+        
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(MainViewController.didTap))
+        slideshow.addGestureRecognizer(recognizer)
+        
+    }
     
     @IBAction func uploadButton(_ sender: Any) {
         var config = YPImagePickerConfiguration()
@@ -67,7 +148,7 @@ class MainViewController: UIViewController {
                         }
                     }
                     
-                // TODO 
+                // TODO
                 case .video(let video):
                     print("uploading video...", video)
                 }
@@ -78,66 +159,6 @@ class MainViewController: UIViewController {
         self.present(picker, animated: true, completion: nil)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        let query = PFQuery(className: "Pictures")
-        query.whereKey("agent", equalTo: PFUser.current()!)
-        query.whereKey("propertyId", equalTo: self.propertyId!)
-        query.findObjectsInBackground() { (posts, error) in
-            if posts != nil {
-                for post in posts! {
-                    let imageFile = post["image"] as! PFFileObject
-                    self.updatedList.append(ParseSource(file: imageFile))
-                }
-            }
-            self.imageSource = self.updatedList
-            self.slideshow.setImageInputs(self.imageSource)
-            self.slideshow.setNeedsDisplay()
-            self.slideshow.bringSubviewToFront(self.priceLabel)
-        }
-        
-        
-        // Button stylings
-        uploadButtonView.layer.cornerRadius = 0.5 * uploadButtonView.bounds.size.width
-        uploadButtonView.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
-        uploadButtonView.layer.shadowOffset = CGSize(width: 2.0, height: 3.0)
-        uploadButtonView.layer.shadowOpacity = 1.0
-        uploadButtonView.layer.shadowRadius = 3.0
-        uploadButtonView.layer.masksToBounds = false
-        uploadButtonView.imageEdgeInsets = UIEdgeInsets(top: 5, left: 7, bottom: 5, right: 3)
-        
-        
-        
-        // Refresh control
-        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
-        
-        
-        
-        
-        
-        
-        slideshow.slideshowInterval = 5.0
-        slideshow.pageIndicatorPosition = .init(horizontal: .center, vertical: .under)
-        
-        slideshow.contentScaleMode = UIViewContentMode.scaleAspectFill
-        
-        let pageControl = LabelPageIndicator()
-        slideshow.pageIndicator = pageControl
-        
-        // optional way to show activity indicator during image load (skipping the line will show no activity indicator)
-        slideshow.activityIndicator = DefaultActivityIndicator()
-        slideshow.delegate = self as ImageSlideshowDelegate
-        
-        // can be used with other sample sources as `afNetworkingSource`, `alamofireSource` or `sdWebImageSource` or `kingfisherSource`
-        slideshow.setImageInputs(imageSource)
-        
-        let recognizer = UITapGestureRecognizer(target: self, action: #selector(MainViewController.didTap))
-        slideshow.addGestureRecognizer(recognizer)
-        
-    }
-    
     @objc func didTap() {
         let fullScreenController = slideshow.presentFullScreenController(from: self)
         // set the activity indicator for full screen controller (skipping the line will show no activity indicator)
@@ -146,12 +167,9 @@ class MainViewController: UIViewController {
     
     @objc func refresh() {
         let query = PFQuery(className: "Pictures")
-        
-        let downloadGroup = DispatchGroup()
-        
         self.updatedList.removeAll(keepingCapacity: true)
         
-        downloadGroup.enter()
+  
         query.whereKey("agent", equalTo: PFUser.current()!)
         query.findObjectsInBackground() { (posts, error) in
             if posts != nil {
@@ -165,17 +183,6 @@ class MainViewController: UIViewController {
             self.slideshow.setNeedsDisplay()
             self.slideshow.bringSubviewToFront(self.priceLabel)
         }
-        downloadGroup.leave()
-        
-        
-        downloadGroup.notify(queue: DispatchQueue.main, execute: {
-            let alert = UIAlertController(title: "Refresh", message: "Refreshed successfully!", preferredStyle: UIAlertController.Style.alert)
-            
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-            
-            
-            self.present(alert, animated: true, completion: nil)
-        })
     }
 }
 

@@ -48,27 +48,8 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
         let width = view.frame.size.width / 2
         
         layout.itemSize = CGSize(width: width, height: width)
-        
-        
-        let alert = UIAlertController(title: nil, message: "Loading properties...", preferredStyle: .alert)
-        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
-        loadingIndicator.style = UIActivityIndicatorView.Style.gray
-        loadingIndicator.startAnimating();
-        
-        alert.view.addSubview(loadingIndicator)
-        self.present(alert, animated: true, completion: nil)
-
-        loadProperties { error in
-            if let error = error {
-                print("Oops! Something went wrong...")
-            } else {
-                print("Done!!")
-                self.dismiss(animated: true, completion: nil)
-            }
-        }
-        
-        
-        
+    
+        loadProperties()
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -85,30 +66,16 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
         return cell;
         
     }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath)
-        self.performSegue(withIdentifier: "propertySegue", sender: self)
-    }
 
     @IBAction func addProperty(_ sender: Any) {
         self.performSegue(withIdentifier: "addPropertySegue", sender: self)
     }
     
-    @objc func loadProperties(completion: @escaping (Error?) -> Void) {
+    @objc func loadProperties() {
         let query = PFQuery(className: "Property")
         query.whereKey("agent", equalTo: PFUser.current()!)
         query.findObjectsInBackground{ (queryDict, error) in
-            let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
-            let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
-            loadingIndicator.style = UIActivityIndicatorView.Style.gray
-            loadingIndicator.startAnimating();
-            
-            alert.view.addSubview(loadingIndicator)
-            
-            self.present(alert, animated: true, completion: nil)
             if let queryProperties = queryDict {
-                
                 self.properties.removeAll()
                 for propertyDict in queryProperties {
                     var pic : UIImage! = UIImage()
@@ -122,7 +89,6 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
                         let data = try? Data(contentsOf: url)
                         pic = UIImage(data: data!)
                     }
-                    
                     let property = Property(id: propertyDict.objectId as! String,
                                             address: propertyDict["address"] as! String,
                                             city:  propertyDict["city"] as! String,
@@ -142,5 +108,16 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
                 self.refreshControl.endRefreshing()
             }
         }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("Loading details")
+        let cell = sender as! UICollectionViewCell
+        let indexPath = self.propertyCollectionView.indexPath(for: cell)!
+        let property = properties[indexPath.row]
+        
+        let propertyDetails = segue.destination as! MainViewController
+        propertyDetails.property = property
+        propertyDetails.refresh()
     }
 }
