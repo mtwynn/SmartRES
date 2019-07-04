@@ -27,7 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             })
         )
         
-        
         /*
         if PFUser.current() != nil {
             let main = UIStoryboard(name: "Main", bundle: nil)
@@ -35,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             window?.rootViewController = mainViewController
         }*/
-        UITabBar.appearance().barTintColor = UIColor(red: 0.0, green: 151/255, blue: 69/255, alpha: 0.6)
+        //UITabBar.appearance().barTintColor = UIColor(red: 0.0, green: 151/255, blue: 69/255, alpha: 0.6)
         return true
     }
 

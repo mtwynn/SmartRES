@@ -11,22 +11,34 @@ import Parse
 import ImageSlideshow
 
 class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
-    
-    var properties = [Property]()
+
     let refreshControl = UIRefreshControl()
-    //let dispatchGroup = DispatchGroup()
+    var properties = [Property]()
+
     @IBOutlet weak var propertyCollectionView: UICollectionView!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
 
-        propertyCollectionView.dataSource = self
-        propertyCollectionView.delegate = self
         refreshControl.addTarget(self, action: #selector(loadProperties), for: .valueChanged)
         propertyCollectionView.refreshControl = refreshControl
+        propertyCollectionView.dataSource = self
+        propertyCollectionView.delegate = self
+
+
+        // UICollectionView Layout config
+        let layout = propertyCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        let width = view.frame.size.width / 2
+        layout.itemSize = CGSize(width: width, height: width)
+    
+        // Async load properties
+        loadProperties()
+
+        // If no properties, display default message
         if self.properties.count == 0 {
-            print("Here")
             let rect = CGRect(origin: CGPoint(x: 0,y :0), size: CGSize(width: self.view.bounds.size.width, height: self.view.bounds.size.height))
             let messageLabel = UILabel(frame: rect)
             messageLabel.text = "You don't have any properties yet.\nPlease click the + sign to add one."
@@ -39,17 +51,6 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
         } else {
             self.propertyCollectionView.backgroundView = nil
         }
-        
-        let layout = propertyCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        
-        layout.minimumLineSpacing = 0
-        layout.minimumInteritemSpacing = 0
-        
-        let width = view.frame.size.width / 2
-        
-        layout.itemSize = CGSize(width: width, height: width)
-    
-        loadProperties()
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -57,14 +58,10 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         let cell = propertyCollectionView.dequeueReusableCell(withReuseIdentifier: "PropertyCell", for: indexPath) as! PropertyCell
-        
         let property = properties[indexPath.item]
         cell.propertyCellView.image = property.image
-        
         return cell;
-        
     }
 
     @IBAction func addProperty(_ sender: Any) {
@@ -72,12 +69,18 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     @objc func loadProperties() {
+
+        // Search all Property objects for this current user
         let query = PFQuery(className: "Property")
         query.whereKey("agent", equalTo: PFUser.current()!)
+
+        // Async find in background
         query.findObjectsInBackground{ (queryDict, error) in
             if let queryProperties = queryDict {
                 self.properties.removeAll()
                 for propertyDict in queryProperties {
+
+                    // Create UI image for each property first
                     var pic : UIImage! = UIImage()
                     if (propertyDict["thumbnail"] != nil) {
                         let imageFile = propertyDict["thumbnail"] as! PFFileObject
@@ -85,10 +88,13 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
                         let data = try? Data(contentsOf: url)
                         pic = UIImage(data: data!)
                     } else {
+                        // Default image if no thumbnail was set
                         let url = URL(string: "https://suitabletech.com/images/HelpCenter/errors/Lenovo-Camera-Error.JPG")!
                         let data = try? Data(contentsOf: url)
                         pic = UIImage(data: data!)
                     }
+
+                    // Create a new Property object
                     let property = Property(id: propertyDict.objectId as! String,
                                             address: propertyDict["address"] as! String,
                                             city:  propertyDict["city"] as! String,
@@ -101,9 +107,12 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
                                             image: pic!,
                                             agent: propertyDict["agent"] as! PFUser
                                             )
+
+                    // Add property object to list of property objects
                     self.properties.append(property)
                     
                 }
+                // Reload and refresh
                 self.propertyCollectionView.reloadData()
                 self.refreshControl.endRefreshing()
             }
@@ -111,11 +120,10 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print("Loading details")
+        // On select cell, pass data to destination VC
         let cell = sender as! UICollectionViewCell
         let indexPath = self.propertyCollectionView.indexPath(for: cell)!
         let property = properties[indexPath.row]
-        
         let propertyDetails = segue.destination as! MainViewController
         propertyDetails.property = property
         propertyDetails.refresh()

@@ -16,10 +16,18 @@ import YPImagePicker
 class MainViewController: UIViewController {
     
     /*var imageSource = [AlamofireSource(urlString: "https://images.unsplash.com/photo-1432679963831-2dab49187847?w=1080")!, AlamofireSource(urlString: "https://images.unsplash.com/photo-1447746249824-4be4e1b76d66?w=1080")!, AlamofireSource(urlString: "https://images.unsplash.com/photo-1463595373836-6e0b0a8ee322?w=1080")!]*/
+
+    // Array of image sources for slideshow
     var imageSource = [ParseSource]()
     var updatedList = [ParseSource]()
+
+    // Refresh control
     var refreshControl = UIRefreshControl()
+
+    // Associated property
     var property: Property?
+    var propertyId: String! = String()
+
     let downloadGroup = DispatchGroup()
     
     @IBOutlet weak var priceLabel: UILabel!
@@ -30,31 +38,13 @@ class MainViewController: UIViewController {
     @IBOutlet weak var bathLabel: UILabel!
     
     
-    var propertyId: String! = String()
-    
-    @IBAction func refreshButton(_ sender: Any) {
-        downloadGroup.enter()
-        refresh()
-        downloadGroup.leave()
-        downloadGroup.notify(queue: DispatchQueue.main, execute: {
-            let alert = UIAlertController(title: "Refresh", message: "Refreshed successfully!", preferredStyle: UIAlertController.Style.alert)
-            
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-            
-            
-            self.present(alert, animated: true, completion: nil)
-        })
-        
-    }
-    
     @IBOutlet weak var slideshow: ImageSlideshow!
-    
-    
     @IBOutlet weak var uploadButtonView: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Set all information labels on finished loading
         priceLabel.text = "$\(property!.price.stringValue)"
         addressLabel.text = property!.address
         cityStateLabel.text = property!.city + ", " + property!.state
@@ -62,9 +52,10 @@ class MainViewController: UIViewController {
         bedLabel.text = property!.bed.stringValue
         bathLabel.text = property!.bath.stringValue
         
+        // Query for all Pictures for this current propertyId
         let query = PFQuery(className: "Pictures")
         query.whereKey("agent", equalTo: PFUser.current()!)
-        query.whereKey("propertyId", equalTo: self.propertyId!)
+        query.whereKey("propertyId", equalTo: self.property.propertyId)
         query.findObjectsInBackground() { (posts, error) in
             if posts != nil {
                 for post in posts! {
@@ -89,32 +80,29 @@ class MainViewController: UIViewController {
         uploadButtonView.imageEdgeInsets = UIEdgeInsets(top: 5, left: 7, bottom: 5, right: 3)
         
         
-        
         // Refresh control
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         
-        slideshow.slideshowInterval = 5.0
-        slideshow.pageIndicatorPosition = .init(horizontal: .center, vertical: .under)
-        
-        slideshow.contentScaleMode = UIViewContentMode.scaleAspectFill
-        
+
+        // Slideshow configuration
         let pageControl = LabelPageIndicator()
         slideshow.pageIndicator = pageControl
-        
-        // optional way to show activity indicator during image load (skipping the line will show no activity indicator)
+        slideshow.slideshowInterval = 5.0
+        slideshow.pageIndicatorPosition = .init(horizontal: .center, vertical: .under)
+        slideshow.contentScaleMode = UIViewContentMode.scaleAspectFill
         slideshow.activityIndicator = DefaultActivityIndicator()
         slideshow.delegate = self as ImageSlideshowDelegate
-        
-        // can be used with other sample sources as `afNetworkingSource`, `alamofireSource` or `sdWebImageSource` or `kingfisherSource`
-        slideshow.setImageInputs(imageSource)
-        
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(MainViewController.didTap))
         slideshow.addGestureRecognizer(recognizer)
-        
+
+        slideshow.setImageInputs(imageSource)
     }
     
+    
     @IBAction func uploadButton(_ sender: Any) {
+        
+        // YPImagePicker configurations and initialization
         var config = YPImagePickerConfiguration()
         config.screens = [.library, .photo, .video]
         config.albumName = "SmartRES"
@@ -122,55 +110,66 @@ class MainViewController: UIViewController {
         config.library.maxNumberOfItems = 10
         config.library.mediaType = YPlibraryMediaType.photoAndVideo
         let picker = YPImagePicker(configuration: config)
+
+        // Function for picker finished picking
         picker.didFinishPicking { [unowned picker] items, _ in
             for item in items {
                 switch item {
+                // If photo
                 case .photo(let photo):
+
                     let post = PFObject(className: "Pictures")
-                    
-                    post["agent"] = PFUser.current()!
-                    
                     let imageData = photo.image.pngData()
                     let file = PFFileObject(data: imageData!)
+
                     post["image"] = file
                     post["propertyId"] = self.propertyId
+                    post["agent"] = PFUser.current()!
+
+                    // Save picture 
                     post.saveInBackground() { (success, error) in
                         if success {
                             let alert = UIAlertController(title: "Success", message: "Upload complete! Please refresh to see changes.", preferredStyle: UIAlertController.Style.alert)
-                            
                             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
                             self.present(alert, animated: true, completion: nil)
                         } else {
                             let alert = UIAlertController(title: "Error", message: "Upload failed.", preferredStyle: UIAlertController.Style.alert)
-                            
                             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
                             self.present(alert, animated: true, completion: nil)
                         }
                     }
                     
-                // TODO
+                // TODO --> User uploads video, must be displayed in slideshow
                 case .video(let video):
                     print("uploading video...", video)
                 }
-                
             }
             picker.dismiss(animated: true, completion: nil)
         }
         self.present(picker, animated: true, completion: nil)
     }
-    
-    @objc func didTap() {
-        let fullScreenController = slideshow.presentFullScreenController(from: self)
-        // set the activity indicator for full screen controller (skipping the line will show no activity indicator)
-        fullScreenController.slideshow.activityIndicator = DefaultActivityIndicator(style: .white, color: nil)
+
+
+    // Refresh button
+    @IBAction func refreshButton(_ sender: Any) {
+        downloadGroup.enter()
+        refresh()
+        downloadGroup.leave()
+        downloadGroup.notify(queue: DispatchQueue.main, execute: {
+            let alert = UIAlertController(title: "Refresh", message: "Refreshed successfully!", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        })
     }
-    
+
+
     @objc func refresh() {
-        let query = PFQuery(className: "Pictures")
+        // Clear updated list
         self.updatedList.removeAll(keepingCapacity: true)
-        
-  
+
+        let query = PFQuery(className: "Pictures")
         query.whereKey("agent", equalTo: PFUser.current()!)
+        query.whereKey("propertyId", equalTo: self.property.propertyId)
         query.findObjectsInBackground() { (posts, error) in
             if posts != nil {
                 for post in posts! {
@@ -184,8 +183,17 @@ class MainViewController: UIViewController {
             self.slideshow.bringSubviewToFront(self.priceLabel)
         }
     }
+    
+
+    // Full screens the slideshow
+    @objc func didTap() {
+        let fullScreenController = slideshow.presentFullScreenController(from: self)
+        fullScreenController.slideshow.activityIndicator = DefaultActivityIndicator(style: .white, color: nil)
+    }
 }
 
+
+// For testing
 extension MainViewController: ImageSlideshowDelegate {
     func imageSlideshow(_ imageSlideshow: ImageSlideshow, didChangeCurrentPageTo page: Int) {
         print("current page:", page)
