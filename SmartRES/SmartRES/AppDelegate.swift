@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        FirebaseApp.configure()
+        //FirebaseApp.configure()
         Parse.initialize(
             with: ParseClientConfiguration(block: { (configuration: ParseMutableClientConfiguration) -> Void in
                 configuration.applicationId = "SmartRES"
@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             window?.rootViewController = mainViewController
         }*/
-        //UITabBar.appearance().barTintColor = UIColor(red: 0.0, green: 151/255, blue: 69/255, alpha: 0.6)
+        UITabBar.appearance().barTintColor = UIColor(red: 0.0, green: 151/255, blue: 69/255, alpha: 0.6)
         return true
     }
 

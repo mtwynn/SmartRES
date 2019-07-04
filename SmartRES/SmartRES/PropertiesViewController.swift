@@ -16,6 +16,7 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
     var properties = [Property]()
 
     @IBOutlet weak var propertyCollectionView: UICollectionView!
+    @IBOutlet weak var propertyLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,19 +39,6 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
         loadProperties()
 
         // If no properties, display default message
-        if self.properties.count == 0 {
-            let rect = CGRect(origin: CGPoint(x: 0,y :0), size: CGSize(width: self.view.bounds.size.width, height: self.view.bounds.size.height))
-            let messageLabel = UILabel(frame: rect)
-            messageLabel.text = "You don't have any properties yet.\nPlease click the + sign to add one."
-            messageLabel.textColor = UIColor(red: 0.0/255.0, green: 151.0/255.0, blue: 69.0/255.0, alpha: 0.5)
-            messageLabel.numberOfLines = 0;
-            messageLabel.textAlignment = .center;
-            messageLabel.font = UIFont(name: "Lato", size: 15)
-            messageLabel.sizeToFit()
-            self.propertyCollectionView.backgroundView = messageLabel;
-        } else {
-            self.propertyCollectionView.backgroundView = nil
-        }
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -61,6 +49,7 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
         let cell = propertyCollectionView.dequeueReusableCell(withReuseIdentifier: "PropertyCell", for: indexPath) as! PropertyCell
         let property = properties[indexPath.item]
         cell.propertyCellView.image = property.image
+        cell.propertyLabel.text = property.address
         return cell;
     }
 
@@ -111,6 +100,19 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
                     // Add property object to list of property objects
                     self.properties.append(property)
                     
+                }
+                if self.properties.count == 0 {
+                    let rect = CGRect(origin: CGPoint(x: 0,y :0), size: CGSize(width: self.view.bounds.size.width, height: self.view.bounds.size.height))
+                    let messageLabel = UILabel(frame: rect)
+                    messageLabel.text = "You don't have any properties yet.\nPlease click the + sign to add one."
+                    messageLabel.textColor = UIColor(red: 0.0/255.0, green: 151.0/255.0, blue: 69.0/255.0, alpha: 0.5)
+                    messageLabel.numberOfLines = 0;
+                    messageLabel.textAlignment = .center;
+                    messageLabel.font = UIFont(name: "Lato", size: 15)
+                    messageLabel.sizeToFit()
+                    self.propertyCollectionView.backgroundView = messageLabel;
+                } else {
+                    self.propertyCollectionView.backgroundView = nil
                 }
                 // Reload and refresh
                 self.propertyCollectionView.reloadData()

@@ -116,7 +116,8 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
         self.bedField.borderStyle = UITextField.BorderStyle.none
         self.bathField.borderStyle = UITextField.BorderStyle.none
         self.priceField.borderStyle = UITextField.BorderStyle.none
-        
+        self.thumbnailView.layer.borderWidth = 1
+        self.thumbnailView.layer.borderColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0).cgColor
         // Add toolbar (Cancel/Done) to Pickers
         let toolBar = UIToolbar()
         statePicker.showsSelectionIndicator = true
@@ -197,8 +198,12 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
             if let photo = items.singlePhoto {
                 self.thumbnailView.image = photo.image
                 self.thumbnailView.isHidden = false
+                self.addThumbnailView.isHidden = true
+            } else {
+                self.addThumbnailView.isHidden = false
+                self.thumbnailView.isHidden = true
             }
-            self.addThumbnailView.isHidden = true
+            
             picker.dismiss(animated: true, completion: nil)
         }
         present(picker, animated: true, completion: nil) 
