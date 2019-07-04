@@ -436,7 +436,7 @@
                                         </constraints>
                                         <connections>
                                             <outlet property="propertyCellView" destination="hdE-MX-OLf" id="VDV-zN-Zkn"/>
-                                            <segue destination="tOa-50-mLJ" kind="show" id="1nx-CF-US6"/>
+                                            <segue destination="tOa-50-mLJ" kind="show" identifier="viewPropertySegue" id="1nx-CF-US6"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

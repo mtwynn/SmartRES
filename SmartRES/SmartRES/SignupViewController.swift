@@ -49,7 +49,7 @@ class SignupViewController: UIViewController {
         user.password = passwordField.text
         user["firstName"] = firstnameField.text
         user["lastName"] = lastnameField.text
-        if (!firstnameField.text || !lastnameField.text || !emailField.text || !passwordField.text || !pwConfirmField || (passwordField.text != pwConfirmField.text)) {
+        if (!(firstnameField!.text != nil) || !(lastnameField!.text != nil) || !(emailField!.text != nil) || !(passwordField!.text != nil) || !(pwConfirmField != nil) || (passwordField.text != pwConfirmField.text)) {
             let alert = UIAlertController(title: "Error", message: "Please fill out all the fields or double check your passwords", preferredStyle: UIAlertController.Style.alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
                 self.present(alert, animated: true, completion: nil)

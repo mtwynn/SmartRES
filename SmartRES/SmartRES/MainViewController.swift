@@ -55,7 +55,7 @@ class MainViewController: UIViewController {
         // Query for all Pictures for this current propertyId
         let query = PFQuery(className: "Pictures")
         query.whereKey("agent", equalTo: PFUser.current()!)
-        query.whereKey("propertyId", equalTo: self.property.propertyId)
+        query.whereKey("propertyId", equalTo: self.property?.id)
         query.findObjectsInBackground() { (posts, error) in
             if posts != nil {
                 for post in posts! {
@@ -169,7 +169,7 @@ class MainViewController: UIViewController {
 
         let query = PFQuery(className: "Pictures")
         query.whereKey("agent", equalTo: PFUser.current()!)
-        query.whereKey("propertyId", equalTo: self.property.propertyId)
+        query.whereKey("propertyId", equalTo: self.property?.id)
         query.findObjectsInBackground() { (posts, error) in
             if posts != nil {
                 for post in posts! {

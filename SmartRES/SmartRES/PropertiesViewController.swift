@@ -120,12 +120,14 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // On select cell, pass data to destination VC
-        let cell = sender as! UICollectionViewCell
-        let indexPath = self.propertyCollectionView.indexPath(for: cell)!
-        let property = properties[indexPath.row]
-        let propertyDetails = segue.destination as! MainViewController
-        propertyDetails.property = property
-        propertyDetails.refresh()
+        if (segue.identifier != "addPropertySegue") {
+            // On select cell, pass data to destination VC
+            let cell = sender as! UICollectionViewCell
+            let indexPath = self.propertyCollectionView.indexPath(for: cell)!
+            let property = properties[indexPath.row]
+            let propertyDetails = segue.destination as! MainViewController
+            propertyDetails.property = property
+            propertyDetails.refresh()
+        }
     }
 }
