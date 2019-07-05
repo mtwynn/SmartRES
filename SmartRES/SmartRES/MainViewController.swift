@@ -5,7 +5,7 @@
 //  Created by Tam Nguyen on 5/8/19.
 //  Copyright © 2019 Tam Nguyen. All rights reserved.
 //
-/* parse-dashboard --appId SmartRES --masterKey fur3l153 --serverURL "http://smart-res.herokuapp.com/parse" */
+
 
 import UIKit
 import Parse

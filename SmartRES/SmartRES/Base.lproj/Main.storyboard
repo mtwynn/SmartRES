@@ -57,7 +57,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SmartRES" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rOA-V0-GaM">
-                                <rect key="frame" x="118" y="196" width="139" height="35"/>
+                                <rect key="frame" x="124" y="196" width="127" height="36"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="Lato-Light" family="Lato" pointSize="30"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -163,7 +163,7 @@
         <!--Add Property-->
         <scene sceneID="tOF-DG-NSB">
             <objects>
-                <viewController title="Add Property" id="azX-rF-hKO" customClass="AddPropertyViewController" customModule="SmartRES" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddPropertyViewController" title="Add Property" id="azX-rF-hKO" customClass="AddPropertyViewController" customModule="SmartRES" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HJD-PF-Zhu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -411,7 +411,7 @@
         <!--Properties-->
         <scene sceneID="ADS-XH-aSM">
             <objects>
-                <viewController title="Properties" id="epp-Xg-qFe" customClass="PropertiesViewController" customModule="SmartRES" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PropertiesViewController" title="Properties" id="epp-Xg-qFe" customClass="PropertiesViewController" customModule="SmartRES" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9hj-Iu-Q4M">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -660,22 +660,45 @@
         <!--Profile-->
         <scene sceneID="BU9-Vj-cHd">
             <objects>
-                <viewController id="EuE-cP-ZQv" customClass="ProfileViewController" customModule="SmartRES" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProfileViewController" id="EuE-cP-ZQv" customClass="ProfileViewController" customModule="SmartRES" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="r0t-SV-tpP">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1nn-CU-IRR">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Profile" translatesAutoresizingMaskIntoConstraints="NO" id="1nn-CU-IRR">
                                 <rect key="frame" x="24" y="88" width="75" height="75"/>
-                                <color key="backgroundColor" red="1" green="0.88923918059999996" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="75" id="cI6-sB-750"/>
                                     <constraint firstAttribute="width" constant="75" id="oWV-8H-NWP"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RbS-mr-1W2">
+                                <rect key="frame" x="150" y="88" width="42" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q0J-64-nZr">
+                                <rect key="frame" x="80" y="142" width="15" height="15"/>
+                                <color key="backgroundColor" red="0.0" green="0.59215686274509804" blue="0.27058823529411763" alpha="0.84705882352941175" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="15" id="Fyc-vf-dJv"/>
+                                    <constraint firstAttribute="width" constant="15" id="qUm-pS-qBy"/>
+                                </constraints>
+                                <state key="normal" title="+">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="addProfilePic:" destination="EuE-cP-ZQv" eventType="touchUpInside" id="n7J-UX-TmK"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="q0J-64-nZr" firstAttribute="leading" secondItem="INm-1O-pM6" secondAttribute="leading" constant="80" id="4ED-WH-uGp"/>
+                            <constraint firstItem="q0J-64-nZr" firstAttribute="top" secondItem="INm-1O-pM6" secondAttribute="top" constant="78" id="ABE-s6-cs1"/>
                             <constraint firstItem="1nn-CU-IRR" firstAttribute="top" secondItem="INm-1O-pM6" secondAttribute="top" constant="24" id="p03-Nl-Pzg"/>
                             <constraint firstItem="1nn-CU-IRR" firstAttribute="leading" secondItem="INm-1O-pM6" secondAttribute="leading" constant="24" id="yIo-hm-uhk"/>
                         </constraints>
@@ -690,6 +713,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addProfilePicView" destination="q0J-64-nZr" id="WFD-zt-Fba"/>
                         <outlet property="profilePicView" destination="1nn-CU-IRR" id="d0b-RW-SYo"/>
                     </connections>
                 </viewController>
@@ -700,7 +724,7 @@
         <!--Signup View Controller-->
         <scene sceneID="V8h-Yz-h6a">
             <objects>
-                <viewController id="ILF-Cf-qoM" customClass="SignupViewController" customModule="SmartRES" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SignupViewController" id="ILF-Cf-qoM" customClass="SignupViewController" customModule="SmartRES" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ZHm-2x-nw3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -845,12 +869,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KSQ-VY-wrT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1840.8" y="-667.01649175412297"/>
+            <point key="canvasLocation" x="1849" y="-667"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Transition Tab Bar Controller-->
         <scene sceneID="EsE-Ba-fbT">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="gGv-Vx-rid" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarViewController" automaticallyAdjustsScrollViewInsets="NO" id="gGv-Vx-rid" customClass="TransitionTabBarController" customModule="SmartRES" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="4d9-oW-IQ0">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
@@ -929,6 +953,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Profile" width="256" height="256"/>
         <image name="bath-color" width="96" height="96"/>
         <image name="bed-color" width="96" height="96"/>
         <image name="houses" width="25" height="25"/>

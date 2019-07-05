@@ -56,6 +56,13 @@ class LoginViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        
+        if UserDefaults.standard.bool(forKey: "userLoggedIn") == true {
+            self.performSegue(withIdentifier: "mainSegue", sender: self)
+        }
+    }
+    
     
     @IBAction func loginButton(_ sender: Any) {
         let username = usernameField.text!
@@ -76,6 +83,7 @@ class LoginViewController: UIViewController {
         // PF Login
         PFUser.logInWithUsername(inBackground: username, password: password) { (user, error) in
             if user != nil { // User exists
+                UserDefaults.standard.set(true, forKey: "userLoggedIn")
                 self.dismiss(animated: true) {
                     self.performSegue(withIdentifier: "mainSegue", sender: nil)
                 }
