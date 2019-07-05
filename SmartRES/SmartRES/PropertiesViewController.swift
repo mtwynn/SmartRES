@@ -10,17 +10,24 @@ import UIKit
 import Parse
 import ImageSlideshow
 
-class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+protocol controlsRefresh {
+    func loadProperties()
+}
+
+
+class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, controlsRefresh {
 
     let refreshControl = UIRefreshControl()
     var properties = [Property]()
-
+    var editButtonEnabled = false
     @IBOutlet weak var propertyCollectionView: UICollectionView!
     @IBOutlet weak var propertyLabel: UILabel!
+    @IBOutlet weak var editButtonView: UIBarButtonItem!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
 
         refreshControl.addTarget(self, action: #selector(loadProperties), for: .valueChanged)
         propertyCollectionView.refreshControl = refreshControl
@@ -50,6 +57,10 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
         let property = properties[indexPath.item]
         cell.propertyCellView.image = property.image
         cell.propertyLabel.text = property.address
+        
+        cell.deleteButtonView?.layer.setValue(indexPath.row, forKey: "index")
+        cell.deleteButtonView?.addTarget(self, action: #selector(deleteProperty), for: UIControl.Event.touchUpInside)
+        
         return cell;
     }
 
@@ -131,5 +142,81 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
             propertyDetails.property = property
             propertyDetails.refresh()
         }
+    }
+    
+    
+    @IBAction func editProperties(_ sender: Any) {
+        if (properties.count == 0) {
+            return
+        }
+        if (!self.editButtonEnabled ) {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(editProperties))
+            navigationItem.leftBarButtonItem?.tintColor = UIColor.init(red: 0.0/255, green: 151/255, blue: 69/255, alpha: 1)
+            self.editButtonEnabled  = true
+            for cell in propertyCollectionView.visibleCells as! [PropertyCell] {
+                
+                UIView.animate(withDuration: 0.5, animations: {
+                    cell.deleteButtonView.alpha = 1
+                }, completion:  nil)
+                cell.deleteButtonView.isHidden = false
+                
+                
+                //cell.deleteButtonView.isHidden = false
+            }
+        } else {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(editProperties))
+            navigationItem.leftBarButtonItem?.tintColor = UIColor.init(red: 0.0/255, green: 151/255, blue: 69/255, alpha: 1)
+            self.editButtonEnabled  = false
+            for cell in propertyCollectionView.visibleCells as! [PropertyCell] {
+                
+                UIView.animate(withDuration: 0.5, animations: {
+                    cell.deleteButtonView.alpha = 0
+                }, completion:  {
+                    (value: Bool) in
+                    cell.deleteButtonView.isHidden = true
+                })
+                //cell.deleteButtonView.isHidden = true
+            }
+        
+        }
+        
+    }
+    
+    @objc func deleteProperty(sender:UIButton) {
+        let i : Int = (sender.layer.value(forKey: "index")) as! Int
+        let propertyName = self.properties[i].address
+        let alert = UIAlertController(title: "Confirmation", message: "Are you sure you want to delete the property: \(propertyName)? This action cannot be undone.", preferredStyle: UIAlertController.Style.alert)
+        
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Yes, I'm sure", style: UIAlertAction.Style.default, handler: {action in
+            print("Deleting cell...")
+            let i : Int = (sender.layer.value(forKey: "index")) as! Int
+            let toDelete = self.properties[i].id
+            
+            let query = PFQuery(className:"Property")
+            query.getObjectInBackground(withId: toDelete) { (property: PFObject?, error: Error?) in
+                if let error = error {
+                    print(error.localizedDescription)
+                } else {
+                    property?.deleteInBackground() { (success, error) in
+                        if success {
+                            let alert = UIAlertController(title: "Success", message: "Property, \(propertyName), has been deleted.", preferredStyle: UIAlertController.Style.alert)
+                            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                            self.present(alert, animated: true, completion: nil)
+                        } else {
+                            let alert = UIAlertController(title: "Error", message: "Deleting property failed. No changes made.", preferredStyle: UIAlertController.Style.alert)
+                            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                    }
+                    self.loadProperties()
+                }
+            }
+        }))
+        
+        
+        
+        self.present(alert, animated: true, completion: nil)
     }
 }

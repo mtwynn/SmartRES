@@ -443,19 +443,34 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vqK-A0-HgS">
+                                                    <rect key="frame" x="164" y="0.0" width="15" height="15"/>
+                                                    <color key="backgroundColor" red="1" green="0.0" blue="0.02169921121" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="15" id="NwG-n6-Ckq"/>
+                                                        <constraint firstAttribute="width" constant="15" id="kmm-cm-8F5"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="13"/>
+                                                    <state key="normal" title="X">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </state>
+                                                </button>
                                             </subviews>
                                         </view>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="WDZ-bV-x0q" secondAttribute="trailing" id="4EE-ci-amG"/>
                                             <constraint firstItem="hdE-MX-OLf" firstAttribute="top" secondItem="Nmg-w8-1Zt" secondAttribute="top" id="HMC-Ay-w9t"/>
+                                            <constraint firstItem="vqK-A0-HgS" firstAttribute="top" secondItem="hdE-MX-OLf" secondAttribute="top" id="K83-7G-TzP"/>
                                             <constraint firstAttribute="bottom" secondItem="hdE-MX-OLf" secondAttribute="bottom" id="KQd-Fi-oHU"/>
                                             <constraint firstItem="WDZ-bV-x0q" firstAttribute="leading" secondItem="Nmg-w8-1Zt" secondAttribute="leading" id="Txb-h2-BH3"/>
+                                            <constraint firstItem="vqK-A0-HgS" firstAttribute="trailing" secondItem="hdE-MX-OLf" secondAttribute="trailing" id="owa-Qu-L1Q"/>
                                             <constraint firstAttribute="bottom" secondItem="WDZ-bV-x0q" secondAttribute="bottom" id="pDX-h9-cl1"/>
                                             <constraint firstItem="hdE-MX-OLf" firstAttribute="top" secondItem="Nmg-w8-1Zt" secondAttribute="top" id="v8D-QR-mGs"/>
                                             <constraint firstAttribute="trailing" secondItem="hdE-MX-OLf" secondAttribute="trailing" id="vHY-OK-lz8"/>
                                             <constraint firstItem="hdE-MX-OLf" firstAttribute="leading" secondItem="Nmg-w8-1Zt" secondAttribute="leading" id="zYA-Fn-0dW"/>
                                         </constraints>
                                         <connections>
+                                            <outlet property="deleteButtonView" destination="vqK-A0-HgS" id="rVJ-Qg-ekM"/>
                                             <outlet property="propertyCellView" destination="hdE-MX-OLf" id="VDV-zN-Zkn"/>
                                             <outlet property="propertyLabel" destination="WDZ-bV-x0q" id="AEX-Iv-nN6"/>
                                             <segue destination="tOa-50-mLJ" kind="show" identifier="viewPropertySegue" id="1nx-CF-US6"/>
@@ -476,6 +491,9 @@
                     <navigationItem key="navigationItem" title="Properties" id="Fv8-hd-cO6">
                         <barButtonItem key="leftBarButtonItem" title="Edit" id="fO9-u1-saz">
                             <color key="tintColor" red="0.0" green="0.59215686270000001" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="editProperties:" destination="epp-Xg-qFe" id="o58-IF-Ne6"/>
+                            </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="TAi-aD-gDY">
                             <color key="tintColor" red="0.0" green="0.59215686270000001" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -485,6 +503,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="editButtonView" destination="fO9-u1-saz" id="Nx4-gr-K8z"/>
                         <outlet property="propertyCollectionView" destination="3PV-5a-HRH" id="N4T-4y-h4f"/>
                         <segue destination="azX-rF-hKO" kind="show" identifier="addPropertySegue" id="eUi-sY-jBA"/>
                     </connections>

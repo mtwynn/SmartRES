@@ -13,9 +13,12 @@ class PropertyCell: UICollectionViewCell {
     @IBOutlet weak var propertyCellView: UIImageView!
     
     @IBOutlet weak var propertyLabel: UILabel!
+    @IBOutlet weak var deleteButtonView: UIButton!
     
-    /*override func awakeFromNib() {
-        propertyCellView.contentMode = .scaleAspectFit
-        self.contentView.sendSubviewToBack(propertyCellView)*/
+    override func awakeFromNib() {
+        deleteButtonView.isHidden = true
+    }
+    
+    
     
 }

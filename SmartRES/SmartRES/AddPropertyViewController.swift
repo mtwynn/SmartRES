@@ -15,6 +15,7 @@ import YPImagePicker
 
 class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
+    var delegate: controlsRefresh?
     
     @IBOutlet weak var addressField: UITextField!
     @IBOutlet weak var cityField: UITextField!
@@ -253,7 +254,8 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {action in
                 property.saveInBackground() { (success, error) in
                     if success {
-                        let alert = UIAlertController(title: "Success", message: "Property added! Please refresh to see changes.", preferredStyle: UIAlertController.Style.alert)
+                        self.delegate?.loadProperties()
+                        let alert = UIAlertController(title: "Success", message: "Property, \(self.addressField.text!) has been added!", preferredStyle: UIAlertController.Style.alert)
                         self.addressField.text = ""
                         self.cityField.text = ""
                         self.stateField.text = ""
