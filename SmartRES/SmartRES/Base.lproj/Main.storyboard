@@ -286,10 +286,10 @@
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VU9-Ot-Rk3">
                                 <rect key="frame" x="40" y="553" width="295" height="33"/>
-                                <color key="backgroundColor" red="0.0" green="0.59215686270000001" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.83137690355329952" green="0.83137690355329952" blue="0.83137690355329952" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="17"/>
                                 <state key="normal" title="ADD">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="titleColor" red="0.61574000634517767" green="0.61574000634517767" blue="0.61574000634517767" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="addButton:" destination="azX-rF-hKO" eventType="touchUpInside" id="PCk-rz-hGS"/>
@@ -298,16 +298,6 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XOK-UI-i9W">
                                 <rect key="frame" x="91" y="348" width="193" height="189"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vHU-gn-3fv">
-                                <rect key="frame" x="129.5" y="426" width="123" height="33"/>
-                                <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="17"/>
-                                <state key="normal" title="Add a thumbnail">
-                                    <color key="titleColor" red="0.0" green="0.47843137254901957" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="addThumbnail:" destination="azX-rF-hKO" eventType="touchUpInside" id="8M4-yL-eEE"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hxG-oG-M2x">
                                 <rect key="frame" x="269" y="348" width="15" height="15"/>
                                 <color key="backgroundColor" red="1" green="0.0" blue="0.021699211209647906" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -317,6 +307,19 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="13"/>
                                 <state key="normal" title="X"/>
+                                <connections>
+                                    <action selector="deleteThumbnail:" destination="azX-rF-hKO" eventType="touchUpInside" id="ac4-g8-XaG"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vHU-gn-3fv">
+                                <rect key="frame" x="91" y="348" width="193" height="189"/>
+                                <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="17"/>
+                                <state key="normal" title="Add a thumbnail">
+                                    <color key="titleColor" red="0.0" green="0.47843137254901957" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="addThumbnail:" destination="azX-rF-hKO" eventType="touchUpInside" id="8M4-yL-eEE"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -324,8 +327,8 @@
                         <constraints>
                             <constraint firstItem="XOK-UI-i9W" firstAttribute="top" secondItem="BSW-gE-ttj" secondAttribute="bottom" constant="16" id="0id-gO-wQm"/>
                             <constraint firstItem="FVZ-u4-Kb0" firstAttribute="leading" secondItem="1C7-MG-RHb" secondAttribute="leading" constant="40" id="1Yh-gV-Moy"/>
+                            <constraint firstItem="vHU-gn-3fv" firstAttribute="height" secondItem="XOK-UI-i9W" secondAttribute="height" id="2Ty-KU-DCk"/>
                             <constraint firstItem="P7t-b1-22l" firstAttribute="leading" secondItem="sFe-Xv-ww7" secondAttribute="trailing" constant="8" id="2ud-z1-SHT"/>
-                            <constraint firstItem="vHU-gn-3fv" firstAttribute="centerX" secondItem="XOK-UI-i9W" secondAttribute="centerX" constant="3.5" id="3Is-Om-k1V"/>
                             <constraint firstItem="1C7-MG-RHb" firstAttribute="trailing" secondItem="d7s-Ln-h0S" secondAttribute="trailing" constant="40" id="4lH-2c-riV"/>
                             <constraint firstItem="0dQ-9I-02R" firstAttribute="trailing" secondItem="AP9-RS-cVo" secondAttribute="trailing" id="5Wj-my-4OJ"/>
                             <constraint firstItem="1C7-MG-RHb" firstAttribute="trailing" secondItem="1nI-KI-Gyq" secondAttribute="trailing" constant="40" id="6vB-GA-VRT"/>
@@ -341,15 +344,17 @@
                             <constraint firstItem="sFe-Xv-ww7" firstAttribute="leading" secondItem="4fc-VH-0eA" secondAttribute="trailing" constant="8" symbolic="YES" id="GHU-Xs-KTN"/>
                             <constraint firstItem="AP9-RS-cVo" firstAttribute="leading" secondItem="1C7-MG-RHb" secondAttribute="leading" constant="40" id="HfW-Ur-b9Q"/>
                             <constraint firstItem="0dQ-9I-02R" firstAttribute="top" secondItem="AP9-RS-cVo" secondAttribute="bottom" constant="8" id="InR-qz-MbR"/>
-                            <constraint firstItem="hxG-oG-M2x" firstAttribute="top" secondItem="XOK-UI-i9W" secondAttribute="top" id="JKE-Ag-hVP"/>
                             <constraint firstItem="PdT-0g-AZF" firstAttribute="top" secondItem="sFe-Xv-ww7" secondAttribute="bottom" constant="16" id="Je6-MS-jOh"/>
                             <constraint firstItem="1C7-MG-RHb" firstAttribute="trailing" secondItem="VU9-Ot-Rk3" secondAttribute="trailing" constant="40" id="Jep-a5-5yX"/>
                             <constraint firstAttribute="trailingMargin" secondItem="8G1-Y0-G3D" secondAttribute="trailing" constant="96" id="L31-Kx-JJ7"/>
                             <constraint firstItem="1C7-MG-RHb" firstAttribute="bottom" secondItem="VU9-Ot-Rk3" secondAttribute="bottom" constant="32" id="Mlf-bD-CHa"/>
                             <constraint firstItem="AP9-RS-cVo" firstAttribute="top" secondItem="4fc-VH-0eA" secondAttribute="bottom" constant="16" id="N5A-t7-5Jm"/>
                             <constraint firstItem="XOK-UI-i9W" firstAttribute="leading" secondItem="1C7-MG-RHb" secondAttribute="leading" constant="91" id="NIf-i1-aia"/>
+                            <constraint firstItem="vHU-gn-3fv" firstAttribute="width" secondItem="XOK-UI-i9W" secondAttribute="width" id="NsQ-Zx-e8f"/>
+                            <constraint firstItem="hxG-oG-M2x" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="vHU-gn-3fv" secondAttribute="trailing" id="R9C-dV-VmE"/>
                             <constraint firstItem="1C7-MG-RHb" firstAttribute="trailing" secondItem="Cft-u0-lG6" secondAttribute="trailing" constant="40" id="Sge-Mb-6ar"/>
                             <constraint firstItem="0dQ-9I-02R" firstAttribute="leading" secondItem="1C7-MG-RHb" secondAttribute="leading" constant="40" id="Umw-KB-UQe"/>
+                            <constraint firstItem="vHU-gn-3fv" firstAttribute="leading" secondItem="1C7-MG-RHb" secondAttribute="leading" constant="91" id="VZC-Pz-a42"/>
                             <constraint firstItem="1C7-MG-RHb" firstAttribute="trailing" secondItem="XOK-UI-i9W" secondAttribute="trailing" constant="91" id="VvN-vC-zda"/>
                             <constraint firstItem="d7s-Ln-h0S" firstAttribute="leading" secondItem="PdT-0g-AZF" secondAttribute="trailing" constant="8" id="WYV-0M-vQL"/>
                             <constraint firstItem="8G1-Y0-G3D" firstAttribute="leading" secondItem="0dQ-9I-02R" secondAttribute="trailing" constant="23" id="cTu-Rd-71R"/>
@@ -362,10 +367,10 @@
                             <constraint firstItem="1C7-MG-RHb" firstAttribute="trailing" secondItem="P7t-b1-22l" secondAttribute="trailing" constant="40" id="hFe-Pf-SK7"/>
                             <constraint firstItem="nSk-3k-X2S" firstAttribute="leading" secondItem="0gZ-19-iE6" secondAttribute="trailing" constant="8" id="hkr-ky-6oK"/>
                             <constraint firstItem="1nI-KI-Gyq" firstAttribute="top" secondItem="0dQ-9I-02R" secondAttribute="bottom" constant="16" id="jFH-lD-edn"/>
-                            <constraint firstItem="vHU-gn-3fv" firstAttribute="centerY" secondItem="XOK-UI-i9W" secondAttribute="centerY" id="kdR-MK-ESI"/>
                             <constraint firstItem="P7t-b1-22l" firstAttribute="leading" secondItem="Cft-u0-lG6" secondAttribute="leading" id="lCB-ad-rYO"/>
                             <constraint firstItem="P7t-b1-22l" firstAttribute="top" secondItem="Cft-u0-lG6" secondAttribute="bottom" constant="8" id="lo8-sV-N1c"/>
                             <constraint firstItem="nSk-3k-X2S" firstAttribute="top" secondItem="FVZ-u4-Kb0" secondAttribute="bottom" constant="16" id="n66-PK-1t6"/>
+                            <constraint firstItem="hxG-oG-M2x" firstAttribute="top" secondItem="XOK-UI-i9W" secondAttribute="top" id="ncg-vw-khD"/>
                             <constraint firstItem="PdT-0g-AZF" firstAttribute="leading" secondItem="AP9-RS-cVo" secondAttribute="trailing" constant="23" id="pqK-cn-iv5"/>
                             <constraint firstItem="1C7-MG-RHb" firstAttribute="trailing" secondItem="1Py-H9-7vJ" secondAttribute="trailing" constant="40" id="pwY-G5-JRh"/>
                             <constraint firstItem="DPt-Gx-FV4" firstAttribute="leading" secondItem="1C7-MG-RHb" secondAttribute="leading" constant="27" id="qQg-4W-lkg"/>
@@ -376,6 +381,7 @@
                             <constraint firstItem="1C7-MG-RHb" firstAttribute="trailing" secondItem="O8Q-8Q-Ryh" secondAttribute="trailing" constant="40" id="sxt-ft-Ft9"/>
                             <constraint firstItem="BSW-gE-ttj" firstAttribute="leading" secondItem="1C7-MG-RHb" secondAttribute="leading" constant="40" id="tbF-eB-A5L"/>
                             <constraint firstItem="0gZ-19-iE6" firstAttribute="leading" secondItem="1C7-MG-RHb" secondAttribute="leading" constant="40" id="tsb-Mh-SKm"/>
+                            <constraint firstItem="hxG-oG-M2x" firstAttribute="top" secondItem="vHU-gn-3fv" secondAttribute="top" id="uKn-CB-PZV"/>
                             <constraint firstItem="4fc-VH-0eA" firstAttribute="top" secondItem="0gZ-19-iE6" secondAttribute="bottom" constant="8" id="wdQ-Ew-hX6"/>
                             <constraint firstItem="4fc-VH-0eA" firstAttribute="leading" secondItem="1C7-MG-RHb" secondAttribute="leading" constant="40" id="xMv-zd-rsf"/>
                             <constraint firstItem="d7s-Ln-h0S" firstAttribute="top" secondItem="P7t-b1-22l" secondAttribute="bottom" constant="16" id="y2a-AA-PP6"/>
@@ -384,11 +390,13 @@
                         <viewLayoutGuide key="safeArea" id="1C7-MG-RHb"/>
                     </view>
                     <connections>
-                        <outlet property="addThumbnailView" destination="vHU-gn-3fv" id="7dV-Fa-Qga"/>
+                        <outlet property="addButtonView" destination="VU9-Ot-Rk3" id="aro-wj-UaB"/>
+                        <outlet property="addThumbnailView" destination="vHU-gn-3fv" id="umG-MZ-uE4"/>
                         <outlet property="addressField" destination="O8Q-8Q-Ryh" id="JTv-g5-D1l"/>
                         <outlet property="bathField" destination="d7s-Ln-h0S" id="obX-md-iZ0"/>
                         <outlet property="bedField" destination="PdT-0g-AZF" id="f1S-e7-pDT"/>
                         <outlet property="cityField" destination="0gZ-19-iE6" id="IN8-dV-pd2"/>
+                        <outlet property="deleteThumbnailView" destination="hxG-oG-M2x" id="zgP-at-lEe"/>
                         <outlet property="priceField" destination="1nI-KI-Gyq" id="0iO-Zw-DdI"/>
                         <outlet property="stateField" destination="nSk-3k-X2S" id="F8N-0K-Gk6"/>
                         <outlet property="thumbnailView" destination="XOK-UI-i9W" id="VdS-Im-eYe"/>
@@ -466,6 +474,9 @@
                         <viewLayoutGuide key="safeArea" id="5lf-7I-BRl"/>
                     </view>
                     <navigationItem key="navigationItem" title="Properties" id="Fv8-hd-cO6">
+                        <barButtonItem key="leftBarButtonItem" title="Edit" id="fO9-u1-saz">
+                            <color key="tintColor" red="0.0" green="0.59215686270000001" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="TAi-aD-gDY">
                             <color key="tintColor" red="0.0" green="0.59215686270000001" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>

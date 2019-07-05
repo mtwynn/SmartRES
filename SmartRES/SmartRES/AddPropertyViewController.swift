@@ -26,6 +26,8 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
     @IBOutlet weak var priceField: UITextField!
     @IBOutlet weak var thumbnailView: UIImageView!
     @IBOutlet weak var addThumbnailView: UIButton!
+    @IBOutlet weak var deleteThumbnailView: UIButton!
+    @IBOutlet weak var addButtonView: UIButton!
     
     // States and their data
     var sortedStates = [String]()
@@ -117,7 +119,10 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
         self.bathField.borderStyle = UITextField.BorderStyle.none
         self.priceField.borderStyle = UITextField.BorderStyle.none
         self.thumbnailView.layer.borderWidth = 1
-        self.thumbnailView.layer.borderColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0).cgColor
+        self.thumbnailView.layer.borderColor = UIColor.lightGray.cgColor
+        addButtonView.isEnabled = false
+        [addressField, cityField, zipField, stateField, typeField, bedField, bathField, priceField].forEach({ $0.addTarget(self, action: #selector(editingChanged), for: .editingChanged) })
+        
         // Add toolbar (Cancel/Done) to Pickers
         let toolBar = UIToolbar()
         statePicker.showsSelectionIndicator = true
@@ -201,18 +206,25 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
                 self.addThumbnailView.isHidden = true
             } else {
                 self.addThumbnailView.isHidden = false
-                self.thumbnailView.isHidden = true
+                self.thumbnailView.layer.borderWidth = 1
+                self.thumbnailView.layer.borderColor = UIColor.lightGray.cgColor
             }
             
             picker.dismiss(animated: true, completion: nil)
         }
         present(picker, animated: true, completion: nil) 
     }
+    
+    @IBAction func deleteThumbnail(_ sender: Any) {
+        self.thumbnailView.image = nil
+        self.addThumbnailView.isHidden = false
+    }
+    
 
 
     @IBAction func addButton(_ sender: Any) {
         // Initialize new PFObject for property
-        let property = PFObject(className: "Property")
+        var property = PFObject(className: "Property")
         property["agent"] = PFUser.current()!
         property["address"] = self.addressField.text!
         property["city"] = self.cityField.text!
@@ -235,31 +247,42 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
             let file = PFFileObject(data: imageData!)
             property["thumbnail"] = file
         }
-
+        
+        let alert = UIAlertController(title: "Confirmation", message: "Would you like to add this property?", preferredStyle: UIAlertController.Style.alert)
+        
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {action in
+                property.saveInBackground() { (success, error) in
+                    if success {
+                        let alert = UIAlertController(title: "Success", message: "Property added! Please refresh to see changes.", preferredStyle: UIAlertController.Style.alert)
+                        self.addressField.text = ""
+                        self.cityField.text = ""
+                        self.stateField.text = ""
+                        self.zipField.text = ""
+                        self.typeField.text = ""
+                        self.bedField.text = ""
+                        self.bathField.text = ""
+                        self.priceField.text = ""
+                        self.thumbnailView.isHidden = true
+                        self.addThumbnailView.isHidden = false
+                        
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    } else {
+                        let alert = UIAlertController(title: "Error", message: "Adding property failed.", preferredStyle: UIAlertController.Style.alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                }
+        }))
+            
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: nil))
+        
+        
+        self.present(alert, animated: true, completion: nil)
+        
         // Save new property and reset all fields to blank
-        property.saveInBackground() { (success, error) in
-            if success {
-                let alert = UIAlertController(title: "Success", message: "Property added! Please refresh to see changes.", preferredStyle: UIAlertController.Style.alert)
-                self.addressField.text = ""
-                self.cityField.text = ""
-                self.stateField.text = ""
-                self.zipField.text = ""
-                self.typeField.text = ""
-                self.bedField.text = ""
-                self.bathField.text = ""
-                self.priceField.text = ""
-                self.thumbnailView.isHidden = true
-                self.addThumbnailView.isHidden = false
-                
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-            } else {
-                let alert = UIAlertController(title: "Error", message: "Adding property failed.", preferredStyle: UIAlertController.Style.alert)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-            }
-        }
     }
+    
     
 
     // Picker functions 
@@ -286,13 +309,39 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
         }
     }
 
-
     @objc func donePicker() {
         
         stateField.resignFirstResponder()
         typeField.resignFirstResponder()
     }
 
+    @objc func editingChanged(_ textField: UITextField) {
+        if textField.text?.count == 1 {
+            if textField.text?.first == " " {
+                textField.text = ""
+                return
+            }
+        }
+        guard
+            let address = addressField.text, !address.isEmpty,
+            let city = cityField.text, !city.isEmpty,
+            let state = stateField.text, !state.isEmpty,
+            let zip = zipField.text, !zip.isEmpty,
+            let type = typeField.text, !type.isEmpty,
+            let bed = bedField.text, !bed.isEmpty,
+            let bath = bathField.text, !bath.isEmpty,
+            let price = priceField.text, !price.isEmpty
+            else {
+                self.addButtonView.isEnabled = false
+                addButtonView.layer.backgroundColor = UIColor.init(red: 212/255, green: 212/255, blue: 212/255, alpha: 1).cgColor
+                addButtonView.setTitleColor(UIColor.init(red: 157/255, green: 157/255, blue: 157/255, alpha: 1), for: .normal)
+                return
+        }
+        addButtonView.isEnabled = true
+        addButtonView.layer.backgroundColor = UIColor.init(red: 0.0/255, green: 151/255, blue: 69/255, alpha: 1).cgColor
+        addButtonView.setTitleColor(UIColor.white, for: .normal)
+    }
+    
 
     // Keyboard functions
     @objc func keyboardWillShow(notification: NSNotification) {
