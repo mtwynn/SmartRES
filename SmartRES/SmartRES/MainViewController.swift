@@ -26,7 +26,6 @@ class MainViewController: UIViewController {
 
     // Associated property
     var property: Property?
-    var propertyId: String! = String()
 
     let downloadGroup = DispatchGroup()
     
@@ -52,23 +51,6 @@ class MainViewController: UIViewController {
         bedLabel.text = property!.bed.stringValue
         bathLabel.text = property!.bath.stringValue
         
-        // Query for all Pictures for this current propertyId
-        let query = PFQuery(className: "Pictures")
-        query.whereKey("agent", equalTo: PFUser.current()!)
-        query.whereKey("propertyId", equalTo: self.property?.id)
-        query.findObjectsInBackground() { (posts, error) in
-            if posts != nil {
-                for post in posts! {
-                    let imageFile = post["image"] as! PFFileObject
-                    self.updatedList.append(ParseSource(file: imageFile))
-                }
-            }
-            self.imageSource = self.updatedList
-            self.slideshow.setImageInputs(self.imageSource)
-            self.slideshow.setNeedsDisplay()
-            self.slideshow.bringSubviewToFront(self.priceLabel)
-        }
-        
         
         // Button stylings
         uploadButtonView.layer.cornerRadius = 0.5 * uploadButtonView.bounds.size.width
@@ -78,6 +60,8 @@ class MainViewController: UIViewController {
         uploadButtonView.layer.shadowRadius = 3.0
         uploadButtonView.layer.masksToBounds = false
         uploadButtonView.imageEdgeInsets = UIEdgeInsets(top: 5, left: 7, bottom: 5, right: 3)
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.init(red: 0.0/255, green: 151/255, blue: 69/255, alpha: 1)
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.init(red: 0.0/255, green: 151/255, blue: 69/255, alpha: 1)
         
         
         // Refresh control
@@ -91,7 +75,6 @@ class MainViewController: UIViewController {
         slideshow.slideshowInterval = 5.0
         slideshow.pageIndicatorPosition = .init(horizontal: .center, vertical: .under)
         slideshow.contentScaleMode = UIViewContentMode.scaleAspectFill
-        slideshow.activityIndicator = DefaultActivityIndicator()
         slideshow.delegate = self as ImageSlideshowDelegate
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(MainViewController.didTap))
         slideshow.addGestureRecognizer(recognizer)
@@ -123,15 +106,16 @@ class MainViewController: UIViewController {
                     let file = PFFileObject(data: imageData!)
 
                     post["image"] = file
-                    post["propertyId"] = self.propertyId
+                    post["propertyId"] = self.property?.id
                     post["agent"] = PFUser.current()!
 
                     // Save picture 
                     post.saveInBackground() { (success, error) in
                         if success {
-                            let alert = UIAlertController(title: "Success", message: "Upload complete! Please refresh to see changes.", preferredStyle: UIAlertController.Style.alert)
+                            let alert = UIAlertController(title: "Success", message: "Upload complete!", preferredStyle: UIAlertController.Style.alert)
                             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
                             self.present(alert, animated: true, completion: nil)
+                            self.refresh()
                         } else {
                             let alert = UIAlertController(title: "Error", message: "Upload failed.", preferredStyle: UIAlertController.Style.alert)
                             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))

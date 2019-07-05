@@ -225,7 +225,7 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
 
     @IBAction func addButton(_ sender: Any) {
         // Initialize new PFObject for property
-        var property = PFObject(className: "Property")
+        let property = PFObject(className: "Property")
         property["agent"] = PFUser.current()!
         property["address"] = self.addressField.text!
         property["city"] = self.cityField.text!
