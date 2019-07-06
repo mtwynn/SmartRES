@@ -10,7 +10,8 @@ import UIKit
 import Parse
 
 class LoginViewController: UIViewController {
-
+    
+    var user : PFUser? = nil
     // User credentials
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
@@ -57,6 +58,7 @@ class LoginViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         if UserDefaults.standard.bool(forKey: "userLoggedIn") == true && PFUser.current() != nil {
+            self.user = PFUser.current()!
             self.performSegue(withIdentifier: "mainSegue", sender: self)
         }
     }
@@ -81,7 +83,8 @@ class LoginViewController: UIViewController {
         // PF Login
         PFUser.logInWithUsername(inBackground: username, password: password) { (user, error) in
             if user != nil { // User exists
-                UserDefaults.standard.set(true, forKey: "userLoggedIn")
+                self.user = user
+                UserDefaults.standard.set(username, forKey: "email")
                 self.dismiss(animated: true) {
                     self.performSegue(withIdentifier: "mainSegue", sender: nil)
                 }
@@ -118,6 +121,19 @@ class LoginViewController: UIViewController {
     @objc func keyboardWillHide(notification: NSNotification) {
         if self.view.frame.origin.y != 0 {
             self.view.frame.origin.y = 0
+        }
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        UserDefaults.standard.set(true, forKey: "userLoggedIn")
+        UserDefaults.standard.set(user!["firstName"], forKey: "firstName")
+        UserDefaults.standard.set(user!["lastName"], forKey: "lastName")
+        UserDefaults.standard.set(user!["phone"], forKey: "phone")
+        if (user!["profilePic"] != nil) {
+            let imageFile = user!["profilePic"] as! PFFileObject
+            let url = URL(string: imageFile.url!)!
+            UserDefaults.standard.set(url, forKey: "profilePic")
         }
     }
 }

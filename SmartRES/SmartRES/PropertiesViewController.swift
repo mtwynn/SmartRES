@@ -223,9 +223,4 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
         
         self.present(alert, animated: true, completion: nil)
     }
-    
-    internal func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        let VC = viewController as! ProfileViewController
-        VC.loadInfo()
-    }
 }
