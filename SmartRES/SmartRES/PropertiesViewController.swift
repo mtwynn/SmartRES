@@ -15,7 +15,7 @@ protocol controlsRefresh {
 }
 
 
-class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, controlsRefresh {
+class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UITabBarDelegate, UITabBarControllerDelegate, controlsRefresh {
 
     let refreshControl = UIRefreshControl()
     var properties = [Property]()
@@ -28,7 +28,6 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         refreshControl.addTarget(self, action: #selector(loadProperties), for: .valueChanged)
         propertyCollectionView.refreshControl = refreshControl
         propertyCollectionView.dataSource = self
@@ -223,5 +222,10 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
         
         
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    internal func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        let VC = viewController as! ProfileViewController
+        VC.loadInfo()
     }
 }

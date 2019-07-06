@@ -12,39 +12,40 @@ import ImageSlideshow
 import Parse
 import YPImagePicker
 
+protocol loadUser {
+    func loadInfo()
+}
+
 class ProfileViewController: UIViewController {
 
     @IBOutlet weak var profilePicView: UIImageView!
-    
     @IBOutlet weak var addProfilePicView: UIButton!
-    
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var phoneLabel: UILabel!
+    @IBOutlet weak var bioLabel: UILabel!
+    @IBOutlet weak var logoView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadInfo()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(addProfilePic))
+        profilePicView.addGestureRecognizer(tap)
+        profilePicView.isUserInteractionEnabled = true
         profilePicView.layer.masksToBounds = true
         profilePicView.layer.cornerRadius = profilePicView.frame.height / 2
         profilePicView.layer.borderWidth = 2
         profilePicView.layer.borderColor = UIColor.init(red: 0.0/255, green: 151/255, blue: 69/255, alpha: 1).cgColor
         addProfilePicView.layer.cornerRadius = addProfilePicView.frame.height / 2
+        
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor.init(red: 0.0/255, green: 151/255, blue: 69/255, alpha: 1)
         
-        let query = PFQuery(className: "Users")
-        query.getObjectInBackground(withId: PFUser.current()!.objectId!) { (user: PFObject?, error: Error?) in
-            if let error = error {
-                print(error.localizedDescription)
-            } else if let user = user {
-                let imageFile = user["profilePic"] as! PFFileObject
-                imageFile.getDataInBackground {(data: Data?, error: Error?) in
-                    if let data = data, let image = UIImage(data: data) {
-                        self.profilePicView.image = image
-                    } else {
-                        print("Error loading")
-                    }
-                }
-            }
-        }
-        
-        //profilePicView.af_setImage(withURL: URL(string: )!)
+        // For testing
+       
+        let url = URL(string: "https://cmkt-image-prd.global.ssl.fastly.net/0.1.0/ps/3652954/910/607/m1/fpnw/wm0/real-estate-logo-.png?1511872497&s=ed290198990284688a4f3afc2ffd7128")!
+        let data = try? Data(contentsOf: url)
+        let pic = UIImage(data: data!)
+        logoView.image = pic
     }
     
     
@@ -60,18 +61,13 @@ class ProfileViewController: UIViewController {
         picker.didFinishPicking { [unowned picker] items, _ in
             if let photo = items.singlePhoto {
                 self.profilePicView.image = photo.image
-                let query = PFQuery(className: "Users")
-                query.getObjectInBackground(withId: PFUser.current()!.objectId!) { (user: PFObject?, error: Error?) in
-                    if let error = error {
-                        print(error.localizedDescription)
-                    } else if let user = user {
-                        let imageData = photo.image.pngData()
-                        let file = PFFileObject(data: imageData!)
-                        user["profilePic"] = file
-                        user.saveInBackground()
-                    }
+                
+                if let user = PFUser.current(){
+                    let imageData = photo.image.pngData()
+                    let file = PFFileObject(data: imageData!)
+                    user["profilePic"] = file
+                    user.saveInBackground()
                 }
-            
             }
             picker.dismiss(animated: true, completion: nil)
         }
@@ -88,5 +84,23 @@ class ProfileViewController: UIViewController {
         delegate.window?.rootViewController = loginViewController
     }
     
-    
+    func loadInfo() {
+        if let user = PFUser.current(){
+            user.fetchInBackground() { (result, error) in
+                let result = result as! PFUser
+                self.nameLabel.text = (result["firstName"] as! String) + " " + (result["lastName"] as! String)
+                
+                
+                self.emailLabel.text = result["username"] as? String
+                self.phoneLabel.text = result["phone"] as? String
+                
+                if result["profilePic"] != nil {
+                    let imageFile = result["profilePic"] as! PFFileObject
+                    let url = URL(string: imageFile.url!)!
+                    let data = try? Data(contentsOf: url)
+                    self.profilePicView.image = UIImage(data: data!)
+                }
+            }
+        }
+    }
 }
