@@ -145,29 +145,62 @@ class MainViewController: UIViewController {
         
         // 3. Grab the value from the text field, and print it when the user clicks OK.
         alert.addAction(UIAlertAction(title: "Delete", style: .default, handler: { [weak alert] (_) in
+
             let textField = alert?.textFields![0] // Force unwrapping because we know it exists.
-            let imageNum = Int(textField!.text!)! - 1
-            let query = PFQuery(className: "Pictures")
-            let imgToDel = self.slideshowImgIds[imageNum]
-            self.slideshowImgIds.remove(at: imageNum)
-            query.getObjectInBackground(withId: imgToDel) { (img: PFObject?, error: Error?) in
-                if let error = error {
-                    print(error.localizedDescription)
-                } else {
-                    img?.deleteInBackground() {(success, error: Error?) in
-                        if success {
-                            self.refresh()
-                            self.slideshow.setImageInputs(self.imageSource)
-                            self.slideshow.setNeedsDisplay()
-                            let alert = UIAlertController(title: "Success", message: "Image deleted!", preferredStyle: .alert)
-                            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                            self.present(alert, animated: true, completion: nil)
+            let input = textField!.text!
+            if input.contains(",") {
+                /*
+                let imageNums = input.split(separator: ",").map{ Int($0)! - 1 }
+                let query = PFQuery(className: "Pictures")
+                for imageNum in imageNums.sorted().reversed() {
+                    let imgToDel = self.slideshowImgIds[imageNum]
+                    self.slideshowImgIds.remove(at: imageNum)
+                    query.getObjectInBackground(withId: imgToDel) { (img: PFObject?, error: Error?) in
+                        if let error = error {
+                            print(error.localizedDescription)
                         } else {
-                            print(error!.localizedDescription)
+                            img?.deleteInBackground() {(success, error: Error?) in
+                                if success {
+                                    self.refresh()
+                                    self.slideshow.setImageInputs(self.imageSource)
+                                    self.slideshow.setNeedsDisplay()
+                                    let alert = UIAlertController(title: "Success", message: "Image deleted!", preferredStyle: .alert)
+                                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                    self.present(alert, animated: true, completion: nil)
+                                } else {
+                                    print(error!.localizedDescription)
+                                }
+                            }
+                        }
+                    }
+                }*/
+            } else {
+                let imageNum = Int(input)! - 1
+                let query = PFQuery(className: "Pictures")
+                let imgToDel = self.slideshowImgIds[imageNum]
+                self.slideshowImgIds.remove(at: imageNum)
+                query.getObjectInBackground(withId: imgToDel) { (img: PFObject?, error: Error?) in
+                    if let error = error {
+                        print(error.localizedDescription)
+                    } else {
+                        img?.deleteInBackground() {(success, error: Error?) in
+                            if success {
+                                self.refresh()
+                                self.slideshow.setImageInputs(self.imageSource)
+                                self.slideshow.setNeedsDisplay()
+                                let alert = UIAlertController(title: "Success", message: "Image deleted!", preferredStyle: .alert)
+                                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                self.present(alert, animated: true, completion: nil)
+                            } else {
+                                print(error!.localizedDescription)
+                            }
                         }
                     }
                 }
             }
+            
+            
+            
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
