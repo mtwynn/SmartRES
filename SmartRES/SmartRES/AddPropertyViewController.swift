@@ -226,6 +226,7 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
     @IBAction func addButton(_ sender: Any) {
         // Initialize new PFObject for property
         let property = PFObject(className: "Property")
+        
         property["agent"] = PFUser.current()!
         property["address"] = self.addressField.text!
         property["city"] = self.cityField.text!
@@ -255,7 +256,8 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
                 property.saveInBackground() { (success, error) in
                     if success {
                         self.delegate?.loadProperties()
-                        let alert = UIAlertController(title: "Success", message: "Property, \(self.addressField.text!) has been added!", preferredStyle: UIAlertController.Style.alert)
+                        print(property.objectId)
+                        let alert = UIAlertController(title: "Success", message: "Property, \(self.addressField.text!) has been added! Please use the provided PropertyID to view your images on the sign slideshow.", preferredStyle: UIAlertController.Style.alert)
                         self.addressField.text = ""
                         self.cityField.text = ""
                         self.stateField.text = ""

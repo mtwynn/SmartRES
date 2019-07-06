@@ -46,7 +46,7 @@ class MainViewController: UIViewController {
         
         // Set all information labels on finished loading
         priceLabel.text = "$\(property!.price.stringValue)"
-        addressLabel.text = property!.address
+        addressLabel.text = "ID: \(property!.id)"
         cityStateLabel.text = property!.city + ", " + property!.state
         zipLabel.text = property!.zip
         bedLabel.text = property!.bed.stringValue
