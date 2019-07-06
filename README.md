@@ -1,11 +1,11 @@
 ## Smart Real Estate Signs (SmartRES)
 
 ### Team
-Chase Carnaroli  
-David Bui  
-Lily Pham  
-Rodrigo Leyva  
-Tâm Nguyễn  
+Michael Huang 
+Tam Nguyen  
+Michael Mac  
+Erick Samano  
+Jeff Huang  
 
 
 ### App Description
