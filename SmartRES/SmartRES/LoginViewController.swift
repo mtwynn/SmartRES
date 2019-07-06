@@ -67,7 +67,7 @@ class LoginViewController: UIViewController {
     @IBAction func loginButton(_ sender: Any) {
         let username = usernameField.text!
         let password = passwordField.text!
-
+        
         // Login load screen
         let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
         let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
