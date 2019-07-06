@@ -1,7 +1,7 @@
 ## Smart Real Estate Signs (SmartRES)
 
 ### Team
-Michael Huang 
+Michael Huang   
 Tam Nguyen  
 Michael Mac  
 Erick Samano  
