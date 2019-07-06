@@ -1,11 +1,11 @@
 ## Smart Real Estate Signs (SmartRES)
 
 ### Team
-Michael Huang -     Chief Executive Officer<br></br>
-Tam Nguyen    -  Co-Chief Technical Officer
-Michael Mac   -  Co-Chief Technical Officer
-Erick Samano  -     Chief Operating Officer
-Jeff Huang    -     Chief Materials Officer
+Michael Huang
+Tam Nguyen 
+Michael Mac   
+Erick Samano 
+Jeff Huang  
 
 
 ### App Description
