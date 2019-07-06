@@ -606,6 +606,20 @@
                                     <action selector="uploadButton:" destination="tOa-50-mLJ" eventType="touchUpInside" id="2ux-Y0-FHE"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C3i-rZ-thp">
+                                <rect key="frame" x="309" y="486" width="50" height="50"/>
+                                <color key="backgroundColor" red="0.87224004089523477" green="0.0" blue="0.019827870099057305" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="Mnm-M1-c4I"/>
+                                    <constraint firstAttribute="height" constant="50" id="gVp-f6-Vom"/>
+                                </constraints>
+                                <state key="normal" image="photo">
+                                    <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="deleteButton:" destination="tOa-50-mLJ" eventType="touchUpInside" id="eHN-pY-Nxp"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -618,11 +632,15 @@
                             <constraint firstItem="7Nx-XA-fwO" firstAttribute="top" secondItem="Qdq-mT-IHA" secondAttribute="bottom" constant="8" id="MuQ-nR-Pri"/>
                             <constraint firstItem="ro9-zB-rjW" firstAttribute="top" secondItem="u0g-XG-Wyr" secondAttribute="bottom" constant="8" id="RCJ-02-1Q8"/>
                             <constraint firstItem="mMw-rZ-T30" firstAttribute="leading" secondItem="l3W-5R-aQu" secondAttribute="leading" constant="16" id="SFP-bM-dII"/>
+                            <constraint firstItem="bGh-6T-OZw" firstAttribute="trailing" secondItem="C3i-rZ-thp" secondAttribute="trailing" constant="16" id="UUb-hb-DUj"/>
+                            <constraint firstItem="4G6-29-bkW" firstAttribute="top" secondItem="C3i-rZ-thp" secondAttribute="bottom" constant="16" id="Wax-4u-cnH"/>
                             <constraint firstItem="mMw-rZ-T30" firstAttribute="top" secondItem="nOu-9g-bvT" secondAttribute="bottom" constant="12" id="aiL-oL-Sxp"/>
                             <constraint firstItem="zB5-0q-8Hg" firstAttribute="centerY" secondItem="IGl-ZV-v9Y" secondAttribute="centerY" id="bNx-Ru-EYf"/>
+                            <constraint firstItem="4G6-29-bkW" firstAttribute="top" secondItem="C3i-rZ-thp" secondAttribute="bottom" constant="16" id="cmL-tu-8ju"/>
                             <constraint firstItem="IGl-ZV-v9Y" firstAttribute="top" secondItem="7Nx-XA-fwO" secondAttribute="bottom" constant="8" id="hgz-GI-Ab8"/>
                             <constraint firstItem="nOu-9g-bvT" firstAttribute="trailing" secondItem="bGh-6T-OZw" secondAttribute="trailing" id="irQ-yR-bVz"/>
                             <constraint firstItem="ro9-zB-rjW" firstAttribute="leading" secondItem="bGh-6T-OZw" secondAttribute="leading" constant="16" id="nXu-W5-Lsh"/>
+                            <constraint firstItem="bGh-6T-OZw" firstAttribute="trailing" secondItem="C3i-rZ-thp" secondAttribute="trailing" constant="16" id="o7d-Or-O6n"/>
                             <constraint firstItem="nOu-9g-bvT" firstAttribute="top" secondItem="bGh-6T-OZw" secondAttribute="top" id="pA9-D7-Ebo"/>
                             <constraint firstAttribute="trailing" secondItem="mMw-rZ-T30" secondAttribute="trailing" constant="16" id="rhx-Cu-eeT"/>
                             <constraint firstItem="7Nx-XA-fwO" firstAttribute="leading" secondItem="bGh-6T-OZw" secondAttribute="leading" constant="16" id="u65-3O-9sd"/>

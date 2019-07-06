@@ -20,6 +20,7 @@ class MainViewController: UIViewController {
     // Array of image sources for slideshow
     var imageSource = [ParseSource]()
     var updatedList = [ParseSource]()
+    var slideshowImgIds = [String]()
 
     // Refresh control
     var refreshControl = UIRefreshControl()
@@ -102,7 +103,8 @@ class MainViewController: UIViewController {
                 case .photo(let photo):
 
                     let post = PFObject(className: "Pictures")
-                    let imageData = photo.image.pngData()
+                    let resizedImage = self.resizeImage(image: photo.image, targetSize: CGSize(width:600.0, height:600.0))
+                    let imageData = resizedImage.pngData()
                     let file = PFFileObject(data: imageData!)
 
                     post["image"] = file
@@ -132,6 +134,46 @@ class MainViewController: UIViewController {
         }
         self.present(picker, animated: true, completion: nil)
     }
+    
+    @IBAction func deleteButton(_ sender: Any) {
+        let alert = UIAlertController(title: "Delete a slideshow image", message: "Enter a number, a range of numbers, or a list of numbers separated by commas for images to delete: ", preferredStyle: .alert)
+        
+        //2. Add the text field. You can configure it however you need.
+        alert.addTextField { (textField) in
+            textField.placeholder = "(e.g. \"1\" |  \"1, 3, 4, 5\" |  \"1-5\")"
+        }
+        
+        // 3. Grab the value from the text field, and print it when the user clicks OK.
+        alert.addAction(UIAlertAction(title: "Delete", style: .default, handler: { [weak alert] (_) in
+            let textField = alert?.textFields![0] // Force unwrapping because we know it exists.
+            let imageNum = Int(textField!.text!)! - 1
+            let query = PFQuery(className: "Pictures")
+            let imgToDel = self.slideshowImgIds[imageNum]
+            self.slideshowImgIds.remove(at: imageNum)
+            query.getObjectInBackground(withId: imgToDel) { (img: PFObject?, error: Error?) in
+                if let error = error {
+                    print(error.localizedDescription)
+                } else {
+                    img?.deleteInBackground() {(success, error: Error?) in
+                        if success {
+                            self.refresh()
+                            self.slideshow.setImageInputs(self.imageSource)
+                            self.slideshow.setNeedsDisplay()
+                            let alert = UIAlertController(title: "Success", message: "Image deleted!", preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                            self.present(alert, animated: true, completion: nil)
+                        } else {
+                            print(error!.localizedDescription)
+                        }
+                    }
+                }
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        // 4. Present the alert.
+        self.present(alert, animated: true, completion: nil)
+    }
 
 
     // Refresh button
@@ -159,6 +201,7 @@ class MainViewController: UIViewController {
                 for post in posts! {
                     let imageFile = post["image"] as! PFFileObject
                     self.updatedList.append(ParseSource(file: imageFile))
+                    self.slideshowImgIds.append(post.objectId!)
                 }
             }
             self.imageSource = self.updatedList
@@ -173,6 +216,32 @@ class MainViewController: UIViewController {
     @objc func didTap() {
         let fullScreenController = slideshow.presentFullScreenController(from: self)
         fullScreenController.slideshow.activityIndicator = DefaultActivityIndicator(style: .white, color: nil)
+    }
+    
+    func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
+        let size = image.size
+        
+        let widthRatio  = targetSize.width  / size.width
+        let heightRatio = targetSize.height / size.height
+        
+        // Figure out what our orientation is, and use that to form the rectangle
+        var newSize: CGSize
+        if(widthRatio > heightRatio) {
+            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+        } else {
+            newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
+        }
+        
+        // This is the rect that we've calculated out and this is what is actually used below
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+        
+        // Actually do the resizing to the rect using the ImageContext stuff
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        image.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage!
     }
 }
 
