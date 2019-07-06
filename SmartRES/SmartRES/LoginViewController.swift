@@ -8,7 +8,6 @@
 
 import UIKit
 import Parse
-import Firebase
 
 class LoginViewController: UIViewController {
 
@@ -57,8 +56,7 @@ class LoginViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        
-        if UserDefaults.standard.bool(forKey: "userLoggedIn") == true {
+        if UserDefaults.standard.bool(forKey: "userLoggedIn") == true && PFUser.current() != nil {
             self.performSegue(withIdentifier: "mainSegue", sender: self)
         }
     }

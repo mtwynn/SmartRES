@@ -66,7 +66,7 @@ class ProfileViewController: UIViewController {
                     let imageData = photo.image.pngData()
                     let file = PFFileObject(data: imageData!)
                     user["profilePic"] = file
-                    user.saveInBackground()
+                    user.saveEventually()
                 }
             }
             picker.dismiss(animated: true, completion: nil)

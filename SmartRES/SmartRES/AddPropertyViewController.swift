@@ -8,8 +8,6 @@
 
 import UIKit
 import Parse
-import FirebaseCore
-import FirebaseDatabase
 import Alamofire
 import YPImagePicker
 
