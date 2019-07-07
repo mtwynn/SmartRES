@@ -7,44 +7,16 @@ Michael Mac
 Erick Samano  
 Jeff Huang  
 
+---
 
 ### App Description
 SmartRES is the solution for real estate agents to replace traditional painted real estate signs with digital signs that are capable of functions like displaying agent information, interior views of the property, video tours and conferencing, and even data collection. The software side of the product consists of two parts:
 1) The mobile application (currently with iOS) allows agents to review and update their signs at their properties, which will happen in real time.
 2) The digital signs will use Raspberry Pi's (model Zero W) with open-source software and Python scripts to compute, display, and retrieve data. 
 
-### App Idea Evaluation
-
-- *Mobile*
-   How uniquely mobile is the product experience?
-      What makes your app more than a glorified website?
-      Try for 2 or more of these: maps, camera, location, audio, sensors, push, real-time, etc
-      
-- *Story*
-   How compelling is the story around this app once completed?
-      How clear is the value of this app to your audience?
-      How well would your friends or peers respond to this product idea?
-
-- *Market*
-   How large or unique is the market for this app?
-      What's the size and scale of your potential user base?
-      Does this app provide huge value to a niche group of people?
-      Do you have a well-defined audience of people for this app?
-      
-- *Habit*: 
-   How habit-forming or addictive is this app?
-      How frequently would an average user open and use this app?
-      Does an average user just consume your app or do they create?
-      
-- *Scope*:
-   How well-formed is the scope for this app?
-      How technically challenging will it be to complete this app by the end of the program?
-      Is a stripped-down version of this app still interesting to build?
-      How clearly defined is the product you want to build?
 ---
 
 ### User Stories
-
 **Required Must-have Stories**
 - [ ] Delete images needs more verification cases (1, 1,2,3, 1-5)
 - [ ] Regex verifications for signup and add property
@@ -54,9 +26,10 @@ SmartRES is the solution for real estate agents to replace traditional painted r
 - [ ] Remember Me Button
 - [ ] GPS pinpointing for add property
 - [ ] Search properties with various filters
----
-### Screen Archetypes
 
+---
+
+### Screen Archetypes
  * Login Screen
      * User can login
      * User can register for an account
@@ -74,9 +47,10 @@ SmartRES is the solution for real estate agents to replace traditional painted r
      * User can view a automatically/manually rotating slideshow of images related to this property
      * User can add new images
      * User can delete old images 
+     
 ---
-### Navigation
 
+### Navigation
 **Tab Navigation**
  * Property Collection Screen
  * Profile Screen
@@ -98,16 +72,17 @@ SmartRES is the solution for real estate agents to replace traditional painted r
 
 ## Profile
 
-
+---
 
 ### App Pitch Presentation Deck
 
+---
+
+### Future Implementation/Ideas
 
 ---
-### Future Implementation/Ideas
 
 
 ### Todo
 - [ ] Create a working executable for Python script 
 - [ ] Restyle Delete images button
-
