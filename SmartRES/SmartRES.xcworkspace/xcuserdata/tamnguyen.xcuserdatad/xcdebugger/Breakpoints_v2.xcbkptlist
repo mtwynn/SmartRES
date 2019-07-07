@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SmartRES/SignupViewController.swift"
-            timestampString = "584172178.206857"
+            timestampString = "584174107.472003"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
             landmarkName = "createUser(_:)"
             landmarkType = "7">
          </BreakpointContent>

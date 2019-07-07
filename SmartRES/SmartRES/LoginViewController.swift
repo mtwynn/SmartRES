@@ -15,6 +15,7 @@ class LoginViewController: UIViewController {
     // User credentials
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
+    @IBOutlet weak var rememberMe: UISwitch!
     
     // Login button
     @IBOutlet weak var loginButtonView: UIButton!
@@ -39,6 +40,23 @@ class LoginViewController: UIViewController {
         passwordField.borderStyle = UITextField.BorderStyle.none
         usernameField.attributedPlaceholder = NSAttributedString(string: "Username", attributes: [NSAttributedString.Key.foregroundColor: UIColor.init(red: 175/255, green:175/255, blue: 175/255, alpha: 0.75)])
         passwordField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSAttributedString.Key.foregroundColor: UIColor.init(red: 175/255, green:175/255, blue: 175/255, alpha: 0.75)])
+        
+        // Remember user information
+        rememberMe.addTarget(self, action: #selector(self.stateChanged), for: .valueChanged)
+        let defaults: UserDefaults? = UserDefaults.standard
+        rememberMe.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
+        
+        // check if defaults already saved the details
+        
+        if (defaults?.bool(forKey: "ISRemember"))! {
+            usernameField.text = (defaults?.value(forKey: "SavedUserName") as! String)
+            passwordField.text = (defaults?.value(forKey: "SavedPassword") as! String)
+            self.rememberMe.setOn(true, animated: false)
+        }
+        else {
+            self.rememberMe.setOn(false, animated: false)
+        }
+        
         
         // Set background styles
         let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
@@ -103,6 +121,19 @@ class LoginViewController: UIViewController {
         }
     }
     
+    @objc func stateChanged(_ switchState: UISwitch) {
+        
+        let defaults: UserDefaults? = UserDefaults.standard
+        if switchState.isOn {
+            defaults?.set(true, forKey: "ISRemember")
+            defaults?.set(usernameField.text, forKey: "SavedUserName")
+            defaults?.set(passwordField.text, forKey: "SavedPassword")
+        }
+        else {
+            defaults?.set(false, forKey: "ISRemember")
+        }
+    }
+    
     
     @IBAction func signupButton(_ sender: Any) {
         self.performSegue(withIdentifier: "signupSegue", sender: nil)
@@ -140,4 +171,5 @@ class LoginViewController: UIViewController {
             }
         }
     }
+    
 }

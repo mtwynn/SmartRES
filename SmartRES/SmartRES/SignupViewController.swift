@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class SignupViewController: UIViewController {
+class SignupViewController: UIViewController, UITextViewDelegate {
 
     @IBOutlet weak var firstnameField: UITextField!
     @IBOutlet weak var lastnameField: UITextField!
@@ -18,8 +18,8 @@ class SignupViewController: UIViewController {
     @IBOutlet weak var phoneField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var pwConfirmField: UITextField!
-    @IBOutlet weak var bioField: UITextField!
-
+    @IBOutlet weak var bioField: UITextView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +32,12 @@ class SignupViewController: UIViewController {
         phoneField.borderStyle = UITextField.BorderStyle.none
         passwordField.borderStyle = UITextField.BorderStyle.none
         pwConfirmField.borderStyle = UITextField.BorderStyle.none
-
+        bioField.delegate = self
+        bioField.text = "Details about you (optional)"
+        bioField.textColor = .lightGray
+        bioField.layer.borderWidth = 1
+        bioField.layer.borderColor = UIColor.init(red: 212/255, green: 212/255, blue: 212/255, alpha: 1).cgColor
+        bioField.layer.cornerRadius = 5
         // Keyboard dismissal functions
         let tapGesture = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
         self.view.addGestureRecognizer(tapGesture)
@@ -85,9 +90,31 @@ class SignupViewController: UIViewController {
     }
     
     
+    func textViewDidBeginEditing(_ textView: UITextView)
+    {
+        if (textView.text == "Details about you (optional)" && textView.textColor == .lightGray)
+        {
+            textView.text = ""
+            textView.textColor = .black
+        }
+        textView.becomeFirstResponder() //Optional
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView)
+    {
+        if (textView.text == "")
+        {
+            textView.text = "Details about you (optional)"
+            textView.textColor = .lightGray
+        }
+        textView.resignFirstResponder()
+    }
+    
     @IBAction func backButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
+    
+    
     
     
     @objc func keyboardWillShow(notification: NSNotification) {
