@@ -93,11 +93,11 @@ Evaluate app across the following categories using the [App Evaluation Protocol]
 ### Future Implementation/Ideas
 
 Todo: 
-[ ] Create a working executable for Python script 
-[ ] Delete images needs more verification cases (1, 1,2,3, 1-5)
-[ ] Regex verifications for signup and add property
-[ ] Remember me button using UserDefaults
-[ ] Restyle Delete images button
-[ ] GPS pinpointing for add property
-[ ] Edit property details
-[ ] Search properties with various filters
+[] Create a working executable for Python script 
+[] Delete images needs more verification cases (1, 1,2,3, 1-5)
+[] Regex verifications for signup and add property
+[] Remember me button using UserDefaults
+[] Restyle Delete images button
+[] GPS pinpointing for add property
+[] Edit property details
+[] Search properties with various filters
