@@ -44,21 +44,22 @@ Evaluate app across the following categories using the [App Evaluation Protocol]
  * Login Screen
      * User can login
      * User can register for an account
- * Search Screen
-     * User can search up pictures/paintings by topic 
- * Upload Screen
-     * User can upload pictures
-     * User can add tags and pricing with the upload picture
+ * Property Collection Screen
+     * User can upload new properties
+     * User can delete existing properties
  * Profile Screen
-     * User can see pictures they have uploaded
- * Picture Viewer Screen
-     * User can view the picture in AR
+     * User can see their agent information and real-estate logo 
+     * User can add and change a profile picture
+     * User can log out
+ * Main Property View Screeen
+     * User can view a automatically/manually rotating slideshow of images related to this property
+     * User can add new images
+     * User can delete old images 
 ---
 ### Navigation
 
 **Tab Navigation** (Tab to Screen)
- * Search Screen
- * Upload Screen
+ * Property Collection Screen
  * Profile Screen
 
 ---
@@ -107,3 +108,4 @@ Todo:
 - Remember me button using UserDefaults
 - Restyle Delete images button
 - GPS pinpointing for add property
+- Edit property details
