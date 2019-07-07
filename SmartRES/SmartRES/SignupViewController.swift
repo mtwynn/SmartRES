@@ -13,9 +13,12 @@ class SignupViewController: UIViewController {
 
     @IBOutlet weak var firstnameField: UITextField!
     @IBOutlet weak var lastnameField: UITextField!
+    @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var emailField: UITextField!
+    @IBOutlet weak var phoneField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var pwConfirmField: UITextField!
+    @IBOutlet weak var bioField: UITextField!
 
     
     override func viewDidLoad() {
@@ -24,10 +27,12 @@ class SignupViewController: UIViewController {
         // Set input field styles
         firstnameField.borderStyle = UITextField.BorderStyle.none
         lastnameField.borderStyle = UITextField.BorderStyle.none
+        usernameField.borderStyle = UITextField.BorderStyle.none
         emailField.borderStyle = UITextField.BorderStyle.none
+        phoneField.borderStyle = UITextField.BorderStyle.none
         passwordField.borderStyle = UITextField.BorderStyle.none
         pwConfirmField.borderStyle = UITextField.BorderStyle.none
-        
+
         // Keyboard dismissal functions
         let tapGesture = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
         self.view.addGestureRecognizer(tapGesture)
@@ -45,15 +50,23 @@ class SignupViewController: UIViewController {
 
     @IBAction func createUser(_ sender: Any) {
         let user = PFUser()
-        user.username = emailField.text
+        if (usernameField.text == nil) {
+            user.username = emailField.text
+        } else {
+            user.username = usernameField.text
+        }
         user.password = passwordField.text
-        user["firstName"] = firstnameField.text
-        user["lastName"] = lastnameField.text
-        if (!(firstnameField!.text != nil) || !(lastnameField!.text != nil) || !(emailField!.text != nil) || !(passwordField!.text != nil) || !(pwConfirmField != nil) || (passwordField.text != pwConfirmField.text)) {
+        
+        if (!(firstnameField!.text != nil) || !(lastnameField!.text != nil) || !(emailField!.text != nil) || !(phoneField!.text != nil) || !(passwordField!.text != nil) || !(pwConfirmField != nil) || (passwordField.text != pwConfirmField.text)) {
             let alert = UIAlertController(title: "Error", message: "Please fill out all the fields or double check your passwords", preferredStyle: UIAlertController.Style.alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
         } else {
+            user["firstName"] = firstnameField.text
+            user["lastName"] = lastnameField.text
+            user["email"] = emailField.text
+            user["phone"] = phoneField.text
+            user["bio"] = bioField.text
             // Sign user up
             user.signUpInBackground { (success, error) in
                 if success { // Sign up successful
@@ -63,7 +76,7 @@ class SignupViewController: UIViewController {
                     }))
                     self.present(alert, animated: true, completion: nil)
                 } else { // Sign up failed
-                    let alert = UIAlertController(title: "Error", message: "Could not sign up", preferredStyle: UIAlertController.Style.alert)
+                    let alert = UIAlertController(title: "Error", message: "Could not sign up. That username or email already exists.", preferredStyle: UIAlertController.Style.alert)
                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
                     self.present(alert, animated: true, completion: nil)
                 }

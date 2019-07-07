@@ -36,6 +36,7 @@ class ProfileViewController: UIViewController {
         nameLabel.text = "\(firstName) \(lastName)"
         emailLabel.text = UserDefaults.standard.string(forKey: "email")!
         phoneLabel.text = UserDefaults.standard.string(forKey: "phone")!
+        bioLabel.text = UserDefaults.standard.string(forKey: "bio")!
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(addProfilePic))
         profilePicView.addGestureRecognizer(tap)
