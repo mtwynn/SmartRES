@@ -102,3 +102,4 @@ Todo:
 - Delete images needs more verification cases (1, 1,2,3, 1-5)
 - Regex verifications for signup and add property
 - Compress images before upload to reduce bandwidth impact
+- Remember me button using UserDefaults
