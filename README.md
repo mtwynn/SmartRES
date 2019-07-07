@@ -68,13 +68,13 @@ Evaluate app across the following categories using the [App Evaluation Protocol]
 +<img src="/gifs/Login.gif?raw=true" width="300px">
 +<img src="/gifs/Signup.gif?raw=true" width="300px">
 
-## Property list
+## Property Collection
 +<img src="/gifs/Property_Collection.gif?raw=true" width="300px">
 
-## Add a property
+## Add Property
 +<img src="/gifs/Add_Property.gif?raw=true" width="300px">
 
-## Upload images to property
+## Edit Property
 +<img src="/gifs/Add_Images.gif?raw=true" width="300px">
 
 ## Profile
