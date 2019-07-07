@@ -63,7 +63,7 @@ Evaluate app across the following categories using the [App Evaluation Protocol]
  * Profile Screen
 
 ---
-### Wireframes
+### Walkthroughs
 ### Login View
 ![LoginView](/Augma/wireframes/LoginView.png?raw=true)
 
