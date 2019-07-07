@@ -74,7 +74,7 @@ SmartRES is the solution for real estate agents to replace traditional painted r
 
 
 ## Sign View (currently from Desktop)
-+<img src="/gifs/ Sign_Demo_View.gif?raw=true">
++<img src="/gifs/Sign_Demo_View.gif?raw=true">
 
 ---
 
