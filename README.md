@@ -63,35 +63,28 @@ Evaluate app across the following categories using the [App Evaluation Protocol]
  * Profile Screen
 
 ---
-### Walkthroughs
-### Login View
-![LoginView](/Augma/wireframes/LoginView.png?raw=true)
-
-### Gallery View
-![GalleryView](/Augma/wireframes/GalleryView.png?raw=true)
-
-### Product View
-![ProductView](/Augma/wireframes/ProductView.png?raw=true)
----
 
 ## Login/Signup
++<img src="/gifs/Login.gif?raw=true" width="300px">
++<img src="/gifs/Signup.gif?raw=true" width="300px">
 
-<img src='https://i.imgur.com/rC1Ubiq.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+## Property list
 
-## Augmented Reality (AR) View
 
-<img src='http://g.recordit.co/MaHw0P1ZYS.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+## Add a property
++<img src="/gifs/Add_Property.gif?raw=true" width="300px">
 
-## Upload a picture
+## Upload images to property
++<img src="/gifs/Add_Images.gif?raw=true" width="300px">
 
-<img src='https://i.imgur.com/ub2vcfv.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+## Profile
 
-## Profile page
 
-<img src='https://i.imgur.com/8QqgTJR.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
-## Searching and viewing a picture
-<img src='http://g.recordit.co/Q1KwpA8ngE.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+
+
+
 
 ### App Pitch Presentation Deck
 
