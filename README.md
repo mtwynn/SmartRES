@@ -102,3 +102,4 @@ Todo:
 - Restyle Delete images button
 - GPS pinpointing for add property
 - Edit property details
+- Search with various filters
