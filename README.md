@@ -23,7 +23,7 @@ SmartRES is the solution for real estate agents to replace traditional painted r
 - [ ] Edit property details
 
 **Optional Nice-to-have Stories**
-- [ ] Remember Me Button
+- [X] Remember Me Button
 - [ ] GPS pinpointing for add property
 - [ ] Search properties with various filters
 
