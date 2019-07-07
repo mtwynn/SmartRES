@@ -75,7 +75,7 @@ Evaluate app across the following categories using the [App Evaluation Protocol]
 ---
 
 ## Login/Signup
-+<img src="/gifs/Login.gif?raw=true" width="200px">
++<img src="/gifs/Login.gif?raw=true" width="300px">
 
 ## Augmented Reality (AR) View
 
