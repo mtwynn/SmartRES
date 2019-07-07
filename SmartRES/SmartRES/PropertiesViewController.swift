@@ -195,7 +195,6 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
         
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default, handler: nil))
         alert.addAction(UIAlertAction(title: "Yes, I'm sure", style: UIAlertAction.Style.default, handler: {action in
-            print("Deleting cell...")
             let i : Int = (sender.layer.value(forKey: "index")) as! Int
             let toDelete = self.properties[i].id
             
@@ -204,6 +203,15 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
                 if let error = error {
                     print(error.localizedDescription)
                 } else {
+                    let picQuery = PFQuery(className:"Picture")
+                    picQuery.whereKey("propertyId", equalTo: toDelete)
+                    picQuery.findObjectsInBackground() { (picDict, error) in
+                        if (picDict != nil) {
+                            for pic in picDict! {
+                                pic.deleteInBackground()
+                            }
+                        }
+                    }
                     property?.deleteInBackground() { (success, error) in
                         if success {
                             let alert = UIAlertController(title: "Success", message: "Property, \(propertyName), has been deleted.", preferredStyle: UIAlertController.Style.alert)

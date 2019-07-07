@@ -9,10 +9,12 @@ Jeff Huang
 
 
 ### App Description
-
+SmartRES is the solution for real estate agents to replace traditional painted real estate signs with digital signs that are capable of functions like displaying agent information, interior views of the property, video tours and conferencing, and even data collection. The software side of the product consists of two parts:
+1) The mobile application (currently with iOS) allows agents to review and update their signs at their properties, which will happen in real time.
+2) The digital signs will use Raspberry Pi's (model Zero W) with open-source software and Python scripts to compute, display, and retrieve data. 
 
 ### App Idea Evaluation
-Evaluate app across the following categories using the [App Evaluation Protocol](https://courses.codepath.com/courses/ios_university/pages/group_project/01_app_brainstorming_guide).
+Evaluate app across the following categories using the [App Evaluation Protocol](https://courses.codeath.com/courses/ios_university/pages/group_project/01_app_brainstorming_guide).
 
 - *Mobile*
 
@@ -42,25 +44,26 @@ Evaluate app across the following categories using the [App Evaluation Protocol]
  * Login Screen
      * User can login
      * User can register for an account
- * Search Screen
-     * User can search up pictures/paintings by topic 
- * Upload Screen
-     * User can upload pictures
-     * User can add tags and pricing with the upload picture
+ * Property Collection Screen
+     * User can upload new properties
+     * User can delete existing properties
  * Profile Screen
-     * User can see pictures they have uploaded
- * Picture Viewer Screen
-     * User can view the picture in AR
+     * User can see their agent information and real-estate logo 
+     * User can add and change a profile picture
+     * User can log out
+ * Main Property View Screeen
+     * User can view a automatically/manually rotating slideshow of images related to this property
+     * User can add new images
+     * User can delete old images 
 ---
 ### Navigation
 
 **Tab Navigation** (Tab to Screen)
- * Search Screen
- * Upload Screen
+ * Property Collection Screen
  * Profile Screen
 
 ---
-### Wireframes
+### Walkthroughs
 ### Login View
 ![LoginView](/Augma/wireframes/LoginView.png?raw=true)
 
@@ -73,7 +76,7 @@ Evaluate app across the following categories using the [App Evaluation Protocol]
 
 ## Login/Signup
 
-<img src='https://i.imgur.com/9Oz79bp.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://i.imgur.com/rC1Ubiq.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 ## Augmented Reality (AR) View
 
@@ -103,3 +106,6 @@ Todo:
 - Regex verifications for signup and add property
 - Compress images before upload to reduce bandwidth impact
 - Remember me button using UserDefaults
+- Restyle Delete images button
+- GPS pinpointing for add property
+- Edit property details
