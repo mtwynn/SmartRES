@@ -75,8 +75,7 @@ Evaluate app across the following categories using the [App Evaluation Protocol]
 ---
 
 ## Login/Signup
-
-<img src='https://i.imgur.com/rC1Ubiq.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
++<img src="/SmartRES/gifs/Login.gif?raw=true" width="200px">
 
 ## Augmented Reality (AR) View
 
