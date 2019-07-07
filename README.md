@@ -14,7 +14,6 @@ SmartRES is the solution for real estate agents to replace traditional painted r
 2) The digital signs will use Raspberry Pi's (model Zero W) with open-source software and Python scripts to compute, display, and retrieve data. 
 
 ### App Idea Evaluation
-Evaluate app across the following categories using the [App Evaluation Protocol](https://courses.codeath.com/courses/ios_university/pages/group_project/01_app_brainstorming_guide).
 
 - *Mobile*
    How uniquely mobile is the product experience?
