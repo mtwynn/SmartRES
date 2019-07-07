@@ -106,3 +106,4 @@ Todo:
 - Compress images before upload to reduce bandwidth impact
 - Remember me button using UserDefaults
 - Restyle Delete images button
+- GPS pinpointing for add property
