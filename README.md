@@ -69,7 +69,7 @@ Evaluate app across the following categories using the [App Evaluation Protocol]
 +<img src="/gifs/Signup.gif?raw=true" width="300px">
 
 ## Property list
-
++<img src="/gifs/Property_Collection.gif?raw=true" width="300px">
 
 ## Add a property
 +<img src="/gifs/Add_Property.gif?raw=true" width="300px">
@@ -94,10 +94,8 @@ Evaluate app across the following categories using the [App Evaluation Protocol]
 
 Todo: 
 - Create a working executable for Python script 
-- When user deletes a property, all associated images must go with it
 - Delete images needs more verification cases (1, 1,2,3, 1-5)
 - Regex verifications for signup and add property
-- Compress images before upload to reduce bandwidth impact
 - Remember me button using UserDefaults
 - Restyle Delete images button
 - GPS pinpointing for add property
