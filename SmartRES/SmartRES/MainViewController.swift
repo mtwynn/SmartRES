@@ -102,9 +102,10 @@ class MainViewController: UIViewController {
                 // If photo
                 case .photo(let photo):
 
-                    let post = PFObject(className: "Pictures")
+                    let post = PFObject(className: "Picture")
                     let resizedImage = self.resizeImage(image: photo.image, targetSize: CGSize(width:600.0, height:600.0))
-                    let imageData = resizedImage.pngData()
+                    let imageData = resizedImage.jpeg(.lowest)
+                    //let imageData = resizedImage.pngData()
                     let file = PFFileObject(data: imageData!)
 
                     post["image"] = file
@@ -176,7 +177,7 @@ class MainViewController: UIViewController {
                 }*/
             } else {
                 let imageNum = Int(input)! - 1
-                let query = PFQuery(className: "Pictures")
+                let query = PFQuery(className: "Picture")
                 let imgToDel = self.slideshowImgIds[imageNum]
                 self.slideshowImgIds.remove(at: imageNum)
                 query.getObjectInBackground(withId: imgToDel) { (img: PFObject?, error: Error?) in
@@ -198,10 +199,7 @@ class MainViewController: UIViewController {
                     }
                 }
             }
-            
-            
-            
-        }))
+        }));
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
         // 4. Present the alert.
@@ -226,7 +224,7 @@ class MainViewController: UIViewController {
         // Clear updated list
         self.updatedList.removeAll(keepingCapacity: true)
 
-        let query = PFQuery(className: "Pictures")
+        let query = PFQuery(className: "Picture")
         query.whereKey("agent", equalTo: PFUser.current()!)
         query.whereKey("propertyId", equalTo: self.property?.id)
         query.findObjectsInBackground() { (posts, error) in
@@ -283,5 +281,22 @@ class MainViewController: UIViewController {
 extension MainViewController: ImageSlideshowDelegate {
     func imageSlideshow(_ imageSlideshow: ImageSlideshow, didChangeCurrentPageTo page: Int) {
         print("current page:", page)
+    }
+}
+
+extension UIImage {
+    enum JPEGQuality: CGFloat {
+        case lowest  = 0
+        case low     = 0.25
+        case medium  = 0.5
+        case high    = 0.75
+        case highest = 1
+    }
+    
+    /// Returns the data for the specified image in JPEG format.
+    /// If the image object’s underlying image data has been purged, calling this function forces that data to be reloaded into memory.
+    /// - returns: A data object containing the JPEG data, or nil if there was a problem generating the data. This function may return nil if the image has no data or if the underlying CGImageRef contains data in an unsupported bitmap format.
+    func jpeg(_ jpegQuality: JPEGQuality) -> Data? {
+        return jpegData(compressionQuality: jpegQuality.rawValue)
     }
 }

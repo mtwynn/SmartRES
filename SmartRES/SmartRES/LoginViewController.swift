@@ -126,14 +126,16 @@ class LoginViewController: UIViewController {
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        UserDefaults.standard.set(true, forKey: "userLoggedIn")
-        UserDefaults.standard.set(user!["firstName"], forKey: "firstName")
-        UserDefaults.standard.set(user!["lastName"], forKey: "lastName")
-        UserDefaults.standard.set(user!["phone"], forKey: "phone")
-        if (user!["profilePic"] != nil) {
-            let imageFile = user!["profilePic"] as! PFFileObject
-            let url = URL(string: imageFile.url!)!
-            UserDefaults.standard.set(url, forKey: "profilePic")
+        if (segue.identifier != "signupSegue") {
+            UserDefaults.standard.set(true, forKey: "userLoggedIn")
+            UserDefaults.standard.set(user!["firstName"], forKey: "firstName")
+            UserDefaults.standard.set(user!["lastName"], forKey: "lastName")
+            UserDefaults.standard.set(user!["phone"], forKey: "phone")
+            if (user!["profilePic"] != nil) {
+                let imageFile = user!["profilePic"] as! PFFileObject
+                let url = URL(string: imageFile.url!)!
+                UserDefaults.standard.set(url, forKey: "profilePic")
+            }
         }
     }
 }

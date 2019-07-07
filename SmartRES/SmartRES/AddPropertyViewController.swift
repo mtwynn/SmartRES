@@ -243,7 +243,8 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
         
         // Check if thumnail exists before trying to add it
         if (thumbnailView.image != nil) {
-            let imageData = thumbnailView.image?.pngData()
+            let imageData = thumbnailView.image?.jpeg(.lowest)
+            //let imageData = thumbnailView.image?.pngData()
             let file = PFFileObject(data: imageData!)
             property["thumbnail"] = file
         }

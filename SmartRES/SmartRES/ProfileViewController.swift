@@ -71,10 +71,21 @@ class ProfileViewController: UIViewController {
                 self.profilePicView.image = photo.image
                 
                 if let user = PFUser.current(){
-                    let imageData = photo.image.pngData()
+                    let imageData = photo.image.jpeg(.lowest)
+                    //let imageData = photo.image.pngData()
                     let file = PFFileObject(data: imageData!)
                     user["profilePic"] = file
-                    user.saveInBackground()
+                    user.saveInBackground() { (success, error) in
+                        if (success) {
+                            let alert = UIAlertController(title: "Success", message: "Profile pic successfully added", preferredStyle: UIAlertController.Style.alert)
+                            
+                            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                        } else {
+                            let alert = UIAlertController(title: "Error", message: "Failed to add profile pic", preferredStyle: UIAlertController.Style.alert)
+                            
+                            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                        }
+                    }
                 }
             }
             picker.dismiss(animated: true, completion: nil)
