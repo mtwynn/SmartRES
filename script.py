@@ -2,12 +2,12 @@ import os
 import sys
 os.environ["PARSE_API_ROOT"] = "http://smart-res.herokuapp.com/parse"
 
-from parse_rest.datatypes import Function, Object, GeoPoint, File, Binary, ParseType
-from parse_rest.connection import register
-from parse_rest.query import QueryResourceDoesNotExist
-from parse_rest.connection import ParseBatcher
-from parse_rest.core import ResourceRequestBadRequest, ParseError
-from parse_rest.user import User
+from ParsePy.parse_rest.datatypes import Function, Object, GeoPoint, File, Binary, ParseType
+from ParsePy.parse_rest.connection import register
+from ParsePy.parse_rest.query import QueryResourceDoesNotExist
+from ParsePy.parse_rest.connection import ParseBatcher
+from ParsePy.parse_rest.core import ResourceRequestBadRequest, ParseError
+from ParsePy.parse_rest.user import User
 import urllib.request
 
 
@@ -17,13 +17,22 @@ MASTER_KEY = 'fur3l153'
 
 register(APPLICATION_ID, REST_API_KEY, master_key=MASTER_KEY)
 
-class Pictures(Object):
+class Picture(Object):
     pass
 
 propertyId = input("Enter your PropertyID: ")
 
-pictures = Pictures.Query.all()
-slideshow = Pictures.Query.filter(propertyId=propertyId)
+#Clear folder of all previous .bin items
+dir_name = "./"
+test = os.listdir(dir_name)
+
+for item in test:
+    if item.endswith(".bin"):
+        os.remove(os.path.join(dir_name, item))
+        
+        
+pictures = Picture.Query.all()
+slideshow = Picture.Query.filter(propertyId=propertyId)
 if (len(slideshow) == 0):
     print("No pictures to display. Please upload through the app.")
     sys.exit(0)
@@ -38,8 +47,6 @@ for pic in slideshow:
 out_file.close()
 
 
-import importlib
-
-importlib.import_module("slideshow-2.py")
+import slideshow
 
 
