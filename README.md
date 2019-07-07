@@ -31,26 +31,30 @@ Evaluate app across the following categories using the [App Evaluation Protocol]
 ### User Stories
 
 **Required Must-have Stories**
-- [x] User can upload pictures  
-- [x] User can view feed of other pictures posted to the site  
-- [x] User can submit a request to "purchase" a picture  
+- [ ] Delete images needs more verification cases (1, 1,2,3, 1-5)
+- [ ] Regex verifications for signup and add property
+- [ ] Edit property details
 
 **Optional Nice-to-have Stories**
-- [x] User can search for by tag
-
+- [ ] Remember Me Button
+- [ ] GPS pinpointing for add property
+- [ ] Search properties with various filters
 ---
 ### Screen Archetypes
 
  * Login Screen
      * User can login
      * User can register for an account
+     
  * Property Collection Screen
      * User can upload new properties
      * User can delete existing properties
+     
  * Profile Screen
      * User can see their agent information and real-estate logo 
      * User can add and change a profile picture
      * User can log out
+     
  * Main Property View Screeen
      * User can view a automatically/manually rotating slideshow of images related to this property
      * User can add new images
@@ -58,10 +62,10 @@ Evaluate app across the following categories using the [App Evaluation Protocol]
 ---
 ### Navigation
 
-**Tab Navigation** (Tab to Screen)
+**Tab Navigation**
  * Property Collection Screen
  * Profile Screen
-
+ 
 ---
 
 ## Login/Signup
@@ -81,23 +85,14 @@ Evaluate app across the following categories using the [App Evaluation Protocol]
 
 
 
-
-
-
-
-
 ### App Pitch Presentation Deck
 
 
 ---
 ### Future Implementation/Ideas
 
-Todo: 
+
+### Todo
 - [ ] Create a working executable for Python script 
-- [ ] Delete images needs more verification cases (1, 1,2,3, 1-5)
-- [ ] Regex verifications for signup and add property
-- [ ] Remember me button using UserDefaults
 - [ ] Restyle Delete images button
-- [ ] GPS pinpointing for add property
-- [ ] Edit property details
-- [ ] Search properties with various filters
+
