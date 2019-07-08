@@ -58,7 +58,7 @@ SmartRES is the solution for real estate agents to replace traditional painted r
 ---
 
 ## Login/Signup
-<img src="/gifs/Login.gif?raw=true" width="300px">
++<img src="/gifs/Login.gif?raw=true" width="300px">
 +<img src="/gifs/Signup.gif?raw=true" width="300px">
 
 ## Property Collection
