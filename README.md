@@ -19,7 +19,7 @@ SmartRES is the solution for real estate agents to replace traditional painted r
 ### User Stories
 **Required Must-have Stories**
 - [ ] Delete images needs more verification cases (1, 1,2,3, 1-5)
-- [ ] Regex verifications for signup and add property
+- [X] Regex verifications for signup and add property
 - [ ] Edit property details
 
 **Optional Nice-to-have Stories**
