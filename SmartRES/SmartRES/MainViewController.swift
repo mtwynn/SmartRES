@@ -208,15 +208,51 @@ class MainViewController: UIViewController {
 
 
     // Refresh button
-    @IBAction func refreshButton(_ sender: Any) {
-        downloadGroup.enter()
-        refresh()
-        downloadGroup.leave()
-        downloadGroup.notify(queue: DispatchQueue.main, execute: {
-            let alert = UIAlertController(title: "Refresh", message: "Refreshed successfully!", preferredStyle: UIAlertController.Style.alert)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-        })
+    @IBAction func editButton(_ sender: Any) {
+        let alert = UIAlertController(title: "Edit Property", message: "Fill in the fields you would like edited, and then hit Submit", preferredStyle: .alert)
+        
+        alert.addTextField { (textField) in
+            textField.placeholder = "Address"
+        }
+        alert.addTextField { (textField) in
+            textField.placeholder = "City"
+        }
+        alert.addTextField { (textField) in
+            textField.placeholder = "State"
+        }
+        alert.addTextField { (textField) in
+            textField.placeholder = "Zip Code"
+        }
+        alert.addTextField { (textField) in
+            textField.placeholder = "Type"
+        }
+        alert.addTextField { (textField) in
+            textField.placeholder = "Bed"
+        }
+        alert.addTextField { (textField) in
+            textField.placeholder = "Bath"
+        }
+        alert.addTextField { (textField) in
+            textField.placeholder = "Price"
+        }
+        
+        alert.addAction(UIAlertAction(title: "Submit", style: .default, handler: { [weak alert] (_) in
+            
+            let editAddress = alert?.textFields![0]
+            let editCity = alert?.textFields![1]
+            let editState = alert?.textFields![2]
+            let editZip = alert?.textFields![3]
+            let editType = alert?.textFields![4]
+            let editBed = alert?.textFields![5]
+            let editBath = alert?.textFields![6]
+            let editPrice = alert?.textFields![7]
+            
+            
+        }));
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        // 4. Present the alert.
+        self.present(alert, animated: true, completion: nil)
     }
 
 

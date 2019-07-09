@@ -668,9 +668,9 @@
                     </view>
                     <navigationItem key="navigationItem" title="32502 Arroyo" leftItemsSupplementBackButton="YES" id="CE7-eR-4Ip">
                         <barButtonItem key="backBarButtonItem" title="Properties" id="N4n-tW-PEZ"/>
-                        <barButtonItem key="rightBarButtonItem" title="Refresh" id="X0d-5d-gnF">
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="X0d-5d-gnF">
                             <connections>
-                                <action selector="refreshButton:" destination="tOa-50-mLJ" id="oH1-GG-CzN"/>
+                                <action selector="editButton:" destination="tOa-50-mLJ" id="88e-py-aVy"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
