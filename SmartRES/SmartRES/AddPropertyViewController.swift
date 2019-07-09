@@ -30,7 +30,7 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
     
     // States and their data
     var sortedStates = [String]()
-    var stateDictionary = [ "Alabama": "AL",
+    let stateDictionary = [ "Alabama": "AL",
                             "Alaska": "AK",
                             "Arizona": "AZ",
                             "Arkansas": "AR",
@@ -82,11 +82,17 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
                             "Wyoming": "WY"]
     
     // Types
-    var typesArray = ["House", "Apartment", "Land"]
+    let typesArray = ["House", "Apartment", "Land"]
+    
+    // Beds and baths
+    let bedArray = ["1", "2", "3", "4", "5", "6", "7"]
+    let bathArray = ["1", "1.5", "2", "2.5", "3", "3.5", "4"]
     
     // Pickers 
     var statePicker : UIPickerView! = UIPickerView()
     var typePicker : UIPickerView! = UIPickerView()
+    var bedPicker : UIPickerView! = UIPickerView()
+    var bathPicker : UIPickerView! = UIPickerView()
     var myPicker : UIPickerView! = UIPickerView()
 
 
@@ -99,14 +105,24 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
         super.viewDidLoad()
         self.statePicker = UIPickerView(frame: CGRect(x: 0, y: 40, width: 0, height: 0))
         self.typePicker = UIPickerView(frame: CGRect(x: 0, y: 40, width: 0, height: 0))
+        self.bedPicker = UIPickerView(frame: CGRect(x: 0, y: 40, width: 0, height: 0))
+        self.bathPicker = UIPickerView(frame: CGRect(x: 0, y: 40, width: 0, height: 0))
         self.typePicker.delegate = self
         self.typePicker.dataSource = self
-        
+        self.statePicker.dataSource = self
+        self.statePicker.delegate = self
+        self.bedPicker.dataSource = self
+        self.bedPicker.delegate = self
+        self.bathPicker.dataSource = self
+        self.bathPicker.delegate = self
         self.statePicker.tag = 1
         self.typePicker.tag = 2
+        self.bedPicker.tag = 3
+        self.bathPicker.tag = 4
+        
         self.stateField.delegate = self
-        self.statePicker.delegate = self
-        self.statePicker.dataSource = self
+        self.zipField.delegate = self
+        
         
         // Set input field styles
         self.addressField.borderStyle = UITextField.BorderStyle.none
@@ -122,9 +138,14 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
         addButtonView.isEnabled = false
         [addressField, cityField, zipField, stateField, typeField, bedField, bathField, priceField].forEach({ $0.addTarget(self, action: #selector(editingChanged), for: .editingChanged) })
         
+        priceField.addTarget(self, action: #selector(priceAppend), for: UIControl.Event.editingDidEnd)
+        
         // Add toolbar (Cancel/Done) to Pickers
         let toolBar = UIToolbar()
         statePicker.showsSelectionIndicator = true
+        typePicker.showsSelectionIndicator = true
+        bedPicker.showsSelectionIndicator = true
+        bathPicker.showsSelectionIndicator = true
         toolBar.barStyle = UIBarStyle.default
         toolBar.isTranslucent = true
         toolBar.tintColor = UIColor(red: 0/255, green: 122/255, blue: 255/255, alpha: 1)
@@ -140,8 +161,12 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
         toolBar.isUserInteractionEnabled = true
         self.stateField.inputView = self.statePicker
         self.typeField.inputView = self.typePicker
+        self.bedField.inputView = self.bedPicker
+        self.bathField.inputView = self.bathPicker
         self.stateField.inputAccessoryView = toolBar
         self.typeField.inputAccessoryView = toolBar
+        self.bedField.inputAccessoryView = toolBar
+        self.bathField.inputAccessoryView = toolBar
 
         self.sortedStates = (Array(stateDictionary.keys).sorted())
         
@@ -155,16 +180,6 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         //let ref = Database.database().reference()
-    }
-    
-
-    @IBAction func stateButton(_ sender: Any) {
-        self.stateField.becomeFirstResponder()
-    }
-    
-
-    func cancelPicker(sender: UIButton) {
-        self.stateField.resignFirstResponder()
     }
     
     
@@ -295,20 +310,46 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
     
 
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return (pickerView.tag == 1) ? stateDictionary.count : typesArray.count
+        var count = 0
+        if (pickerView.tag == 1) {
+            count = stateDictionary.count
+        } else if (pickerView.tag == 2) {
+            count = typesArray.count
+        } else if (pickerView.tag == 3) {
+            count = bedArray.count
+        } else {
+            count = bathArray.count
+        }
+        
+        return count
     }
     
 
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return (pickerView.tag == 1) ? self.sortedStates[row] : typesArray[row]
+        var stringToReturn : String
+        if (pickerView.tag == 1) {
+            stringToReturn = self.sortedStates[row]
+        } else if (pickerView.tag == 2) {
+            stringToReturn = typesArray[row]
+        } else if (pickerView.tag == 3) {
+            stringToReturn = bedArray[row]
+        } else {
+            stringToReturn = bathArray[row]
+        }
+        
+        return stringToReturn
     }
     
 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if (pickerView.tag == 1) {
             stateField.text = stateDictionary[self.sortedStates[row]]!
-        } else {
+        } else if (pickerView.tag == 2) {
             typeField.text = typesArray[row]
+        } else if (pickerView.tag == 3) {
+            bedField.text = bedArray[row]
+        } else {
+            bathField.text = bathArray[row]
         }
     }
 
@@ -316,6 +357,20 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
         
         stateField.resignFirstResponder()
         typeField.resignFirstResponder()
+        bedField.resignFirstResponder()
+        bathField.resignFirstResponder()
+    }
+    
+    // Field verification functions
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let textFieldText = textField.text,
+            let rangeOfTextToReplace = Range(range, in: textFieldText) else {
+                return false
+        }
+        let substringToReplace = textFieldText[rangeOfTextToReplace]
+        let count = textFieldText.count - substringToReplace.count + string.count
+        return count <= 5
     }
 
     @objc func editingChanged(_ textField: UITextField) {
@@ -343,6 +398,12 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
         addButtonView.isEnabled = true
         addButtonView.layer.backgroundColor = UIColor.init(red: 0.0/255, green: 151/255, blue: 69/255, alpha: 1).cgColor
         addButtonView.setTitleColor(UIColor.white, for: .normal)
+    }
+    
+    @objc func priceAppend() {
+        if (!self.priceField.text!.contains(".")) {
+            self.priceField.text!.append(".00")
+        }
     }
     
 

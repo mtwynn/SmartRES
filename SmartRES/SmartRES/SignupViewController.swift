@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class SignupViewController: UIViewController, UITextViewDelegate {
+class SignupViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var firstnameField: UITextField!
     @IBOutlet weak var lastnameField: UITextField!
@@ -32,6 +32,8 @@ class SignupViewController: UIViewController, UITextViewDelegate {
         phoneField.borderStyle = UITextField.BorderStyle.none
         passwordField.borderStyle = UITextField.BorderStyle.none
         pwConfirmField.borderStyle = UITextField.BorderStyle.none
+        phoneField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
+        phoneField.delegate = self
         bioField.delegate = self
         bioField.text = "Details about you (optional)"
         bioField.textColor = .lightGray
@@ -60,18 +62,33 @@ class SignupViewController: UIViewController, UITextViewDelegate {
         } else {
             user.username = usernameField.text
         }
+        
         user.password = passwordField.text
         
-        if (!(firstnameField!.text != nil) || !(lastnameField!.text != nil) || !(emailField!.text != nil) || !(phoneField!.text != nil) || !(passwordField!.text != nil) || !(pwConfirmField != nil) || (passwordField.text != pwConfirmField.text)) {
-            let alert = UIAlertController(title: "Error", message: "Please fill out all the fields or double check your passwords", preferredStyle: UIAlertController.Style.alert)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
+        let validEmail = isValidEmail(emailStr: emailField.text!)
+        
+        if (firstnameField!.text == "") || (lastnameField!.text == "") || (usernameField!.text == "") || (emailField!.text == "") || (phoneField!.text == "") || (passwordField!.text == "") || (pwConfirmField!.text == "") {
+            let alert = UIAlertController(title: "Error", message: "Please fill out all the fields", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        } else if (passwordField.text != pwConfirmField.text) {
+            let alert = UIAlertController(title: "Error", message: "Passwords do not match", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        } else if (!validEmail) {
+            let alert = UIAlertController(title: "Error", message: "Please enter a valid email", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         } else {
             user["firstName"] = firstnameField.text
             user["lastName"] = lastnameField.text
             user["email"] = emailField.text
             user["phone"] = phoneField.text
-            user["bio"] = bioField.text
+            if (bioField.text == "Details about you (optional)") {
+                user["bio"] = ""
+            } else {
+                user["bio"] = bioField.text
+            }
             // Sign user up
             user.signUpInBackground { (success, error) in
                 if success { // Sign up successful
@@ -81,12 +98,31 @@ class SignupViewController: UIViewController, UITextViewDelegate {
                     }))
                     self.present(alert, animated: true, completion: nil)
                 } else { // Sign up failed
-                    let alert = UIAlertController(title: "Error", message: "Could not sign up. That username or email already exists.", preferredStyle: UIAlertController.Style.alert)
+                    let alert = UIAlertController(title: "Error", message: "That user or email already exists. Please try something different.", preferredStyle: UIAlertController.Style.alert)
                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
                     self.present(alert, animated: true, completion: nil)
                 }
             }
         }
+    }
+    
+    // Field verification functions
+    
+    func isValidEmail(emailStr:String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        
+        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailPred.evaluate(with: emailStr)
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let textFieldText = textField.text,
+            let rangeOfTextToReplace = Range(range, in: textFieldText) else {
+                return false
+        }
+        let substringToReplace = textFieldText[rangeOfTextToReplace]
+        let count = textFieldText.count - substringToReplace.count + string.count
+        return count <= 10
     }
     
     
