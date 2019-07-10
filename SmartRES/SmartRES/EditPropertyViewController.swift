@@ -1,20 +1,20 @@
 //
-//  AddPropertyViewController.swift
+//  EditPropertyViewController.swift
 //  SmartRES
 //
-//  Created by Tam Nguyen on 6/26/19.
+//  Created by Tam Nguyen on 7/9/19.
 //  Copyright © 2019 Tam Nguyen. All rights reserved.
 //
 
 import UIKit
-import Parse
-import Alamofire
 import YPImagePicker
+import Parse
 
-class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+class EditPropertyViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+
+    //var property: Property
     
-    var delegate: controlsRefresh?
-    
+    @IBOutlet weak var thumbnailView: UIImageView!
     @IBOutlet weak var addressField: UITextField!
     @IBOutlet weak var cityField: UITextField!
     @IBOutlet weak var zipField: UITextField!
@@ -23,10 +23,6 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
     @IBOutlet weak var bedField: UITextField!
     @IBOutlet weak var bathField: UITextField!
     @IBOutlet weak var priceField: UITextField!
-    @IBOutlet weak var thumbnailView: UIImageView!
-    @IBOutlet weak var addThumbnailView: UIButton!
-    @IBOutlet weak var deleteThumbnailView: UIButton!
-    @IBOutlet weak var addButtonView: UIButton!
     
     // States and their data
     var sortedStates = [String]()
@@ -88,20 +84,40 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
     let bedArray = ["1", "2", "3", "4", "5", "6", "7"]
     let bathArray = ["1", "1.5", "2", "2.5", "3", "3.5", "4"]
     
-    // Pickers 
+    // Pickers
     var statePicker : UIPickerView! = UIPickerView()
     var typePicker : UIPickerView! = UIPickerView()
     var bedPicker : UIPickerView! = UIPickerView()
     var bathPicker : UIPickerView! = UIPickerView()
     var myPicker : UIPickerView! = UIPickerView()
-
-
-    //var ref: DatabaseReference!
-    var thumbnail: UIImage! = UIImage()
     
-
+    
+    
+    @IBAction func editThumbnailButton(_ sender: Any) {
+        var config = YPImagePickerConfiguration()
+        config.screens = [.library, .photo]
+        config.albumName = "SmartRES"
+        config.startOnScreen = YPPickerScreen.library
+        config.library.maxNumberOfItems = 1
+        config.library.mediaType = YPlibraryMediaType.photo
+        let picker = YPImagePicker(configuration: config)
+        picker.didFinishPicking { [unowned picker] items, _ in
+            if let photo = items.singlePhoto {
+                self.thumbnailView.image = photo.image
+                self.thumbnailView.isHidden = false
+            } else {
+                self.thumbnailView.layer.borderWidth = 1
+                self.thumbnailView.layer.borderColor = UIColor.lightGray.cgColor
+            }
+            
+            picker.dismiss(animated: true, completion: nil)
+        }
+        present(picker, animated: true, completion: nil)
+    }
+    
+    
+    
     override func viewDidLoad() {
-        // Initialize all pickers 
         super.viewDidLoad()
         self.statePicker = UIPickerView(frame: CGRect(x: 0, y: 40, width: 0, height: 0))
         self.typePicker = UIPickerView(frame: CGRect(x: 0, y: 40, width: 0, height: 0))
@@ -122,9 +138,6 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
         
         self.stateField.delegate = self
         self.zipField.delegate = self
-        
-        
-        // Set input field styles
         self.addressField.borderStyle = UITextField.BorderStyle.none
         self.cityField.borderStyle = UITextField.BorderStyle.none
         self.zipField.borderStyle = UITextField.BorderStyle.none
@@ -133,13 +146,11 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
         self.bedField.borderStyle = UITextField.BorderStyle.none
         self.bathField.borderStyle = UITextField.BorderStyle.none
         self.priceField.borderStyle = UITextField.BorderStyle.none
-        self.thumbnailView.layer.borderWidth = 1
-        self.thumbnailView.layer.borderColor = UIColor.lightGray.cgColor
-        addButtonView.isEnabled = false
-        [addressField, cityField, zipField, stateField, typeField, bedField, bathField, priceField].forEach({ $0.addTarget(self, action: #selector(editingChanged), for: .editingChanged) })
+        self.thumbnailView.layer.borderWidth = 2
+        self.thumbnailView.layer.borderColor = UIColor.init(red: 0.0/255, green: 151/255, blue: 69/255, alpha: 0.8).cgColor
+        self.thumbnailView.layer.cornerRadius = 5
         
         priceField.addTarget(self, action: #selector(priceAppend), for: UIControl.Event.editingDidEnd)
-        
         // Add toolbar (Cancel/Done) to Pickers
         let toolBar = UIToolbar()
         statePicker.showsSelectionIndicator = true
@@ -155,7 +166,7 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
         let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.plain, target: self, action: #selector(donePicker))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
         let cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItem.Style.plain, target: self, action: #selector(donePicker))
-
+        
         // Set items
         toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
         toolBar.isUserInteractionEnabled = true
@@ -167,8 +178,11 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
         self.typeField.inputAccessoryView = toolBar
         self.bedField.inputAccessoryView = toolBar
         self.bathField.inputAccessoryView = toolBar
-
+        
         self.sortedStates = (Array(stateDictionary.keys).sorted())
+        
+        
+        
         
         // Keyboard dismissal functions
         let tapGesture = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
@@ -178,10 +192,7 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
         self.view.addGestureRecognizer(swipeDown)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
-        //let ref = Database.database().reference()
     }
-    
     
     @IBAction func textField(sender: UITextField) {
         // Create view for picker fields
@@ -189,11 +200,11 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
         let inputView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 240))
         myPicker.tintColor = tintColor
         myPicker.center.x = inputView.center.x
-        inputView.addSubview(myPicker) 
+        inputView.addSubview(myPicker)
         let doneButton = UIButton(frame: CGRect(x: 100/2, y: 0, width: 100, height: 50))
         doneButton.setTitle("Done", for: UIControl.State.highlighted)
         doneButton.setTitleColor(tintColor, for: UIControl.State.highlighted)
-        inputView.addSubview(doneButton) 
+        inputView.addSubview(doneButton)
         doneButton.addTarget(self, action: Selector(("doneButton:")), for: UIControl.Event.touchUpInside) // set button click event
         
         let cancelButton = UIButton(frame: CGRect(x: (self.view.frame.size.width - 3*(100/2)), y: 0, width: 100, height: 50))
@@ -203,112 +214,13 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
         cancelButton.addTarget(self, action: Selector(("cancelPicker:")), for: UIControl.Event.touchUpInside) // set button click event
         sender.inputView = inputView
     }
-
     
-    @IBAction func addThumbnail(_ sender: Any) {
-        var config = YPImagePickerConfiguration()
-        config.screens = [.library, .photo]
-        config.albumName = "SmartRES"
-        config.startOnScreen = YPPickerScreen.library
-        config.library.maxNumberOfItems = 1
-        config.library.mediaType = YPlibraryMediaType.photo
-        let picker = YPImagePicker(configuration: config)
-        picker.didFinishPicking { [unowned picker] items, _ in
-            if let photo = items.singlePhoto {
-                self.thumbnailView.image = photo.image
-                self.thumbnailView.isHidden = false
-                self.addThumbnailView.isHidden = true
-            } else {
-                self.addThumbnailView.isHidden = false
-                self.thumbnailView.layer.borderWidth = 1
-                self.thumbnailView.layer.borderColor = UIColor.lightGray.cgColor
-            }
-            
-            picker.dismiss(animated: true, completion: nil)
-        }
-        present(picker, animated: true, completion: nil) 
-    }
-    
-    @IBAction func deleteThumbnail(_ sender: Any) {
-        self.thumbnailView.image = nil
-        self.addThumbnailView.isHidden = false
-    }
-    
-
-
-    @IBAction func addButton(_ sender: Any) {
-        // Initialize new PFObject for property
-        let property = PFObject(className: "Property")
-        
-        property["agent"] = PFUser.current()!
-        property["address"] = self.addressField.text!
-        property["city"] = self.cityField.text!
-        property["state"] = self.stateField.text!
-        property["zip"] = self.zipField.text!
-        property["type"] = self.typeField.text!
-        
-        // Helper number formatter to convert strings to nums
-        let formatter = NumberFormatter()
-        formatter.generatesDecimalNumbers = true
-        
-        // Data that needs to be converted
-        property["bed"] = formatter.number(from: self.bedField.text!) as? NSDecimalNumber ?? 0
-        property["bath"] = formatter.number(from: self.bathField.text!) as? NSDecimalNumber ?? 0
-        property["price"] = formatter.number(from: self.priceField.text!) as? NSDecimalNumber ?? 0
-        
-        // Check if thumnail exists before trying to add it
-        if (thumbnailView.image != nil) {
-            let imageData = thumbnailView.image?.jpeg(.lowest)
-            //let imageData = thumbnailView.image?.pngData()
-            let file = PFFileObject(data: imageData!)
-            property["thumbnail"] = file
-        }
-        
-        let alert = UIAlertController(title: "Confirmation", message: "Would you like to add this property?", preferredStyle: UIAlertController.Style.alert)
-        
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {action in
-                property.saveInBackground() { (success, error) in
-                    if success {
-                        self.delegate?.loadProperties()
-                        print(property.objectId)
-                        let alert = UIAlertController(title: "Success", message: "Property, \(self.addressField.text!) has been added! Please use the provided PropertyID to view your images on the sign slideshow.", preferredStyle: UIAlertController.Style.alert)
-                        self.addressField.text = ""
-                        self.cityField.text = ""
-                        self.stateField.text = ""
-                        self.zipField.text = ""
-                        self.typeField.text = ""
-                        self.bedField.text = ""
-                        self.bathField.text = ""
-                        self.priceField.text = ""
-                        self.thumbnailView.isHidden = true
-                        self.addThumbnailView.isHidden = false
-                        
-                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-                        self.present(alert, animated: true, completion: nil)
-                    } else {
-                        let alert = UIAlertController(title: "Error", message: "Adding property failed.", preferredStyle: UIAlertController.Style.alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-                        self.present(alert, animated: true, completion: nil)
-                    }
-                }
-        }))
-            
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: nil))
-        
-        
-        self.present(alert, animated: true, completion: nil)
-        
-        // Save new property and reset all fields to blank
-    }
-    
-    
-
-    // Picker functions 
+    // Picker functions
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
-
+    
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         var count = 0
         if (pickerView.tag == 1) {
@@ -324,7 +236,7 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
         return count
     }
     
-
+    
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         var stringToReturn : String
         if (pickerView.tag == 1) {
@@ -340,7 +252,7 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
         return stringToReturn
     }
     
-
+    
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if (pickerView.tag == 1) {
             stateField.text = stateDictionary[self.sortedStates[row]]!
@@ -352,7 +264,7 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
             bathField.text = bathArray[row]
         }
     }
-
+    
     @objc func donePicker() {
         
         stateField.resignFirstResponder()
@@ -372,32 +284,13 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
         let count = textFieldText.count - substringToReplace.count + string.count
         return count <= 5
     }
-
-    @objc func editingChanged(_ textField: UITextField) {
-        if textField.text?.count == 1 {
-            if textField.text?.first == " " {
-                textField.text = ""
-                return
-            }
-        }
-        guard
-            let address = addressField.text, !address.isEmpty,
-            let city = cityField.text, !city.isEmpty,
-            let state = stateField.text, !state.isEmpty,
-            let zip = zipField.text, !zip.isEmpty,
-            let type = typeField.text, !type.isEmpty,
-            let bed = bedField.text, !bed.isEmpty,
-            let bath = bathField.text, !bath.isEmpty,
-            let price = priceField.text, !price.isEmpty
-            else {
-                self.addButtonView.isEnabled = false
-                addButtonView.layer.backgroundColor = UIColor.init(red: 212/255, green: 212/255, blue: 212/255, alpha: 1).cgColor
-                addButtonView.setTitleColor(UIColor.init(red: 157/255, green: 157/255, blue: 157/255, alpha: 1), for: .normal)
-                return
-        }
-        addButtonView.isEnabled = true
-        addButtonView.layer.backgroundColor = UIColor.init(red: 0.0/255, green: 151/255, blue: 69/255, alpha: 1).cgColor
-        addButtonView.setTitleColor(UIColor.white, for: .normal)
+    
+    @IBAction func cancelButton(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func doneButton(_ sender: Any) {
+        print("Editing...")
     }
     
     @objc func priceAppend() {
@@ -406,8 +299,6 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
         }
     }
     
-
-    // Keyboard functions
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             if self.view.frame.origin.y == 0 {
@@ -421,9 +312,5 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
             self.view.frame.origin.y = 0
         }
     }
-    
-}
-    /*func addPropertyButton(_ sender: Any) {
-        ref.child("users/tammn4/password").setValue("test4321")
-    }*/
 
+}

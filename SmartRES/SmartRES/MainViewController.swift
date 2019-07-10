@@ -13,6 +13,10 @@ import ImageSlideshow
 import Alamofire
 import YPImagePicker
 
+protocol controlsPropertyRefresh {
+    func refresh()
+}
+
 class MainViewController: UIViewController {
     
     /*var imageSource = [AlamofireSource(urlString: "https://images.unsplash.com/photo-1432679963831-2dab49187847?w=1080")!, AlamofireSource(urlString: "https://images.unsplash.com/photo-1447746249824-4be4e1b76d66?w=1080")!, AlamofireSource(urlString: "https://images.unsplash.com/photo-1463595373836-6e0b0a8ee322?w=1080")!]*/
@@ -40,6 +44,8 @@ class MainViewController: UIViewController {
     
     @IBOutlet weak var slideshow: ImageSlideshow!
     @IBOutlet weak var uploadButtonView: UIButton!
+    @IBOutlet weak var deleteButtonView: UIButton!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,6 +67,13 @@ class MainViewController: UIViewController {
         uploadButtonView.layer.shadowRadius = 3.0
         uploadButtonView.layer.masksToBounds = false
         uploadButtonView.imageEdgeInsets = UIEdgeInsets(top: 5, left: 7, bottom: 5, right: 3)
+        deleteButtonView.layer.cornerRadius = 0.5 * uploadButtonView.bounds.size.width
+        deleteButtonView.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
+        deleteButtonView.layer.shadowOffset = CGSize(width: 2.0, height: 3.0)
+        deleteButtonView.layer.shadowOpacity = 1.0
+        deleteButtonView.layer.shadowRadius = 3.0
+        deleteButtonView.layer.masksToBounds = false
+        deleteButtonView.imageEdgeInsets = UIEdgeInsets(top: 5, left: 7, bottom: 5, right: 3)
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor.init(red: 0.0/255, green: 151/255, blue: 69/255, alpha: 1)
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor.init(red: 0.0/255, green: 151/255, blue: 69/255, alpha: 1)
         
@@ -209,50 +222,7 @@ class MainViewController: UIViewController {
 
     // Refresh button
     @IBAction func editButton(_ sender: Any) {
-        let alert = UIAlertController(title: "Edit Property", message: "Fill in the fields you would like edited, and then hit Submit", preferredStyle: .alert)
-        
-        alert.addTextField { (textField) in
-            textField.placeholder = "Address"
-        }
-        alert.addTextField { (textField) in
-            textField.placeholder = "City"
-        }
-        alert.addTextField { (textField) in
-            textField.placeholder = "State"
-        }
-        alert.addTextField { (textField) in
-            textField.placeholder = "Zip Code"
-        }
-        alert.addTextField { (textField) in
-            textField.placeholder = "Type"
-        }
-        alert.addTextField { (textField) in
-            textField.placeholder = "Bed"
-        }
-        alert.addTextField { (textField) in
-            textField.placeholder = "Bath"
-        }
-        alert.addTextField { (textField) in
-            textField.placeholder = "Price"
-        }
-        
-        alert.addAction(UIAlertAction(title: "Submit", style: .default, handler: { [weak alert] (_) in
-            
-            let editAddress = alert?.textFields![0]
-            let editCity = alert?.textFields![1]
-            let editState = alert?.textFields![2]
-            let editZip = alert?.textFields![3]
-            let editType = alert?.textFields![4]
-            let editBed = alert?.textFields![5]
-            let editBath = alert?.textFields![6]
-            let editPrice = alert?.textFields![7]
-            
-            
-        }));
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
-        // 4. Present the alert.
-        self.present(alert, animated: true, completion: nil)
+        self.performSegue(withIdentifier: "editPropertySegue", sender: self)
     }
 
 
