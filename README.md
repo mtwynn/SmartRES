@@ -27,6 +27,7 @@ SmartRES is the solution for real estate agents to replace traditional painted r
 - [ ] GPS pinpointing for add property
 - [ ] Search properties with various filters
 - [ ] Video upload available
+- [ ] Map view of all properties using Geolocation services (Google Maps API, Foursquare, etc) 
 
 ---
 
