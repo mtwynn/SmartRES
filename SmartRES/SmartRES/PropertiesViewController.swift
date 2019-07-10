@@ -155,8 +155,6 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
             return
         }
         if (!self.editButtonEnabled ) {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(editProperties))
-            navigationItem.leftBarButtonItem?.tintColor = UIColor.init(red: 0.0/255, green: 151/255, blue: 69/255, alpha: 1)
             self.editButtonEnabled  = true
             for cell in propertyCollectionView.visibleCells as! [PropertyCell] {
                 
@@ -169,8 +167,6 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
                 //cell.deleteButtonView.isHidden = false
             }
         } else {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(editProperties))
-            navigationItem.leftBarButtonItem?.tintColor = UIColor.init(red: 0.0/255, green: 151/255, blue: 69/255, alpha: 1)
             self.editButtonEnabled  = false
             for cell in propertyCollectionView.visibleCells as! [PropertyCell] {
                 

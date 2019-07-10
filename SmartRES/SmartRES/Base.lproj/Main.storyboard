@@ -503,14 +503,12 @@
                         <viewLayoutGuide key="safeArea" id="5lf-7I-BRl"/>
                     </view>
                     <navigationItem key="navigationItem" title="Properties" id="Fv8-hd-cO6">
-                        <barButtonItem key="leftBarButtonItem" title="Edit" id="fO9-u1-saz">
-                            <color key="tintColor" red="0.0" green="0.59215686270000001" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <barButtonItem key="leftBarButtonItem" image="trash" id="fO9-u1-saz">
                             <connections>
                                 <action selector="editProperties:" destination="epp-Xg-qFe" id="o58-IF-Ne6"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="TAi-aD-gDY">
-                            <color key="tintColor" red="0.0" green="0.59215686270000001" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <barButtonItem key="rightBarButtonItem" image="add" id="TAi-aD-gDY">
                             <connections>
                                 <action selector="addProperty:" destination="epp-Xg-qFe" id="SAh-ej-HQX"/>
                             </connections>
@@ -668,7 +666,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="32502 Arroyo" leftItemsSupplementBackButton="YES" id="CE7-eR-4Ip">
                         <barButtonItem key="backBarButtonItem" title="Properties" id="N4n-tW-PEZ"/>
-                        <barButtonItem key="rightBarButtonItem" title="Edit" id="X0d-5d-gnF">
+                        <barButtonItem key="rightBarButtonItem" image="edit" id="X0d-5d-gnF">
                             <connections>
                                 <action selector="editButton:" destination="tOa-50-mLJ" id="88e-py-aVy"/>
                             </connections>
@@ -777,9 +775,8 @@
                         <viewLayoutGuide key="safeArea" id="INm-1O-pM6"/>
                     </view>
                     <navigationItem key="navigationItem" title="Profile" id="nJ5-rR-GDi">
-                        <barButtonItem key="leftBarButtonItem" title="Edit Profile" id="0iZ-Zk-0XO"/>
-                        <barButtonItem key="rightBarButtonItem" title="Logout" id="vLU-OY-RfH">
-                            <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <barButtonItem key="leftBarButtonItem" title="Edit Profile" image="edit" id="0iZ-Zk-0XO"/>
+                        <barButtonItem key="rightBarButtonItem" image="exit" id="vLU-OY-RfH">
                             <connections>
                                 <action selector="logoutButton:" destination="EuE-cP-ZQv" id="ACR-R1-guy"/>
                             </connections>
@@ -1110,11 +1107,15 @@
     </scenes>
     <resources>
         <image name="Profile" width="256" height="256"/>
+        <image name="add" width="25" height="25"/>
         <image name="bath-color" width="96" height="96"/>
         <image name="bed-color" width="96" height="96"/>
+        <image name="edit" width="25" height="25"/>
+        <image name="exit" width="25" height="25"/>
         <image name="houses" width="25" height="25"/>
         <image name="iTunesArtwork-1" width="512" height="512"/>
         <image name="photo" width="512" height="512"/>
+        <image name="trash" width="25" height="25"/>
         <image name="user" width="25" height="25"/>
     </resources>
     <color key="tintColor" red="0.0" green="0.59215686270000001" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
