@@ -884,8 +884,7 @@
                                 <action selector="cancelButton:" destination="DK4-uB-cqr" id="2oQ-BH-p7d"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="yoD-im-C9c">
-                            <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <barButtonItem key="rightBarButtonItem" image="check" style="done" id="yoD-im-C9c">
                             <connections>
                                 <action selector="doneButton:" destination="DK4-uB-cqr" id="beh-G6-ezZ"/>
                             </connections>
@@ -1348,6 +1347,7 @@
         <image name="add" width="25" height="25"/>
         <image name="bath-color" width="96" height="96"/>
         <image name="bed-color" width="96" height="96"/>
+        <image name="check" width="25" height="25"/>
         <image name="edit" width="25" height="25"/>
         <image name="exit" width="25" height="25"/>
         <image name="houses" width="25" height="25"/>
