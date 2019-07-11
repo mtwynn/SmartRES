@@ -245,7 +245,7 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
         property["city"] = self.cityField.text!.trim()
         property["state"] = self.stateField.text!.trim()
         property["zip"] = self.zipField.text!.trim()
-        property["type"] = self.typeField.text!.trim()
+        property["type"] = self.typeField.text!
         
         // Helper number formatter to convert strings to nums
         let formatter = NumberFormatter()
@@ -401,6 +401,9 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
     }
     
     @objc func priceAppend() {
+        if self.priceField.text == "" {
+            return
+        }
         let counts = self.priceField.text!.split(separator: ".")
         let reqDecLength = counts[0].count + 3
         if (!self.priceField.text!.contains(".") && self.priceField.text! != "") {

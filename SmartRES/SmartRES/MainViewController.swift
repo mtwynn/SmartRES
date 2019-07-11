@@ -49,6 +49,9 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let backButton = UIBarButtonItem()
+        backButton.title = "Cancel"
+        self.navigationItem.backBarButtonItem = backButton
         
         // Set all information labels on finished loading
         priceLabel.text = "$\(property!.price.stringValue)"
@@ -251,6 +254,14 @@ class MainViewController: UIViewController {
     // Refresh button
     @IBAction func editButton(_ sender: Any) {
         self.performSegue(withIdentifier: "editPropertySegue", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "editPropertySegue" {
+            let editPropertyDetails = segue.destination as! EditPropertyViewController
+            //editPropertyDetails.delegate = self
+            editPropertyDetails.property = self.property
+        }
     }
 
 

@@ -13,6 +13,9 @@ import Parse
 class EditPropertyViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
 
     //var property: Property
+    @IBOutlet weak var navBar: UINavigationItem!
+    var delegate: controlsPropertyRefresh?
+    var property: Property?
     
     @IBOutlet weak var thumbnailView: UIImageView!
     @IBOutlet weak var addressField: UITextField!
@@ -119,6 +122,7 @@ class EditPropertyViewController: UIViewController, UITextFieldDelegate, UIPicke
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.statePicker = UIPickerView(frame: CGRect(x: 0, y: 40, width: 0, height: 0))
         self.typePicker = UIPickerView(frame: CGRect(x: 0, y: 40, width: 0, height: 0))
         self.bedPicker = UIPickerView(frame: CGRect(x: 0, y: 40, width: 0, height: 0))
@@ -146,6 +150,15 @@ class EditPropertyViewController: UIViewController, UITextFieldDelegate, UIPicke
         self.bedField.borderStyle = UITextField.BorderStyle.none
         self.bathField.borderStyle = UITextField.BorderStyle.none
         self.priceField.borderStyle = UITextField.BorderStyle.none
+        self.addressField.text = property?.address
+        self.cityField.text = property?.city
+        self.stateField.text = property?.state
+        self.zipField.text = property?.zip
+        self.typeField.text = property?.type
+        self.bedField.text = property?.bed.stringValue
+        self.bathField.text = property?.bath.stringValue
+        self.priceField.text = property?.price.stringValue
+        
         self.thumbnailView.layer.borderWidth = 2
         self.thumbnailView.layer.borderColor = UIColor.init(red: 0.0/255, green: 151/255, blue: 69/255, alpha: 0.8).cgColor
         self.thumbnailView.layer.cornerRadius = 5
@@ -181,7 +194,7 @@ class EditPropertyViewController: UIViewController, UITextFieldDelegate, UIPicke
         
         self.sortedStates = (Array(stateDictionary.keys).sorted())
         
-        
+        priceField.addTarget(self, action: #selector(priceAppend), for: UIControl.Event.editingDidEnd)
         
         
         // Keyboard dismissal functions
@@ -290,12 +303,53 @@ class EditPropertyViewController: UIViewController, UITextFieldDelegate, UIPicke
     }
     
     @IBAction func doneButton(_ sender: Any) {
-        print("Editing...")
+        let query = PFQuery(className: "Property")
+        query.getObjectInBackground(withId: property!.id) { (property: PFObject?, error: Error?) in
+            if let error = error {
+                print(error.localizedDescription)
+            } else if let property = property {
+                property["address"] = self.addressField.text!.trim()
+                property["city"] = self.cityField.text!.trim()
+                property["state"] = self.stateField.text!.trim()
+                property["zip"] = self.zipField.text!.trim()
+                property["type"] = self.typeField.text!
+                
+                // Helper number formatter to convert strings to nums
+                let formatter = NumberFormatter()
+                formatter.generatesDecimalNumbers = true
+                
+                // Data that needs to be converted
+                property["bed"] = formatter.number(from: self.bedField.text!) as? NSDecimalNumber ?? 0
+                property["bath"] = formatter.number(from: self.bathField.text!) as? NSDecimalNumber ?? 0
+                property["price"] = formatter.number(from: self.priceField.text!) as? NSDecimalNumber ?? 0
+                if (self.thumbnailView.image != nil) {
+                    let imageData = self.thumbnailView.image?.jpeg(.lowest)
+                    //let imageData = thumbnailView.image?.pngData()
+                    let file = PFFileObject(data: imageData!)
+                    property["thumbnail"] = file
+                }
+                property.saveInBackground() {(success, error) in
+                    if success {
+                        self.delegate?.refresh()
+                        self.dismiss(animated: true, completion: nil)
+                    } else {
+                        let alert = UIAlertController(title: "Error", message: "Editing failed.", preferredStyle: UIAlertController.Style.alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                }
+            }
+        }
     }
     
     @objc func priceAppend() {
+        let counts = self.priceField.text!.split(separator: ".")
+        let reqDecLength = counts[0].count + 3
         if (!self.priceField.text!.contains(".") && self.priceField.text! != "") {
             self.priceField.text!.append(".00")
+        } else if (self.priceField.text!.contains(".") && self.priceField.text!.count < reqDecLength) {
+            let decimals = String(repeating: "0", count: reqDecLength - self.priceField.text!.count)
+            self.priceField.text!.append(decimals)
         }
     }
     
@@ -312,5 +366,4 @@ class EditPropertyViewController: UIViewController, UITextFieldDelegate, UIPicke
             self.view.frame.origin.y = 0
         }
     }
-
 }

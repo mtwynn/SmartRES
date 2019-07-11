@@ -28,6 +28,10 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let backButton = UIBarButtonItem()
+        backButton.title = "Properties"
+        self.navigationItem.backBarButtonItem = backButton
+
         refreshControl.addTarget(self, action: #selector(loadProperties), for: .valueChanged)
         propertyCollectionView.refreshControl = refreshControl
         propertyCollectionView.dataSource = self
@@ -133,21 +137,20 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let backButton = UIBarButtonItem()
-        backButton.title = "Properties"
+        
         if (segue.identifier != "addPropertySegue") {
             // On select cell, pass data to destination VC
             let cell = sender as! UICollectionViewCell
             let indexPath = self.propertyCollectionView.indexPath(for: cell)!
             let property = properties[indexPath.row]
             let propertyDetails = segue.destination as! MainViewController
-            propertyDetails.navigationItem.backBarButtonItem = backButton
+            
             propertyDetails.property = property
             propertyDetails.navigationItem.title = property.address
             propertyDetails.refresh()
         } else {
             let propertyDetails = segue.destination as! AddPropertyViewController
-            propertyDetails.navigationItem.backBarButtonItem = backButton
+            
             propertyDetails.delegate = self
         }
     }
