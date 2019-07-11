@@ -241,11 +241,11 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
         let property = PFObject(className: "Property")
         
         property["agent"] = PFUser.current()!
-        property["address"] = self.addressField.text!
-        property["city"] = self.cityField.text!
-        property["state"] = self.stateField.text!
-        property["zip"] = self.zipField.text!
-        property["type"] = self.typeField.text!
+        property["address"] = self.addressField.text!.trim()
+        property["city"] = self.cityField.text!.trim()
+        property["state"] = self.stateField.text!.trim()
+        property["zip"] = self.zipField.text!.trim()
+        property["type"] = self.typeField.text!.trim()
         
         // Helper number formatter to convert strings to nums
         let formatter = NumberFormatter()
@@ -401,8 +401,13 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
     }
     
     @objc func priceAppend() {
+        let counts = self.priceField.text!.split(separator: ".")
+        let reqDecLength = counts[0].count + 3
         if (!self.priceField.text!.contains(".") && self.priceField.text! != "") {
             self.priceField.text!.append(".00")
+        } else if (self.priceField.text!.contains(".") && self.priceField.text!.count < reqDecLength) {
+            let decimals = String(repeating: "0", count: reqDecLength - self.priceField.text!.count)
+            self.priceField.text!.append(decimals)
         }
     }
     
@@ -411,10 +416,11 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             if self.view.frame.origin.y == 0 {
-                self.view.frame.origin.y -= keyboardSize.height
+                self.view.frame.origin.y -= (keyboardSize.height - 200)
             }
         }
     }
+    
     
     @objc func keyboardWillHide(notification: NSNotification) {
         if self.view.frame.origin.y != 0 {
@@ -422,6 +428,12 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
         }
     }
     
+}
+
+extension String {
+    func trim() -> String {
+        return self.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
 }
     /*func addPropertyButton(_ sender: Any) {
         ref.child("users/tammn4/password").setValue("test4321")

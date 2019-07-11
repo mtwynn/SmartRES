@@ -57,14 +57,14 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SmartRES" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rOA-V0-GaM">
-                                <rect key="frame" x="124" y="196" width="127" height="36"/>
+                                <rect key="frame" x="118" y="196" width="139" height="35"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="Lato-Light" family="Lato" pointSize="30"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e6z-2K-Yae">
-                                <rect key="frame" x="136" y="619" width="103" height="24"/>
+                                <rect key="frame" x="134" y="619" width="107" height="24"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="10"/>
                                 <state key="normal" title="Don't have an account?">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -108,7 +108,7 @@
                                 <rect key="frame" x="286" y="514.5" width="51" height="31"/>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remember me?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y7i-t6-YEI">
-                                <rect key="frame" x="214" y="524" width="68" height="12"/>
+                                <rect key="frame" x="210" y="524" width="72" height="12"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="10"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -284,7 +284,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VU9-Ot-Rk3">
-                                <rect key="frame" x="40" y="553" width="295" height="33"/>
+                                <rect key="frame" x="40" y="554" width="295" height="32"/>
                                 <color key="backgroundColor" red="0.83137690355329952" green="0.83137690355329952" blue="0.83137690355329952" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="17"/>
                                 <state key="normal" title="ADD">
@@ -295,7 +295,7 @@
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XOK-UI-i9W">
-                                <rect key="frame" x="91" y="348" width="193" height="189"/>
+                                <rect key="frame" x="91" y="348" width="193" height="190"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hxG-oG-M2x">
                                 <rect key="frame" x="269" y="348" width="15" height="15"/>
@@ -311,7 +311,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vHU-gn-3fv">
-                                <rect key="frame" x="91" y="348" width="193" height="189"/>
+                                <rect key="frame" x="91" y="348" width="193" height="190"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="17"/>
                                 <state key="normal" title="Add a thumbnail">
                                     <color key="titleColor" red="0.0" green="0.47843137254901957" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -405,7 +405,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qp4-QL-jYR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3825" y="645"/>
+            <point key="canvasLocation" x="3566" y="817"/>
         </scene>
         <!--Properties-->
         <scene sceneID="ADS-XH-aSM">
@@ -436,7 +436,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="179" height="179"/>
                                                 </imageView>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.84999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WDZ-bV-x0q">
-                                                    <rect key="frame" x="0.0" y="158" width="179" height="21"/>
+                                                    <rect key="frame" x="0.0" y="159" width="179" height="20"/>
                                                     <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" name="Lato-Light" family="Lato" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -507,7 +507,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nep-Pn-vLw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3824.8000000000002" y="-134.48275862068968"/>
+            <point key="canvasLocation" x="2777" y="27"/>
         </scene>
         <!--MainViewController-->
         <scene sceneID="LkK-rb-2S4">
@@ -552,39 +552,39 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Irvine, CA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ro9-zB-rjW">
-                                <rect key="frame" x="16" y="370" width="77" height="22"/>
+                                <rect key="frame" x="16" y="370" width="78" height="21"/>
                                 <fontDescription key="fontDescription" name="Lato-Light" family="Lato" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="92617" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qdq-mT-IHA">
-                                <rect key="frame" x="16" y="400" width="53" height="22"/>
+                                <rect key="frame" x="16" y="399" width="50.5" height="21"/>
                                 <fontDescription key="fontDescription" name="Lato-Light" family="Lato" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bed-color" translatesAutoresizingMaskIntoConstraints="NO" id="7Nx-XA-fwO">
-                                <rect key="frame" x="16" y="430" width="30" height="30"/>
+                                <rect key="frame" x="16" y="428" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="EXy-kh-myG"/>
                                     <constraint firstAttribute="height" constant="30" id="O3X-Lh-KaN"/>
                                 </constraints>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bath-color" translatesAutoresizingMaskIntoConstraints="NO" id="IGl-ZV-v9Y">
-                                <rect key="frame" x="16" y="468" width="30" height="30"/>
+                                <rect key="frame" x="16" y="466" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="A5l-kT-mZQ"/>
                                     <constraint firstAttribute="height" constant="30" id="F3b-Qz-dm1"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bath" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zB5-0q-8Hg">
-                                <rect key="frame" x="54" y="475" width="27.5" height="16"/>
+                                <rect key="frame" x="54" y="473" width="27.5" height="16"/>
                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="13"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aux-fe-3rN">
-                                <rect key="frame" x="54" y="437" width="23" height="16"/>
+                                <rect key="frame" x="54" y="435" width="23" height="16"/>
                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="13"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -671,7 +671,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c9d-ck-NNQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4751" y="-134"/>
+            <point key="canvasLocation" x="3566" y="27"/>
         </scene>
         <!--Edit Property-->
         <scene sceneID="tLA-jZ-c2F">
@@ -904,7 +904,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="etq-FU-cgY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6696.8000000000002" y="-134.48275862068968"/>
+            <point key="canvasLocation" x="5209" y="27"/>
         </scene>
         <!--Profile-->
         <scene sceneID="BU9-Vj-cHd">
@@ -944,13 +944,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9JV-yp-ed6">
-                                <rect key="frame" x="140" y="118" width="219" height="20.5"/>
+                                <rect key="frame" x="140" y="118" width="219" height="20"/>
                                 <fontDescription key="fontDescription" name="Lato-Light" family="Lato" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Phone" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eUL-Ps-ZUx">
-                                <rect key="frame" x="140" y="146.5" width="219" height="20.5"/>
+                                <rect key="frame" x="140" y="146" width="219" height="20"/>
                                 <fontDescription key="fontDescription" name="Lato-Light" family="Lato" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -962,7 +962,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Biography/Details" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8gV-up-jes">
-                                <rect key="frame" x="24" y="191" width="327" height="20.5"/>
+                                <rect key="frame" x="24" y="190" width="327" height="20.5"/>
                                 <fontDescription key="fontDescription" name="Lato-Light" family="Lato" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -1013,7 +1013,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dZJ-mk-eJt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2776.8000000000002" y="623.83808095952031"/>
+            <point key="canvasLocation" x="2777" y="818"/>
         </scene>
         <!--Signup View Controller-->
         <scene sceneID="V8h-Yz-h6a">
@@ -1128,7 +1128,7 @@
                                                 </constraints>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KlT-la-Xxk">
-                                                <rect key="frame" x="40" y="919" width="295" height="33"/>
+                                                <rect key="frame" x="40" y="920" width="295" height="32"/>
                                                 <color key="backgroundColor" red="0.0" green="0.59215686270000001" blue="0.27058823529999998" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="17"/>
                                                 <state key="normal" title="SIGN UP">
@@ -1139,7 +1139,7 @@
                                                 </connections>
                                             </button>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="KTn-vr-iht">
-                                                <rect key="frame" x="40" y="674.5" width="295" height="220.5"/>
+                                                <rect key="frame" x="40" y="674.5" width="295" height="221.5"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -1241,7 +1241,35 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KSQ-VY-wrT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1848.8" y="-667.4662668665668"/>
+            <point key="canvasLocation" x="902" y="-1523"/>
+        </scene>
+        <!--Map View Controller-->
+        <scene sceneID="kBZ-Wz-DnN">
+            <objects>
+                <viewController id="wQD-Eg-SbZ" customClass="MapViewController" customModule="SmartRES" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="X5A-qm-Ip6">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="vFN-xD-el9">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="vr3-tY-xO8"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="" image="maps" id="knA-Tm-v7d">
+                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                    </tabBarItem>
+                    <navigationItem key="navigationItem" id="Gvs-PT-eiW"/>
+                    <connections>
+                        <outlet property="mapView" destination="vFN-xD-el9" id="gcu-NE-3a0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bD8-x2-8RH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1833" y="-683"/>
         </scene>
         <!--Transition Tab Bar Controller-->
         <scene sceneID="EsE-Ba-fbT">
@@ -1256,7 +1284,8 @@
                     </tabBar>
                     <connections>
                         <segue destination="ADl-fi-te6" kind="relationship" relationship="viewControllers" id="M3B-w0-weY"/>
-                        <segue destination="amT-u0-u6U" kind="relationship" relationship="viewControllers" id="zgF-4K-ryL"/>
+                        <segue destination="wQD-Eg-SbZ" kind="relationship" relationship="viewControllers" id="Krr-fY-VNa"/>
+                        <segue destination="amT-u0-u6U" kind="relationship" relationship="viewControllers" id="Yd7-G4-s89"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tQc-gm-7zm" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1266,6 +1295,7 @@
         <!--Navigation Controller-->
         <scene sceneID="mcb-Fb-nPD">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xbP-9j-FDj" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ADl-fi-te6" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="houses" id="vHl-s9-5Wc">
                         <inset key="imageInsets" minX="0.0" minY="8" maxX="0.0" maxY="-8"/>
@@ -1280,13 +1310,13 @@
                         <segue destination="epp-Xg-qFe" kind="relationship" relationship="rootViewController" id="xSH-Lw-koj"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="xbP-9j-FDj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2788" y="-134.48275862068968"/>
+            <point key="canvasLocation" x="1833" y="27"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Dhc-IK-XFJ">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lqw-h2-bUY" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="amT-u0-u6U" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="user" id="Zjx-uU-fjK">
                         <inset key="imageInsets" minX="0.0" minY="8" maxX="0.0" maxY="-6"/>
@@ -1301,9 +1331,8 @@
                         <segue destination="EuE-cP-ZQv" kind="relationship" relationship="rootViewController" id="iiE-CO-kKy"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="lqw-h2-bUY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1849" y="624"/>
+            <point key="canvasLocation" x="1833" y="819"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="In3-1s-ndi">
@@ -1321,7 +1350,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qaF-QX-NLg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="901.60000000000002" y="-667.01649175412297"/>
+            <point key="canvasLocation" x="902" y="-683"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="UlK-ny-N0b">
@@ -1339,7 +1368,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0wT-WC-NcF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5757.6000000000004" y="-134.48275862068968"/>
+            <point key="canvasLocation" x="4369" y="27"/>
         </scene>
     </scenes>
     <resources>
@@ -1352,6 +1381,7 @@
         <image name="exit" width="25" height="25"/>
         <image name="houses" width="25" height="25"/>
         <image name="iTunesArtwork-1" width="512" height="512"/>
+        <image name="maps" width="25" height="25"/>
         <image name="photo" width="512" height="512"/>
         <image name="trash" width="25" height="25"/>
         <image name="user" width="25" height="25"/>

@@ -42,6 +42,10 @@
 		C69C3C8122BCB6D80056DE89 /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69C3C6F22BCB6D70056DE89 /* Lato-Black.ttf */; };
 		C69C3C8222BCB6D80056DE89 /* Lato-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69C3C7022BCB6D80056DE89 /* Lato-Thin.ttf */; };
 		C69C3C8322BCB6D80056DE89 /* Lato-HairlineItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69C3C7122BCB6D80056DE89 /* Lato-HairlineItalic.ttf */; };
+		C6A3ADEB22D69892009BE8C7 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6A3ADEA22D69892009BE8C7 /* MapKit.framework */; };
+		C6A3ADED22D6989B009BE8C7 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6A3ADEC22D6989B009BE8C7 /* CoreLocation.framework */; };
+		C6A3ADEF22D69981009BE8C7 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A3ADEE22D69981009BE8C7 /* MapViewController.swift */; };
+		C6A3ADF122D6B499009BE8C7 /* NativeGeocoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A3ADF022D6B499009BE8C7 /* NativeGeocoding.swift */; };
 		C6E1DBA822D5AC7E0059C2C7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C6E1DBA722D5AC7D0059C2C7 /* Assets.xcassets */; };
 		C6E1DBAA22D5B6FA0059C2C7 /* EditPropertyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6E1DBA922D5B6FA0059C2C7 /* EditPropertyViewController.swift */; };
 		CF691A7C4AFC8FFF1DBB7E09 /* Pods_SmartRES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03A85B3380ABFD7A844949B3 /* Pods_SmartRES.framework */; };
@@ -112,6 +116,10 @@
 		C69C3C6F22BCB6D70056DE89 /* Lato-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Black.ttf"; sourceTree = "<group>"; };
 		C69C3C7022BCB6D80056DE89 /* Lato-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Thin.ttf"; sourceTree = "<group>"; };
 		C69C3C7122BCB6D80056DE89 /* Lato-HairlineItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-HairlineItalic.ttf"; sourceTree = "<group>"; };
+		C6A3ADEA22D69892009BE8C7 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		C6A3ADEC22D6989B009BE8C7 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		C6A3ADEE22D69981009BE8C7 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		C6A3ADF022D6B499009BE8C7 /* NativeGeocoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeGeocoding.swift; sourceTree = "<group>"; };
 		C6E1DBA722D5AC7D0059C2C7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C6E1DBA922D5B6FA0059C2C7 /* EditPropertyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPropertyViewController.swift; sourceTree = "<group>"; };
 		CAA240497221ED8E8FE43740 /* Pods-SmartRESUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartRESUITests.release.xcconfig"; path = "Target Support Files/Pods-SmartRESUITests/Pods-SmartRESUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -122,6 +130,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C6A3ADED22D6989B009BE8C7 /* CoreLocation.framework in Frameworks */,
+				C6A3ADEB22D69892009BE8C7 /* MapKit.framework in Frameworks */,
 				CF691A7C4AFC8FFF1DBB7E09 /* Pods_SmartRES.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -161,6 +171,8 @@
 		25E2E44027AEA340BC42E826 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C6A3ADEC22D6989B009BE8C7 /* CoreLocation.framework */,
+				C6A3ADEA22D69892009BE8C7 /* MapKit.framework */,
 				03A85B3380ABFD7A844949B3 /* Pods_SmartRES.framework */,
 				0D09D3F08E54FEC746AE9BF1 /* Pods_SmartRESTests.framework */,
 				72380A2AECC61409C62AE0E1 /* Pods_SmartRESUITests.framework */,
@@ -218,6 +230,8 @@
 				C666BB3222C43981006E76CF /* AddPropertyViewController.swift */,
 				C67D60CF22CF43B5001C7149 /* TransitionTabBarController.swift */,
 				C6E1DBA922D5B6FA0059C2C7 /* EditPropertyViewController.swift */,
+				C6A3ADEE22D69981009BE8C7 /* MapViewController.swift */,
+				C6A3ADF022D6B499009BE8C7 /* NativeGeocoding.swift */,
 			);
 			path = SmartRES;
 			sourceTree = "<group>";
@@ -515,6 +529,8 @@
 				C64A223D22C356590041C764 /* PropertyCell.swift in Sources */,
 				C666BB3122C3E26D006E76CF /* PropertiesViewController.swift in Sources */,
 				C611FF43228362EB00704CD3 /* ProfileViewController.swift in Sources */,
+				C6A3ADEF22D69981009BE8C7 /* MapViewController.swift in Sources */,
+				C6A3ADF122D6B499009BE8C7 /* NativeGeocoding.swift in Sources */,
 				C67D60D022CF43B5001C7149 /* TransitionTabBarController.swift in Sources */,
 				C645AECC2282A668006F2EF3 /* LoginViewController.swift in Sources */,
 				C645AE9E2282A56E006F2EF3 /* AppDelegate.swift in Sources */,

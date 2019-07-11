@@ -150,6 +150,15 @@ class MainViewController: UIViewController {
     }
     
     @IBAction func deleteButton(_ sender: Any) {
+        if (slideshowImgIds.count == 0 || imageSource.count == 0) {
+            let alert = UIAlertController(title: "Delete a slideshow image", message: "No slideshow images to delete!", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
+        
+        
         let alert = UIAlertController(title: "Delete a slideshow image", message: "Enter a number, a range of numbers, or a list of numbers separated by commas for images to delete: ", preferredStyle: .alert)
         
         //2. Add the text field. You can configure it however you need.
@@ -163,9 +172,8 @@ class MainViewController: UIViewController {
             let textField = alert?.textFields![0] // Force unwrapping because we know it exists.
             let input = textField!.text!
             if input.contains(",") {
-                /*
                 let imageNums = input.split(separator: ",").map{ Int($0)! - 1 }
-                let query = PFQuery(className: "Pictures")
+                /*let query = PFQuery(className: "Pictures")
                 for imageNum in imageNums.sorted().reversed() {
                     let imgToDel = self.slideshowImgIds[imageNum]
                     self.slideshowImgIds.remove(at: imageNum)
@@ -173,7 +181,7 @@ class MainViewController: UIViewController {
                         if let error = error {
                             print(error.localizedDescription)
                         } else {
-                            img?.deleteInBackground() {(success, error: Error?) in
+                            img?.deleteEventually() {(success, error: Error?) in
                                 if success {
                                     self.refresh()
                                     self.slideshow.setImageInputs(self.imageSource)
@@ -186,8 +194,28 @@ class MainViewController: UIViewController {
                                 }
                             }
                         }
+                    }*/
+                
+            } else if input.contains("-") {
+                let imageNums = input.split(separator: "-").map{ Int($0)! - 1 }
+                /*let query = PFQuery(className: "Pictures")
+                var objectsToDelete = [PFObject]()
+                for imageNum in imageNums[0]...imageNums[1] {
+                    let imgToDel = self.slideshowImgIds[imageNum]
+                    self.slideshowImgIds.remove(at: imageNum)
+                    query.whereKey("objectId", equalTo: imgToDel)
+                    query.findObjectsInBackground { (objects: [PFObject]?, error: Error?) in
+                        if error == nil {
+                            PFObject.deleteAll(inBackground: objects, block: {(success: Bool, error: Error?) in
+                                if success {
+                                    print("Yay")
+                                }
+                            })
+                        }
                     }
                 }*/
+               
+                
             } else {
                 let imageNum = Int(input)! - 1
                 let query = PFQuery(className: "Picture")

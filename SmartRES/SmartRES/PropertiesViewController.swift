@@ -41,6 +41,7 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
         let width = view.frame.size.width / 2
         layout.itemSize = CGSize(width: width, height: width)
     
+        
         // Async load properties
         loadProperties()
     }
@@ -123,6 +124,8 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
                     self.propertyCollectionView.backgroundView = nil
                 }
                 // Reload and refresh
+                let vc = self.tabBarController?.viewControllers![1] as! MapViewController
+                vc.properties = self.properties
                 self.propertyCollectionView.reloadData()
                 self.refreshControl.endRefreshing()
             }
