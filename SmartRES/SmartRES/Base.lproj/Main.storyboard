@@ -649,7 +649,6 @@
                         <viewLayoutGuide key="safeArea" id="bGh-6T-OZw"/>
                     </view>
                     <navigationItem key="navigationItem" title="32502 Arroyo" id="CE7-eR-4Ip">
-                        <barButtonItem key="backBarButtonItem" title="Properties" id="N4n-tW-PEZ"/>
                         <barButtonItem key="rightBarButtonItem" image="edit" id="X0d-5d-gnF">
                             <connections>
                                 <action selector="editButton:" destination="tOa-50-mLJ" id="88e-py-aVy"/>
@@ -690,7 +689,7 @@
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L8y-mz-B3z">
                                 <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                                 <items>
-                                    <navigationItem title="Title" id="0o0-2d-oME">
+                                    <navigationItem title="Edit Property" id="0o0-2d-oME">
                                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="lTG-nU-A0a">
                                             <connections>
                                                 <action selector="cancelButton:" destination="DK4-uB-cqr" id="Bhg-QL-DLI"/>

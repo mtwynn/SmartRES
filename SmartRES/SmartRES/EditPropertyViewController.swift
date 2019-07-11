@@ -16,6 +16,7 @@ class EditPropertyViewController: UIViewController, UITextFieldDelegate, UIPicke
     @IBOutlet weak var navBar: UINavigationItem!
     var delegate: controlsPropertyRefresh?
     var property: Property?
+    var propertyThumbnail: UIImage?
     
     @IBOutlet weak var thumbnailView: UIImageView!
     @IBOutlet weak var addressField: UITextField!
@@ -158,7 +159,7 @@ class EditPropertyViewController: UIViewController, UITextFieldDelegate, UIPicke
         self.bedField.text = property?.bed.stringValue
         self.bathField.text = property?.bath.stringValue
         self.priceField.text = property?.price.stringValue
-        
+        self.thumbnailView.image = self.propertyThumbnail
         self.thumbnailView.layer.borderWidth = 2
         self.thumbnailView.layer.borderColor = UIColor.init(red: 0.0/255, green: 151/255, blue: 69/255, alpha: 0.8).cgColor
         self.thumbnailView.layer.cornerRadius = 5

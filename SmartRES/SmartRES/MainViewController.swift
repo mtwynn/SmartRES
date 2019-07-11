@@ -31,7 +31,7 @@ class MainViewController: UIViewController {
 
     // Associated property
     var property: Property?
-
+    var propertyThumbnail: UIImage?
     let downloadGroup = DispatchGroup()
     
     @IBOutlet weak var priceLabel: UILabel!
@@ -49,9 +49,10 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let backButton = UIBarButtonItem()
-        backButton.title = "Cancel"
-        self.navigationItem.backBarButtonItem = backButton
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        var swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(refresh))
+        swipeDown.direction = .down
+        slideshow.addGestureRecognizer(swipeDown)
         
         // Set all information labels on finished loading
         priceLabel.text = "$\(property!.price.stringValue)"
@@ -60,9 +61,31 @@ class MainViewController: UIViewController {
         zipLabel.text = property!.zip
         bedLabel.text = property!.bed.stringValue
         bathLabel.text = property!.bath.stringValue
+        let query = PFQuery(className: "Property")
+        query.whereKey("objectId", equalTo: property?.id)
+        query.getFirstObjectInBackground() { (property: PFObject?, error: Error?) in
+            if let error = error {
+                print("Failed to load thumbnail")
+            } else {
+                if (property!["thumbnail"] != nil) {
+                    let imageFile = property!["thumbnail"] as! PFFileObject
+                    let url = URL(string: imageFile.url!)!
+                    let data = try? Data(contentsOf: url)
+                    self.propertyThumbnail = UIImage(data: data!)
+                } else {
+                    // Default image if no thumbnail was set
+                    let url = URL(string: "https://suitabletech.com/images/HelpCenter/errors/Lenovo-Camera-Error.JPG")!
+                    let data = try? Data(contentsOf: url)
+                    self.propertyThumbnail = UIImage(data: data!)
+                }
+            }
+        }
         
         
         // Button stylings
+        let backButton = UIBarButtonItem()
+        backButton.title = "Cancel"
+        self.navigationItem.backBarButtonItem = backButton
         uploadButtonView.layer.cornerRadius = 0.5 * uploadButtonView.bounds.size.width
         uploadButtonView.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
         uploadButtonView.layer.shadowOffset = CGSize(width: 2.0, height: 3.0)
@@ -261,18 +284,36 @@ class MainViewController: UIViewController {
             let editPropertyDetails = segue.destination as! EditPropertyViewController
             //editPropertyDetails.delegate = self
             editPropertyDetails.property = self.property
+            editPropertyDetails.propertyThumbnail = self.propertyThumbnail
         }
     }
 
 
     @objc func refresh() {
         // Clear updated list
+        self.refreshControl.beginRefreshing()
         self.updatedList.removeAll(keepingCapacity: true)
-
-        let query = PFQuery(className: "Picture")
-        query.whereKey("agent", equalTo: PFUser.current()!)
-        query.whereKey("propertyId", equalTo: self.property?.id)
-        query.findObjectsInBackground() { (posts, error) in
+        
+        let labelQuery = PFQuery(className: "Property")
+        labelQuery.whereKey("objectId", equalTo: self.property?.id)
+        labelQuery.getFirstObjectInBackground() {(property: PFObject?, error: Error?) in
+            if let error = error {
+                print("Failed to refresh. Error: \(error.localizedDescription)")
+            } else {
+                self.priceLabel.text = property!["price"] as? String
+                self.navigationItem.title = property!["address"] as? String
+                self.cityStateLabel.text = (property!["city"] as! String) + ", " + (property!["state"] as! String)
+                self.zipLabel.text = property!["zip"] as? String
+                let bathNum = property!["bath"] as? NSNumber
+                print(bathNum)
+                self.bedLabel.text = (property!["bed"] as? NSNumber)?.stringValue
+                self.bathLabel.text = (property!["bath"] as? NSNumber)?.stringValue
+            }
+        }
+        let pictureQuery = PFQuery(className: "Picture")
+        pictureQuery.whereKey("agent", equalTo: PFUser.current()!)
+        pictureQuery.whereKey("propertyId", equalTo: self.property?.id)
+        pictureQuery.findObjectsInBackground() { (posts, error) in
             if posts != nil {
                 for post in posts! {
                     let imageFile = post["image"] as! PFFileObject
@@ -282,8 +323,10 @@ class MainViewController: UIViewController {
             }
             self.imageSource = self.updatedList
             self.slideshow.setImageInputs(self.imageSource)
+            
             self.slideshow.setNeedsDisplay()
             self.slideshow.bringSubviewToFront(self.priceLabel)
+            self.refreshControl.endRefreshing()
         }
     }
     
