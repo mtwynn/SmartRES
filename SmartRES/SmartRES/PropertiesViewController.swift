@@ -29,7 +29,7 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
     override func viewDidLoad() {
         super.viewDidLoad()
         let backButton = UIBarButtonItem()
-        backButton.title = "Back"
+        backButton.title = "Properties"
         self.navigationItem.backBarButtonItem = backButton
 
         refreshControl.addTarget(self, action: #selector(loadProperties), for: .valueChanged)
@@ -233,6 +233,4 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
         
         self.present(alert, animated: true, completion: nil)
     }
-    
-    
 }

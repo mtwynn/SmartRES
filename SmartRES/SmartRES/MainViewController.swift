@@ -1,11 +1,9 @@
-
 //  MainViewController.swift
 //  SmartRES
 //
 //  Created by Tam Nguyen on 5/8/19.
 //  Copyright © 2019 Tam Nguyen. All rights reserved.
 //
-
 
 import UIKit
 import Parse
@@ -17,18 +15,18 @@ protocol controlsPropertyRefresh {
     func refresh()
 }
 
-class MainViewController: UIViewController {
+class MainViewController: UIViewController, controlsPropertyRefresh {
     
     /*var imageSource = [AlamofireSource(urlString: "https://images.unsplash.com/photo-1432679963831-2dab49187847?w=1080")!, AlamofireSource(urlString: "https://images.unsplash.com/photo-1447746249824-4be4e1b76d66?w=1080")!, AlamofireSource(urlString: "https://images.unsplash.com/photo-1463595373836-6e0b0a8ee322?w=1080")!]*/
-
+    
     // Array of image sources for slideshow
     var imageSource = [ParseSource]()
     var updatedList = [ParseSource]()
     var slideshowImgIds = [String]()
-    var imageNums = [Int]() // For deletion
+    
     // Refresh control
     var refreshControl = UIRefreshControl()
-
+    
     // Associated property
     var property: Property?
     var propertyThumbnail: UIImage?
@@ -49,7 +47,6 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        refresh()
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         var swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(refresh))
         swipeDown.direction = .down
@@ -57,6 +54,7 @@ class MainViewController: UIViewController {
         
         // Set all information labels on finished loading
         priceLabel.text = "$\(property!.price.stringValue)"
+        print(priceLabel.text)
         addressLabel.text = "ID: \(property!.id)"
         cityStateLabel.text = property!.city + ", " + property!.state
         zipLabel.text = property!.zip
@@ -109,7 +107,8 @@ class MainViewController: UIViewController {
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         
-
+        
+        
         // Slideshow configuration
         let pageControl = LabelPageIndicator()
         slideshow.pageIndicator = pageControl
@@ -119,7 +118,6 @@ class MainViewController: UIViewController {
         slideshow.delegate = self as ImageSlideshowDelegate
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(MainViewController.didTap))
         slideshow.addGestureRecognizer(recognizer)
-
         slideshow.setImageInputs(imageSource)
     }
     
@@ -134,35 +132,35 @@ class MainViewController: UIViewController {
         config.library.maxNumberOfItems = 10
         config.library.mediaType = YPlibraryMediaType.photoAndVideo
         let picker = YPImagePicker(configuration: config)
-
+        
         // Function for picker finished picking
         picker.didFinishPicking { [unowned picker] items, _ in
             for item in items {
                 switch item {
                 // If photo
                 case .photo(let photo):
-
+                    
                     let post = PFObject(className: "Picture")
                     let resizedImage = self.resizeImage(image: photo.image, targetSize: CGSize(width:600.0, height:600.0))
                     let imageData = resizedImage.jpeg(.lowest)
                     //let imageData = resizedImage.pngData()
                     let file = PFFileObject(data: imageData!)
-
+                    
                     post["image"] = file
                     post["propertyId"] = self.property?.id
                     post["agent"] = PFUser.current()!
-
+                    
                     // Save picture
-                    self.downloadGroup.enter()
                     post.saveInBackground() { (success, error) in
                         if success {
-                            print("Success")
-                            self.downloadGroup.leave()
-                        } else {
-                            print("Error")
-                            /*let alert = UIAlertController(title: "Error", message: "Upload failed.", preferredStyle: UIAlertController.Style.alert)
+                            let alert = UIAlertController(title: "Success", message: "Upload complete!", preferredStyle: UIAlertController.Style.alert)
                             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-                            self.present(alert, animated: true, completion: nil)*/
+                            self.present(alert, animated: true, completion: nil)
+                            self.refresh()
+                        } else {
+                            let alert = UIAlertController(title: "Error", message: "Upload failed.", preferredStyle: UIAlertController.Style.alert)
+                            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                            self.present(alert, animated: true, completion: nil)
                         }
                     }
                     
@@ -173,15 +171,7 @@ class MainViewController: UIViewController {
             }
             picker.dismiss(animated: true, completion: nil)
         }
-        self.downloadGroup.notify(queue: .main) {
-            self.refresh()
-            let alert = UIAlertController(title: "Success", message: "Upload complete!", preferredStyle: UIAlertController.Style.alert)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-            
-        }
         self.present(picker, animated: true, completion: nil)
-        
     }
     
     @IBAction func deleteButton(_ sender: Any) {
@@ -203,52 +193,53 @@ class MainViewController: UIViewController {
         
         // 3. Grab the value from the text field, and print it when the user clicks OK.
         alert.addAction(UIAlertAction(title: "Delete", style: .default, handler: { [weak alert] (_) in
-
+            
             let textField = alert?.textFields![0] // Force unwrapping because we know it exists.
             let input = textField!.text!
             if input.contains(",") {
                 let imageNums = input.split(separator: ",").map{ Int($0)! - 1 }
                 /*let query = PFQuery(className: "Pictures")
-                for imageNum in imageNums.sorted().reversed() {
-                    let imgToDel = self.slideshowImgIds[imageNum]
-                    self.slideshowImgIds.remove(at: imageNum)
-                    query.getObjectInBackground(withId: imgToDel) { (img: PFObject?, error: Error?) in
-                        if let error = error {
-                            print(error.localizedDescription)
-                        } else {
-                            img?.deleteEventually() {(success, error: Error?) in
-                                if success {
-                                    self.refresh()
-                                    self.slideshow.setImageInputs(self.imageSource)
-                                    self.slideshow.setNeedsDisplay()
-                                    let alert = UIAlertController(title: "Success", message: "Image deleted!", preferredStyle: .alert)
-                                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                                    self.present(alert, animated: true, completion: nil)
-                                } else {
-                                    print(error!.localizedDescription)
-                                }
-                            }
-                        }
-                    }*/
+                 for imageNum in imageNums.sorted().reversed() {
+                 let imgToDel = self.slideshowImgIds[imageNum]
+                 self.slideshowImgIds.remove(at: imageNum)
+                 query.getObjectInBackground(withId: imgToDel) { (img: PFObject?, error: Error?) in
+                 if let error = error {
+                 print(error.localizedDescription)
+                 } else {
+                 img?.deleteEventually() {(success, error: Error?) in
+                 if success {
+                 self.refresh()
+                 self.slideshow.setImageInputs(self.imageSource)
+                 self.slideshow.setNeedsDisplay()
+                 let alert = UIAlertController(title: "Success", message: "Image deleted!", preferredStyle: .alert)
+                 alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                 self.present(alert, animated: true, completion: nil)
+                 } else {
+                 print(error!.localizedDescription)
+                 }
+                 }
+                 }
+                 }*/
                 
             } else if input.contains("-") {
-                let results = input.split(separator: "-").map{ Int($0)! - 1 }
-                let range: ClosedRange = results[0] ... results[1]
-                for num in range {
-                    self.imageNums.append(num)
-                    
-                }
-                print(self.imageNums)
-                self.delete(self.imageNums.first!)
-                self.downloadGroup.notify(queue: .main) {
-                    for _ in range {
-                        self.imageSource.remove(at: range.lowerBound)
-                        self.slideshowImgIds.remove(at: range.lowerBound)
-                    }
-                    self.refresh()
-                    self.slideshow.setImageInputs(self.imageSource)
-                    self.slideshow.setNeedsDisplay()
-                }
+                let imageNums = input.split(separator: "-").map{ Int($0)! - 1 }
+                /*let query = PFQuery(className: "Pictures")
+                 var objectsToDelete = [PFObject]()
+                 for imageNum in imageNums[0]...imageNums[1] {
+                 let imgToDel = self.slideshowImgIds[imageNum]
+                 self.slideshowImgIds.remove(at: imageNum)
+                 query.whereKey("objectId", equalTo: imgToDel)
+                 query.findObjectsInBackground { (objects: [PFObject]?, error: Error?) in
+                 if error == nil {
+                 PFObject.deleteAll(inBackground: objects, block: {(success: Bool, error: Error?) in
+                 if success {
+                 print("Yay")
+                 }
+                 })
+                 }
+                 }
+                 }*/
+                
                 
             } else {
                 let imageNum = Int(input)! - 1
@@ -280,8 +271,8 @@ class MainViewController: UIViewController {
         // 4. Present the alert.
         self.present(alert, animated: true, completion: nil)
     }
-
-
+    
+    
     // Refresh button
     @IBAction func editButton(_ sender: Any) {
         self.performSegue(withIdentifier: "editPropertySegue", sender: self)
@@ -290,18 +281,13 @@ class MainViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "editPropertySegue" {
             let editPropertyDetails = segue.destination as! EditPropertyViewController
-            //editPropertyDetails.delegate = self
+            editPropertyDetails.delegate = self
             editPropertyDetails.property = self.property
             editPropertyDetails.propertyThumbnail = self.propertyThumbnail
         }
     }
-
-
-    @objc func refresh() {
-        // Clear updated list
-        self.refreshControl.beginRefreshing()
-        self.updatedList.removeAll(keepingCapacity: true)
-        
+    
+    @objc func loadLabels() {
         let labelQuery = PFQuery(className: "Property")
         labelQuery.whereKey("objectId", equalTo: self.property?.id)
         labelQuery.getFirstObjectInBackground() {(property: PFObject?, error: Error?) in
@@ -312,14 +298,20 @@ class MainViewController: UIViewController {
                 self.navigationItem.title = property!["address"] as? String
                 self.cityStateLabel.text = (property!["city"] as! String) + ", " + (property!["state"] as! String)
                 self.zipLabel.text = property!["zip"] as? String
-                let bathNum = property!["bath"] as? NSNumber
                 self.bedLabel.text = (property!["bed"] as? NSNumber)?.stringValue
                 self.bathLabel.text = (property!["bath"] as? NSNumber)?.stringValue
             }
         }
-        self.downloadGroup.enter()
+    }
+    @objc func refresh() {
+        // Clear updated list
+    
+        self.updatedList.removeAll(keepingCapacity: true)
+        //loadLabels()
+        
+        
         let pictureQuery = PFQuery(className: "Picture")
-        //pictureQuery.whereKey("agent", equalTo: PFUser.current()!)
+        pictureQuery.whereKey("agent", equalTo: PFUser.current()!)
         pictureQuery.whereKey("propertyId", equalTo: self.property?.id)
         pictureQuery.findObjectsInBackground() { (posts, error) in
             if posts != nil {
@@ -327,49 +319,18 @@ class MainViewController: UIViewController {
                     let imageFile = post["image"] as! PFFileObject
                     self.updatedList.append(ParseSource(file: imageFile))
                     self.slideshowImgIds.append(post.objectId!)
+                    
                 }
             }
-            self.slideshow.setImageInputs(self.imageSource)
             self.imageSource = self.updatedList
-            
-            
-            self.downloadGroup.leave()
-            
-        }
-        self.downloadGroup.notify(queue: .main) {
-            
+            self.slideshow.setImageInputs(self.imageSource)
             self.slideshow.setNeedsDisplay()
             self.slideshow.bringSubviewToFront(self.priceLabel)
-            self.refreshControl.endRefreshing()
         }
+        
     }
     
-    func delete(_ id: Int) {
-        self.downloadGroup.enter()
-        let imgToDel = self.slideshowImgIds[id]
-        
-        print(imgToDel)
-        
-        let query = PFQuery(className: "Picture")
-        query.getObjectInBackground(withId: imgToDel) { (object: PFObject?, error: Error?) in
-            if error == nil {
-                object?.deleteInBackground() {(success, error) in
-                    if error == nil {
-                        print("Done!")
-                        self.downloadGroup.leave()
-                    }
-                }
-            }
-            
-            self.imageNums = Array(self.imageNums.dropFirst())
-            
-            if (!self.imageNums.isEmpty) {
-                self.delete(self.imageNums.first!)
-            }
-        }
-    }
     
-
     // Full screens the slideshow
     @objc func didTap() {
         let fullScreenController = slideshow.presentFullScreenController(from: self)

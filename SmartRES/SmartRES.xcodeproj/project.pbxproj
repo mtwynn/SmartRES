@@ -20,7 +20,6 @@
 		C645AECC2282A668006F2EF3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C645AECB2282A668006F2EF3 /* LoginViewController.swift */; };
 		C64A223922C228400041C764 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64A223822C228400041C764 /* SignupViewController.swift */; };
 		C64A223D22C356590041C764 /* PropertyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64A223C22C356590041C764 /* PropertyCell.swift */; };
-		C665A80522D73AEA0098E904 /* CustomFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C665A80422D73AEA0098E904 /* CustomFlowLayout.swift */; };
 		C666BB3122C3E26D006E76CF /* PropertiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C666BB3022C3E26D006E76CF /* PropertiesViewController.swift */; };
 		C666BB3322C43981006E76CF /* AddPropertyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C666BB3222C43981006E76CF /* AddPropertyViewController.swift */; };
 		C67D60CC22C96390001C7149 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C67D60CB22C96390001C7149 /* GoogleService-Info.plist */; };
@@ -95,7 +94,6 @@
 		C645AECB2282A668006F2EF3 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		C64A223822C228400041C764 /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		C64A223C22C356590041C764 /* PropertyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyCell.swift; sourceTree = "<group>"; };
-		C665A80422D73AEA0098E904 /* CustomFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFlowLayout.swift; sourceTree = "<group>"; };
 		C666BB3022C3E26D006E76CF /* PropertiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertiesViewController.swift; sourceTree = "<group>"; };
 		C666BB3222C43981006E76CF /* AddPropertyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPropertyViewController.swift; sourceTree = "<group>"; };
 		C67D60CB22C96390001C7149 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -234,7 +232,6 @@
 				C6E1DBA922D5B6FA0059C2C7 /* EditPropertyViewController.swift */,
 				C6A3ADEE22D69981009BE8C7 /* MapViewController.swift */,
 				C6A3ADF022D6B499009BE8C7 /* NativeGeocoding.swift */,
-				C665A80422D73AEA0098E904 /* CustomFlowLayout.swift */,
 			);
 			path = SmartRES;
 			sourceTree = "<group>";
@@ -531,7 +528,6 @@
 				C611FF412283603A00704CD3 /* MainViewController.swift in Sources */,
 				C64A223D22C356590041C764 /* PropertyCell.swift in Sources */,
 				C666BB3122C3E26D006E76CF /* PropertiesViewController.swift in Sources */,
-				C665A80522D73AEA0098E904 /* CustomFlowLayout.swift in Sources */,
 				C611FF43228362EB00704CD3 /* ProfileViewController.swift in Sources */,
 				C6A3ADEF22D69981009BE8C7 /* MapViewController.swift in Sources */,
 				C6A3ADF122D6B499009BE8C7 /* NativeGeocoding.swift in Sources */,
