@@ -23,7 +23,7 @@ class MainViewController: UIViewController, controlsPropertyRefresh {
     var imageSource = [ParseSource]()
     var updatedList = [ParseSource]()
     var slideshowImgIds = [String]()
-    
+    var imageNums = [Int]() // For deletion
     // Refresh control
     var refreshControl = UIRefreshControl()
     
@@ -54,7 +54,6 @@ class MainViewController: UIViewController, controlsPropertyRefresh {
         
         // Set all information labels on finished loading
         priceLabel.text = "$\(property!.price.stringValue)"
-        print(priceLabel.text)
         addressLabel.text = "ID: \(property!.id)"
         cityStateLabel.text = property!.city + ", " + property!.state
         zipLabel.text = property!.zip
@@ -222,23 +221,22 @@ class MainViewController: UIViewController, controlsPropertyRefresh {
                  }*/
                 
             } else if input.contains("-") {
-                let imageNums = input.split(separator: "-").map{ Int($0)! - 1 }
-                /*let query = PFQuery(className: "Pictures")
-                 var objectsToDelete = [PFObject]()
-                 for imageNum in imageNums[0]...imageNums[1] {
-                 let imgToDel = self.slideshowImgIds[imageNum]
-                 self.slideshowImgIds.remove(at: imageNum)
-                 query.whereKey("objectId", equalTo: imgToDel)
-                 query.findObjectsInBackground { (objects: [PFObject]?, error: Error?) in
-                 if error == nil {
-                 PFObject.deleteAll(inBackground: objects, block: {(success: Bool, error: Error?) in
-                 if success {
-                 print("Yay")
-                 }
-                 })
-                 }
-                 }
-                 }*/
+                let results = input.split(separator: "-").map{ Int($0)! - 1 }
+                let range: ClosedRange = results[0] ... results[1]
+                for num in range {
+                    self.imageNums.append(num)
+                    
+                }
+                self.delete(self.imageNums.first!)
+                self.downloadGroup.notify(queue: .main) {
+                    for _ in range {
+                        self.imageSource.remove(at: range.lowerBound)
+                        self.slideshowImgIds.remove(at: range.lowerBound)
+                    }
+                    self.refresh()
+                    self.slideshow.setImageInputs(self.imageSource)
+                    self.slideshow.setNeedsDisplay()
+                }
                 
                 
             } else {
@@ -294,22 +292,24 @@ class MainViewController: UIViewController, controlsPropertyRefresh {
             if let error = error {
                 print("Failed to refresh. Error: \(error.localizedDescription)")
             } else {
-                self.priceLabel.text = property!["price"] as? String
+                //self.priceLabel.text = property!["price"] as? String
                 self.navigationItem.title = property!["address"] as? String
                 self.cityStateLabel.text = (property!["city"] as! String) + ", " + (property!["state"] as! String)
                 self.zipLabel.text = property!["zip"] as? String
                 self.bedLabel.text = (property!["bed"] as? NSNumber)?.stringValue
                 self.bathLabel.text = (property!["bath"] as? NSNumber)?.stringValue
+                
             }
+            self.slideshow.bringSubviewToFront(self.priceLabel)
         }
     }
     @objc func refresh() {
         // Clear updated list
     
         self.updatedList.removeAll(keepingCapacity: true)
-        //loadLabels()
         
         
+        self.loadLabels()
         let pictureQuery = PFQuery(className: "Picture")
         pictureQuery.whereKey("agent", equalTo: PFUser.current()!)
         pictureQuery.whereKey("propertyId", equalTo: self.property?.id)
@@ -326,10 +326,35 @@ class MainViewController: UIViewController, controlsPropertyRefresh {
             self.slideshow.setImageInputs(self.imageSource)
             self.slideshow.setNeedsDisplay()
             self.slideshow.bringSubviewToFront(self.priceLabel)
+            
         }
         
     }
     
+    func delete(_ id: Int) {
+        self.downloadGroup.enter()
+        let imgToDel = self.slideshowImgIds[id]
+        
+        print(imgToDel)
+        
+        let query = PFQuery(className: "Picture")
+        query.getObjectInBackground(withId: imgToDel) { (object: PFObject?, error: Error?) in
+            if error == nil {
+                object?.deleteInBackground() {(success, error) in
+                    if error == nil {
+                        print("Done!")
+                        self.downloadGroup.leave()
+                    }
+                }
+            }
+            
+            self.imageNums = Array(self.imageNums.dropFirst())
+            
+            if (!self.imageNums.isEmpty) {
+                self.delete(self.imageNums.first!)
+            }
+        }
+    }
     
     // Full screens the slideshow
     @objc func didTap() {
