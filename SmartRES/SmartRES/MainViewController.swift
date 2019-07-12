@@ -48,7 +48,7 @@ class MainViewController: UIViewController, controlsPropertyRefresh {
     override func viewDidLoad() {
         super.viewDidLoad()
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
-        var swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(refresh))
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(refresh))
         swipeDown.direction = .down
         slideshow.addGestureRecognizer(swipeDown)
         
@@ -60,9 +60,9 @@ class MainViewController: UIViewController, controlsPropertyRefresh {
         bedLabel.text = property!.bed.stringValue
         bathLabel.text = property!.bath.stringValue
         let query = PFQuery(className: "Property")
-        query.whereKey("objectId", equalTo: property?.id)
+        query.whereKey("objectId", equalTo: property?.id!)
         query.getFirstObjectInBackground() { (property: PFObject?, error: Error?) in
-            if let error = error {
+            if error != nil {
                 print("Failed to load thumbnail")
             } else {
                 if (property!["thumbnail"] != nil) {

@@ -22,6 +22,7 @@
 		C64A223D22C356590041C764 /* PropertyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64A223C22C356590041C764 /* PropertyCell.swift */; };
 		C666BB3122C3E26D006E76CF /* PropertiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C666BB3022C3E26D006E76CF /* PropertiesViewController.swift */; };
 		C666BB3322C43981006E76CF /* AddPropertyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C666BB3222C43981006E76CF /* AddPropertyViewController.swift */; };
+		C67A842E22D9491400577AC9 /* Geocoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67A842D22D9491400577AC9 /* Geocoding.swift */; };
 		C67D60CC22C96390001C7149 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C67D60CB22C96390001C7149 /* GoogleService-Info.plist */; };
 		C67D60D022CF43B5001C7149 /* TransitionTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67D60CF22CF43B5001C7149 /* TransitionTabBarController.swift */; };
 		C69C3C7222BCB6D80056DE89 /* Lato-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69C3C6022BCB6D60056DE89 /* Lato-LightItalic.ttf */; };
@@ -96,6 +97,7 @@
 		C64A223C22C356590041C764 /* PropertyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyCell.swift; sourceTree = "<group>"; };
 		C666BB3022C3E26D006E76CF /* PropertiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertiesViewController.swift; sourceTree = "<group>"; };
 		C666BB3222C43981006E76CF /* AddPropertyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPropertyViewController.swift; sourceTree = "<group>"; };
+		C67A842D22D9491400577AC9 /* Geocoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geocoding.swift; sourceTree = "<group>"; };
 		C67D60CB22C96390001C7149 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C67D60CF22CF43B5001C7149 /* TransitionTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionTabBarController.swift; sourceTree = "<group>"; };
 		C69C3C6022BCB6D60056DE89 /* Lato-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-LightItalic.ttf"; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				C60D9C7A22CC542800B0A2FF /* Property.swift */,
+				C67A842D22D9491400577AC9 /* Geocoding.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -346,7 +349,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1010;
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Tam Nguyen";
 				TargetAttributes = {
 					C645AE992282A56E006F2EF3 = {
@@ -527,6 +530,7 @@
 				C64A223922C228400041C764 /* SignupViewController.swift in Sources */,
 				C611FF412283603A00704CD3 /* MainViewController.swift in Sources */,
 				C64A223D22C356590041C764 /* PropertyCell.swift in Sources */,
+				C67A842E22D9491400577AC9 /* Geocoding.swift in Sources */,
 				C666BB3122C3E26D006E76CF /* PropertiesViewController.swift in Sources */,
 				C611FF43228362EB00704CD3 /* ProfileViewController.swift in Sources */,
 				C6A3ADEF22D69981009BE8C7 /* MapViewController.swift in Sources */,
@@ -719,8 +723,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.smartres;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_VERSION = 5.0;
-				SWIFT_WHOLE_MODULE_OPTIMIZATION = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -739,8 +743,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.smartres;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_VERSION = 5.0;
-				SWIFT_WHOLE_MODULE_OPTIMIZATION = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

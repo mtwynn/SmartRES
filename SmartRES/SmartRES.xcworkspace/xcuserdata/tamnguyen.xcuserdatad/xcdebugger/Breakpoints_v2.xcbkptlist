@@ -22,23 +22,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SmartRES/MainViewController.swift"
-<<<<<<< HEAD
             timestampString = "584564092.672796"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "96"
             endingLineNumber = "96"
-=======
-            timestampString = "584519171.40355"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "72"
-            endingLineNumber = "72"
->>>>>>> parent of 0e88bdd... Finished edit property view
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -50,7 +42,6 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SmartRES/EditPropertyViewController.swift"
-<<<<<<< HEAD
             timestampString = "584530826.7370059"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
@@ -72,13 +63,6 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "97"
             endingLineNumber = "97"
-=======
-            timestampString = "584519171.404193"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "192"
-            endingLineNumber = "192"
->>>>>>> parent of 0e88bdd... Finished edit property view
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
