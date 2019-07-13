@@ -41,6 +41,12 @@ SmartRES is the solution for real estate agents to replace traditional painted r
  * Property Collection Screen
      * User can upload new properties
      * User can delete existing properties
+     * Users can "fuzzy" search for properties by street name/house number
+     
+ * Map View Screen
+     * User can view the locations of their properties on a map 
+     * Users can search for their existing properties and locations
+     * Users can add their current location as a new property if they choose to
      
  * Profile Screen
      * User can see their agent information and real-estate logo 
@@ -57,6 +63,7 @@ SmartRES is the solution for real estate agents to replace traditional painted r
 ### Navigation
 **Tab Navigation**
  * Property Collection Screen
+ * Map View
  * Profile Screen
  
 ---
