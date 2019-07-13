@@ -105,3 +105,4 @@ SmartRES is the solution for real estate agents to replace traditional painted r
 ### Todo
 - [ ] Create a working executable for Python script 
 - [ ] Restyle Delete images button
+- [ ] Add activity indicators for all loading operations
