@@ -1283,8 +1283,20 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IQO-Fv-Iv1">
+                                <rect key="frame" x="293" y="536" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="TyD-z2-Tt3"/>
+                                    <constraint firstAttribute="height" constant="50" id="cpG-gj-TqD"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="vr3-tY-xO8" firstAttribute="bottom" secondItem="IQO-Fv-Iv1" secondAttribute="bottom" constant="32" id="GoP-dk-Sn0"/>
+                            <constraint firstItem="vr3-tY-xO8" firstAttribute="trailing" secondItem="IQO-Fv-Iv1" secondAttribute="trailing" constant="32" id="sr6-Ra-kuc"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="vr3-tY-xO8"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="maps" id="knA-Tm-v7d">
