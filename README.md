@@ -11,7 +11,7 @@ Jeff Huang
 
 ### App Description
 SmartRES is the solution for real estate agents to replace traditional painted real estate signs with digital signs that are capable of functions like displaying agent information and interior views of the property, video tours and conferencing, and even perform data collection. The software side of the product consists of two parts:
-1) The mobile application (currently with iOS) allows agents to review and update their signs at their properties, which will happen in real time.
+1) The mobile application (currently with iOS) allows agents to review and update the digital signs at their properties, which will happen in real time.
 2) The digital signs will use Raspberry Pi's (model Zero W) with open-source software and Python scripts to compute, display, and retrieve data. 
 
 ---
