@@ -31,6 +31,7 @@ SmartRES is the solution for real estate agents to replace traditional painted r
 - [ ] Video upload available
 - [X] Map view of all properties using Geolocation services (Used Native iOS Mapkit) 
 - [ ] Integration with Firebase
+- [ ] Use with third-party signups, like Sign up with Google, Facebook, OAuth, etc
 
 ---
 
