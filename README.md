@@ -21,6 +21,7 @@ SmartRES is the solution for real estate agents to replace traditional painted r
 - [ ] Delete images needs more verification cases (1, 1,2,3, 1-5)
 - [X] Regex verifications for signup and add property
 - [X] Edit property details
+- [ ] Edit profile information
 
 **Optional Nice-to-have Stories**
 - [X] Remember Me Button
@@ -29,7 +30,7 @@ SmartRES is the solution for real estate agents to replace traditional painted r
     - [ ] With various filters
 - [ ] Video upload available
 - [X] Map view of all properties using Geolocation services (Used Native iOS Mapkit) 
-- [ ]Integration with Firebase
+- [ ] Integration with Firebase
 
 ---
 
@@ -37,16 +38,17 @@ SmartRES is the solution for real estate agents to replace traditional painted r
  * Login Screen
      * User can login
      * User can register for an account
+     * User can save and remember their login information
      
  * Property Collection Screen
      * User can upload new properties
      * User can delete existing properties
-     * Users can "fuzzy" search for properties by street name/house number
+     * User can "fuzzy" search for properties by street name/house number
      
  * Map View Screen
      * User can view the locations of their properties on a map 
-     * Users can search for their existing properties and locations
-     * Users can add their current location as a new property if they choose to
+     * User can search for their existing properties and locations
+     * User can add their current location as a new property if they choose to
      
  * Profile Screen
      * User can see their agent information and real-estate logo 
@@ -57,6 +59,7 @@ SmartRES is the solution for real estate agents to replace traditional painted r
      * User can view a automatically/manually rotating slideshow of images related to this property
      * User can add new images
      * User can delete old images 
+     * User can edit property details and property thumbnail
      
 ---
 
