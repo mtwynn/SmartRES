@@ -33,33 +33,16 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             annotation.title = "Current Location"
             mapView.addAnnotation(annotation)
         }
-        let geoCoder = CLGeocoder()
+        
         var addresses = [String]()
         for property in properties {
-            let address = "\(property.address), \(property.city) \(property.state), \(property.zip)"
-            addresses.append(address)
+            print("\(property.address) has coordinates: \(property.latitude) \(property.longitude)")
             
-            /*geoCoder.geocodeAddressString(address) { (placemarks, error) in
-                guard
-                    let placemarks = placemarks,
-                    let location = placemarks.first?.location
-                    else {
-                        print("No location for \(address)")
-                        return
-                }
-                
-                
-                let lat = location.coordinate.latitude
-                let long = location.coordinate.longitude
-                print("\(lat) \(long)")
-                let coord = CLLocationCoordinate2D(latitude: lat, longitude: long)
-                let tempAnnot = MKPointAnnotation()
-                tempAnnot.coordinate = coord
-                tempAnnot.title = address
-                self.mapView.addAnnotation(tempAnnot)
-                
-                
-            }*/
+            let coordinates = CLLocationCoordinate2D(latitude: CLLocationDegrees(property.latitude), longitude: CLLocationDegrees(property.longitude))
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = coordinates
+            annotation.title = property.address
+            mapView.addAnnotation(annotation)
         }
         print(addresses)
     }
@@ -69,6 +52,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         print("locations = \(locValue.latitude) and \(locValue.longitude)")
         
+        
+    }
+    
+    func loadProperties() -> Void {
         
     }
     

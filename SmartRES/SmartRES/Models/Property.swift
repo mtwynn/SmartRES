@@ -21,5 +21,7 @@ struct Property {
     let bath: NSNumber
     let price: NSNumber
     var image: UIImage
+    let latitude: NSNumber
+    let longitude: NSNumber
     let agent: PFUser
 }

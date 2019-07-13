@@ -125,6 +125,8 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
                                             bath: propertyDict["bath"] as! NSNumber,
                                             price: propertyDict["price"] as! NSNumber,
                                             image: pic!,
+                                            latitude: propertyDict["latitude"] as! NSNumber,
+                                            longitude: propertyDict["longitude"] as! NSNumber,
                                             agent: propertyDict["agent"] as! PFUser
                                             )
 

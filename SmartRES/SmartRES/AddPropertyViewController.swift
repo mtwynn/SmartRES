@@ -10,6 +10,7 @@ import UIKit
 import Parse
 import Alamofire
 import YPImagePicker
+import MapKit
 
 class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
@@ -247,6 +248,26 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
         property["zip"] = self.zipField.text!.trim()
         property["type"] = self.typeField.text!
         
+        let propertyAddressString = "\(self.addressField.text!.trim()), \(self.cityField.text!.trim()) \(self.stateField.text!.trim()), \(self.zipField.text!.trim())"
+        
+        let geoCoder = CLGeocoder()
+        geoCoder.geocodeAddressString(propertyAddressString) { (placemarks, error) in
+            guard
+                let placemarks = placemarks,
+                let location = placemarks.first?.location
+                else {
+                    let alert = UIAlertController(title: "Error", message: "No location exists for this property. Please try again.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                    return
+            }
+            
+            
+            let lat = location.coordinate.latitude
+            let long = location.coordinate.longitude
+            property["latitude"] = lat
+            property["longitude"] = long
+        }
         // Helper number formatter to convert strings to nums
         let formatter = NumberFormatter()
         formatter.generatesDecimalNumbers = true
@@ -354,7 +375,15 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
     }
 
     @objc func donePicker() {
-        
+        if (typeField.text == "") {
+            typeField.text = "House"
+        }
+        if (bedField.text == "") {
+            bedField.text = "1"
+        }
+        if (bathField.text == "") {
+            bathField.text = "1"
+        }
         stateField.resignFirstResponder()
         typeField.resignFirstResponder()
         bedField.resignFirstResponder()
