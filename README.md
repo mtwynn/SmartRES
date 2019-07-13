@@ -20,14 +20,16 @@ SmartRES is the solution for real estate agents to replace traditional painted r
 **Required Must-have Stories**
 - [ ] Delete images needs more verification cases (1, 1,2,3, 1-5)
 - [X] Regex verifications for signup and add property
-- [ ] Edit property details
+- [X] Edit property details
 
 **Optional Nice-to-have Stories**
 - [X] Remember Me Button
-- [ ] GPS pinpointing for add property
-- [ ] Search properties with various filters
+- [ ] Reverse geocoding for add property
+- [X] Search properties
+    - [ ] With various filters
 - [ ] Video upload available
-- [ ] Map view of all properties using Geolocation services (Google Maps API, Foursquare, etc) 
+- [X] Map view of all properties using Geolocation services (Used Native iOS Mapkit) 
+- [ ]Integration with Firebase
 
 ---
 
