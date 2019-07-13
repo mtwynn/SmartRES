@@ -15,10 +15,12 @@ protocol controlsRefresh {
 }
 
 
-class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UITabBarDelegate, UITabBarControllerDelegate, controlsRefresh {
+class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UITabBarDelegate, UITabBarControllerDelegate, UISearchBarDelegate, controlsRefresh {
 
     let refreshControl = UIRefreshControl()
+    
     var properties = [Property]()
+    var filteredProperties = [Property]()
     var editButtonEnabled = false
     @IBOutlet weak var propertyCollectionView: UICollectionView!
     @IBOutlet weak var propertyLabel: UILabel!
@@ -29,7 +31,7 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
     override func viewDidLoad() {
         super.viewDidLoad()
         let backButton = UIBarButtonItem()
-        backButton.title = "Properties"
+        backButton.title = "Back"
         self.navigationItem.backBarButtonItem = backButton
 
         refreshControl.addTarget(self, action: #selector(loadProperties), for: .valueChanged)
@@ -45,18 +47,21 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
         let width = view.frame.size.width / 2
         layout.itemSize = CGSize(width: width, height: width)
     
+        // Activity Indicator Style
+        
+        
         
         // Async load properties
         loadProperties()
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return properties.count
+        return filteredProperties.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = propertyCollectionView.dequeueReusableCell(withReuseIdentifier: "PropertyCell", for: indexPath) as! PropertyCell
-        let property = properties[indexPath.item]
+        let property = filteredProperties[indexPath.item]
         cell.propertyCellView.image = property.image
         cell.propertyLabel.text = property.address
         
@@ -71,7 +76,17 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     @objc func loadProperties() {
-
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.style = .gray
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.startAnimating()
+        
+        self.propertyCollectionView.addSubview(activityIndicator)
+        
+        
         // Search all Property objects for this current user
         let query = PFQuery(className: "Property")
         query.whereKey("agent", equalTo: PFUser.current()!)
@@ -79,7 +94,10 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
         // Async find in background
         query.findObjectsInBackground{ (queryDict, error) in
             if let queryProperties = queryDict {
+                activityIndicator.stopAnimating()
+                UIApplication.shared.endIgnoringInteractionEvents()
                 self.properties.removeAll()
+                self.filteredProperties.removeAll()
                 for propertyDict in queryProperties {
 
                     // Create UI image for each property first
@@ -112,6 +130,7 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
 
                     // Add property object to list of property objects
                     self.properties.append(property)
+                    self.filteredProperties = self.properties
                     
                 }
                 if self.properties.count == 0 {
@@ -233,4 +252,23 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
         
         self.present(alert, animated: true, completion: nil)
     }
+    
+    @IBAction func searchButton(_ sender: Any) {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchBar.delegate = self
+        self.present(searchController, animated: true, completion: nil)
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        print("Works")
+        filteredProperties = searchText.isEmpty ? properties : properties.filter { (property: Property) -> Bool in
+            
+            let address = property.address
+            return address.lowercased().contains(searchText.lowercased())
+        }
+        
+        
+        propertyCollectionView.reloadData()
+    }
+    
 }

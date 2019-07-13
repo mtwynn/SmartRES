@@ -488,16 +488,27 @@
                         <viewLayoutGuide key="safeArea" id="5lf-7I-BRl"/>
                     </view>
                     <navigationItem key="navigationItem" title="Properties" id="Fv8-hd-cO6">
-                        <barButtonItem key="leftBarButtonItem" image="trash" id="fO9-u1-saz">
-                            <connections>
-                                <action selector="editProperties:" destination="epp-Xg-qFe" id="o58-IF-Ne6"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="add" id="TAi-aD-gDY">
-                            <connections>
-                                <action selector="addProperty:" destination="epp-Xg-qFe" id="SAh-ej-HQX"/>
-                            </connections>
-                        </barButtonItem>
+                        <leftBarButtonItems>
+                            <barButtonItem image="trash" id="fO9-u1-saz">
+                                <connections>
+                                    <action selector="editProperties:" destination="epp-Xg-qFe" id="o58-IF-Ne6"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="filter" id="5ow-Oq-htn"/>
+                        </leftBarButtonItems>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="search" id="TAi-aD-gDY">
+                                <inset key="imageInsets" minX="0.0" minY="1" maxX="0.0" maxY="0.0"/>
+                                <connections>
+                                    <action selector="searchButton:" destination="epp-Xg-qFe" id="Kvl-SI-40C"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Item" image="add" id="rea-Vh-kJY">
+                                <connections>
+                                    <action selector="addProperty:" destination="epp-Xg-qFe" id="P5Z-w7-98Z"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="editButtonView" destination="fO9-u1-saz" id="Nx4-gr-K8z"/>
@@ -1378,6 +1389,7 @@
         <image name="check" width="25" height="25"/>
         <image name="edit" width="25" height="25"/>
         <image name="exit" width="25" height="25"/>
+        <image name="filter" width="25" height="25"/>
         <image name="houses" width="25" height="25"/>
         <image name="iTunesArtwork-1" width="512" height="512"/>
         <image name="maps" width="25" height="25"/>

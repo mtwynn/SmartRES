@@ -60,7 +60,7 @@ class MainViewController: UIViewController, controlsPropertyRefresh {
         bedLabel.text = property!.bed.stringValue
         bathLabel.text = property!.bath.stringValue
         let query = PFQuery(className: "Property")
-        query.whereKey("objectId", equalTo: property?.id!)
+        query.whereKey("objectId", equalTo: property?.id)
         query.getFirstObjectInBackground() { (property: PFObject?, error: Error?) in
             if error != nil {
                 print("Failed to load thumbnail")
@@ -305,7 +305,16 @@ class MainViewController: UIViewController, controlsPropertyRefresh {
     }
     @objc func refresh() {
         // Clear updated list
-    
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.style = .gray
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.startAnimating()
+        
+        self.view.addSubview(activityIndicator)
+        
         self.updatedList.removeAll(keepingCapacity: true)
         
         
@@ -315,6 +324,8 @@ class MainViewController: UIViewController, controlsPropertyRefresh {
         pictureQuery.whereKey("propertyId", equalTo: self.property?.id)
         pictureQuery.findObjectsInBackground() { (posts, error) in
             if posts != nil {
+                UIApplication.shared.endIgnoringInteractionEvents()
+                activityIndicator.stopAnimating()
                 for post in posts! {
                     let imageFile = post["image"] as! PFFileObject
                     self.updatedList.append(ParseSource(file: imageFile))
