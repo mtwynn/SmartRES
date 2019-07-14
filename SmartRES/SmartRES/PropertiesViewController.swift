@@ -131,6 +131,8 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
                     // Add property object to list of property objects
                     self.properties.append(property)
                     self.filteredProperties = self.properties
+                    let vc = self.tabBarController?.viewControllers![1] as! MapViewController
+                    vc.properties = self.properties
                     
                 }
                 if self.properties.count == 0 {
@@ -147,8 +149,7 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
                     self.propertyCollectionView.backgroundView = nil
                 }
                 // Reload and refresh
-                let vc = self.tabBarController?.viewControllers![1] as! MapViewController
-                vc.properties = self.properties
+                
                 self.propertyCollectionView.reloadData()
                 self.refreshControl.endRefreshing()
             }

@@ -49,7 +49,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             currentLoc.longitude = locValue!.coordinate.longitude
             let region = MKCoordinateRegion(center: currentLoc, span: mapSpan)
             mapView.setRegion(region, animated: false)
-            let annotation = MKPointAnnotation()
+            let annotation = CustomPointAnnotation()
             annotation.coordinate = currentLoc
             annotation.title = "Current Location"
             mapView.addAnnotation(annotation)
@@ -58,7 +58,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             print("\(property.address) has coordinates: \(property.latitude) \(property.longitude)")
             
             let coordinates = CLLocationCoordinate2D(latitude: CLLocationDegrees(property.latitude), longitude: CLLocationDegrees(property.longitude))
-            let annotation = MKPointAnnotation()
+            let annotation = CustomPointAnnotation()
+            annotation.image = property.image
+            annotation.address = "\(property.address), \(property.city) \(property.state), \(property.zip)"
             annotation.coordinate = coordinates
             annotation.title = property.address
             mapView.addAnnotation(annotation)
@@ -106,6 +108,76 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             self.mapView.addAnnotation(annotation)
             self.mapView.animatedZoom(zoomRegion: region, duration: 3)
         }
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        let reuseID = "myAnnotationView"
+        
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseID)
+        if (annotationView == nil) {
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseID)
+            annotationView!.canShowCallout = true
+            annotationView!.leftCalloutAccessoryView = UIImageView(frame: CGRect(x:0, y:0, width: 60, height:60))
+        }
+        
+        let customAnnotation = annotation as! CustomPointAnnotation
+        let rightCalloutButton = OpenMapsUIButton(type: .detailDisclosure)
+        
+        rightCalloutButton.address = customAnnotation.address
+        rightCalloutButton.addTarget(self, action: #selector(openMaps), for: UIControl.Event.touchUpInside)
+        annotationView?.rightCalloutAccessoryView = rightCalloutButton
+        
+        let imageView = annotationView?.leftCalloutAccessoryView as! UIImageView
+        
+        
+        imageView.image = customAnnotation.image
+        
+        return annotationView
+    }
+    
+    @objc func openMaps(sender: UIButton) {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let customButton = sender as! OpenMapsUIButton
+        guard let address = customButton.address else {
+            return
+        }
+        let formattedAddress = address.replacingOccurrences(of: " ", with: "+", options: .literal, range: nil)
+        // Open Apple Maps with given lat/long coordinates
+        alert.addAction(UIAlertAction(title: "Open with Apple Maps", style: .default, handler: {action in
+            guard let appleMapsURL = URL(string: "http://maps.apple.com/?address=\(formattedAddress)") else { return }
+            //guard let appleMapsURL = URL(string: "http://maps.apple.com/?q=\(latitude),\(longitude)") else { return }
+            UIApplication.shared.open(appleMapsURL, options: [:], completionHandler: nil)
+        }));
+        
+        // Open Google Maps with given lat/long coordinates
+        alert.addAction(UIAlertAction(title: "Open with Google Maps", style: .default, handler: {action in
+            if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
+                UIApplication.shared.openURL(URL(string:
+                    "comgooglemaps://?q=\(formattedAddress)&zoom=14&views=traffic")!)
+            } else {
+                print("Can't use comgooglemaps://");
+            }
+        }));
+        
+        
+        //Copy to clipboard
+        alert.addAction(UIAlertAction(title: "Copy to Clipboard", style: .default, handler: {action in
+            UIPasteboard.general.string = address
+        }));
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        cancel.setValue(UIColor.red, forKey: "titleTextColor")
+        alert.addAction(cancel)
+        
+        
+        self.present(alert, animated: true) {
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissAlertController))
+            alert.view.superview?.subviews[0].addGestureRecognizer(tapGesture)
+        }
+    }
+    
+    @objc func dismissAlertController(){
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
