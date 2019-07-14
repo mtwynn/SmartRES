@@ -14,9 +14,11 @@ class CustomPointAnnotation: MKPointAnnotation {
     var image: UIImage!
     var address: String!
     var pinColor: UIColor
+    var isSearchResult: Bool
     
     init(pinColor: UIColor) {
         self.pinColor = pinColor
+        self.isSearchResult = false
         super.init()
     }
 }

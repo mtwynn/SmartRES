@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import Parse
 
-class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UISearchBarDelegate {
+class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
     
@@ -19,6 +19,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     @IBOutlet weak var shadowButtonView: UIView!
     
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var searchTableView: UITableView!
+    var searchCompleter = MKLocalSearchCompleter()
+    var searchResults = [MKLocalSearchCompletion]()
     
     let locationManager = CLLocationManager()
     var properties = [Property]()
@@ -29,8 +32,17 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         super.viewDidLoad()
         mapView.delegate = self
         searchBar.delegate = self
-        locationManager.requestAlwaysAuthorization()
+        searchCompleter.delegate = self
+        searchTableView.delegate = self
+        searchTableView.dataSource = self
+        searchTableView.isHidden = true
+        //searchTableView.tableFooterView = UIView(frame: .zero)
+        let swipeDown = UISwipeGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
+        swipeDown.direction = UISwipeGestureRecognizer.Direction.down
+        self.view.addGestureRecognizer(swipeDown)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil); locationManager.requestAlwaysAuthorization()
         let tapGesture = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
+        tapGesture.addTarget(self, action: #selector(self.hideSearch))
         mapView.addGestureRecognizer(tapGesture)
             
         recenterButtonView.layer.shadowColor = UIColor.black.cgColor
@@ -84,6 +96,18 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.alpha = 0
+        
+        UIView.animate(
+            withDuration: 0.5,
+            delay: 0.05 * Double(indexPath.row),
+            animations: {
+                cell.alpha = 1
+        })
+    }
+    
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         let address = self.searchBar.text!
         let geoCoder = CLGeocoder()
@@ -105,9 +129,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             let coordinates = CLLocationCoordinate2D(latitude: lat, longitude: long)
             let searchSpan = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
             let region = MKCoordinateRegion(center: coordinates, span: searchSpan)
-            let annotation = MKPointAnnotation()
+            let annotation = CustomPointAnnotation(pinColor: MKPinAnnotationView.purplePinColor())
             annotation.coordinate = coordinates
             annotation.title = address
+            annotation.isSearchResult = true
             self.mapView.addAnnotation(annotation)
             self.mapView.animatedZoom(zoomRegion: region, duration: 3)
         }
@@ -130,6 +155,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let rightCalloutButton = OpenMapsUIButton(type: .detailDisclosure)
         
         rightCalloutButton.address = customAnnotation.address
+        rightCalloutButton.shouldShowAddProperty = customAnnotation.isSearchResult
         rightCalloutButton.addTarget(self, action: #selector(openMaps), for: UIControl.Event.touchUpInside)
         annotationView?.rightCalloutAccessoryView = rightCalloutButton
         
@@ -147,7 +173,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         guard let address = customButton.address else {
             return
         }
+        
+        var separatedAddress = address.split(separator: ",")
+        let street = String(separatedAddress.first!)
+        let city = String(separatedAddress.removeFirst().first!)
+        let state = String(separatedAddress.removeFirst().first!)
+        
+        print("Street: \(street), City: \(city), State: \(state)")
         let formattedAddress = address.replacingOccurrences(of: " ", with: "+", options: .literal, range: nil)
+        
         // Open Apple Maps with given lat/long coordinates
         alert.addAction(UIAlertAction(title: "Open with Apple Maps", style: .default, handler: {action in
             guard let appleMapsURL = URL(string: "http://maps.apple.com/?address=\(formattedAddress)") else { return }
@@ -158,13 +192,18 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         // Open Google Maps with given lat/long coordinates
         alert.addAction(UIAlertAction(title: "Open with Google Maps", style: .default, handler: {action in
             if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
-                UIApplication.shared.openURL(URL(string:
-                    "comgooglemaps://?q=\(formattedAddress)&zoom=14&views=traffic")!)
+                UIApplication.shared.open(URL(string:
+                    "comgooglemaps://?q=\(formattedAddress)&zoom=14&views=traffic")!, options: [:], completionHandler: nil)
             } else {
                 print("Can't use comgooglemaps://");
             }
         }));
         
+        if (customButton.shouldShowAddProperty!) {
+            alert.addAction(UIAlertAction(title: "Add New Property", style: .default, handler: {action in
+                self.performSegue(withIdentifier: "addPropertyFromMapsSegue", sender: self)
+            }));
+        }
         
         //Copy to clipboard
         alert.addAction(UIAlertAction(title: "Copy to Clipboard", style: .default, handler: {action in
@@ -185,6 +224,19 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     @objc func dismissAlertController(){
         self.dismiss(animated: true, completion: nil)
     }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
+        }
+    }
+    
+    @objc func hideSearch() {
+        self.searchTableView.isHidden = true
+        searchBar.resignFirstResponder()
+    }
+    
+    
 }
 
 
@@ -193,5 +245,82 @@ extension MKMapView {
         MKMapView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 10, options: UIView.AnimationOptions.curveEaseIn, animations: {
             self.setRegion(zoomRegion, animated: true)
         }, completion: nil)
+    }
+}
+
+extension MapViewController: UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if (searchText == "") {
+            self.searchTableView.isHidden = true
+        } else {
+            self.searchTableView.isHidden = false
+        }
+        searchCompleter.region = MKCoordinateRegion(center: currentLoc, span: mapSpan)
+        searchCompleter.queryFragment = searchText
+        
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.searchTableView.isHidden = true
+        searchBar.resignFirstResponder()
+    }
+}
+
+extension MapViewController: MKLocalSearchCompleterDelegate {
+    
+    func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
+        searchResults = completer.results
+        searchTableView.reloadData()
+    }
+    
+    func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
+        // handle error
+    }
+}
+
+extension MapViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print(searchResults.count)
+        return searchResults.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let searchResult = searchResults[indexPath.row]
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
+        cell.textLabel?.text = searchResult.title
+        cell.detailTextLabel?.text = searchResult.subtitle
+        return cell
+    }
+}
+
+extension MapViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let completion = searchResults[indexPath.row]
+        let fullAddress = "\(completion.title), \(completion.subtitle)"
+        print(fullAddress)
+        let searchRequest = MKLocalSearch.Request(completion: completion)
+        let search = MKLocalSearch(request: searchRequest)
+        search.start { (response, error) in
+            self.searchTableView.isHidden = true
+            self.searchBar.resignFirstResponder()
+            let coordinates = response?.mapItems[0].placemark.coordinate
+            let searchSpan = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+            let region = MKCoordinateRegion(center: coordinates!, span: searchSpan)
+            let annotation = CustomPointAnnotation(pinColor: MKPinAnnotationView.purplePinColor())
+            annotation.address = fullAddress
+            annotation.isSearchResult = true
+            annotation.coordinate = coordinates!
+            annotation.title = completion.title
+            self.mapView.addAnnotation(annotation)
+            self.mapView.animatedZoom(zoomRegion: region, duration: 1.5)
+        }
     }
 }

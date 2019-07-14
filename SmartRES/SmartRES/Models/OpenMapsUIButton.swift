@@ -10,4 +10,5 @@ import UIKit
 
 class OpenMapsUIButton : UIButton {
     var address: String?
+    var shouldShowAddProperty: Bool?
 }
