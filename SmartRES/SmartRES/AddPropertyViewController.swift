@@ -29,6 +29,9 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
     @IBOutlet weak var deleteThumbnailView: UIButton!
     @IBOutlet weak var addButtonView: UIButton!
     
+    var addressText = String("")
+    var cityText = String("")
+    var stateText = String("")
     // States and their data
     var sortedStates = [String]()
     let stateDictionary = [ "Alabama": "AL",
@@ -104,6 +107,11 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
     override func viewDidLoad() {
         // Initialize all pickers 
         super.viewDidLoad()
+        
+        self.addressField.text = addressText
+        self.cityField.text = cityText
+        self.stateField.text = stateText
+        
         self.statePicker = UIPickerView(frame: CGRect(x: 0, y: 40, width: 0, height: 0))
         self.typePicker = UIPickerView(frame: CGRect(x: 0, y: 40, width: 0, height: 0))
         self.bedPicker = UIPickerView(frame: CGRect(x: 0, y: 40, width: 0, height: 0))
@@ -441,6 +449,10 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
             let decimals = String(repeating: "0", count: reqDecLength - self.priceField.text!.count)
             self.priceField.text!.append(decimals)
         }
+    }
+    
+    @objc func dismissController() {
+        self.dismiss(animated: true, completion: nil)
     }
     
 

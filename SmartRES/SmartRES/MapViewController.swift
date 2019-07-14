@@ -26,6 +26,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     let locationManager = CLLocationManager()
     var properties = [Property]()
     var currentLoc = CLLocationCoordinate2D()
+    var addressToAdd = String()
     var mapSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
     
     override func viewDidLoad() {
@@ -174,12 +175,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             return
         }
         
-        var separatedAddress = address.split(separator: ",")
-        let street = String(separatedAddress.first!)
-        let city = String(separatedAddress.removeFirst().first!)
-        let state = String(separatedAddress.removeFirst().first!)
-        
-        print("Street: \(street), City: \(city), State: \(state)")
+        self.addressToAdd = address
         let formattedAddress = address.replacingOccurrences(of: " ", with: "+", options: .literal, range: nil)
         
         // Open Apple Maps with given lat/long coordinates
@@ -236,7 +232,29 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         searchBar.resignFirstResponder()
     }
     
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "addPropertyFromMapsSegue") {
+            print("Segueing to add property with---")
+            let vc = segue.destination as! AddPropertyViewController
+            var separatedAddress = self.addressToAdd.split(separator: ",")
+            let street = String(separatedAddress.removeFirst()).trim()
+            let city = String(separatedAddress.removeFirst()).trim()
+            let state = String(separatedAddress.removeFirst()).trim()
+            
+            print("Street: \(street), City: \(city), State: \(state)")
+            let navBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: 320, height: 44))
+            vc.view.addSubview(navBar)
+            
+            let navItem = UINavigationItem(title: "Add Property")
+            let doneItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.cancel, target: nil, action: #selector(vc.dismissController))
+            navItem.leftBarButtonItem = doneItem
+            
+            navBar.setItems([navItem], animated: false)
+            vc.addressText = street
+            vc.cityText = city
+            vc.stateText = state
+        }
+    }
 }
 
 
