@@ -1279,9 +1279,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="vFN-xD-el9">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="vFN-xD-el9">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                             </mapView>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IQO-Fv-Iv1">
                                 <rect key="frame" x="293" y="536" width="50" height="50"/>
@@ -1297,21 +1296,43 @@
                                     <action selector="reCenter:" destination="wQD-Eg-SbZ" eventType="touchUpInside" id="2R6-BE-CYf"/>
                                 </connections>
                             </button>
+                            <searchBar alpha="0.80000000000000004" contentMode="redraw" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c32-gv-eNY">
+                                <rect key="frame" x="0.0" y="20" width="375" height="56"/>
+                                <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <scopeButtonTitles>
+                                    <string>Title</string>
+                                    <string>Title</string>
+                                </scopeButtonTitles>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="vr3-tY-xO8" firstAttribute="bottom" secondItem="IQO-Fv-Iv1" secondAttribute="bottom" constant="32" id="25P-9X-nVs"/>
+                            <constraint firstItem="vFN-xD-el9" firstAttribute="leading" secondItem="vr3-tY-xO8" secondAttribute="leading" id="AcB-Cq-GGo"/>
+                            <constraint firstItem="vFN-xD-el9" firstAttribute="top" secondItem="vr3-tY-xO8" secondAttribute="top" id="G4X-FI-XJe"/>
                             <constraint firstItem="vr3-tY-xO8" firstAttribute="trailing" secondItem="IQO-Fv-Iv1" secondAttribute="trailing" constant="32" id="Pv2-iz-F8R"/>
+                            <constraint firstItem="c32-gv-eNY" firstAttribute="top" secondItem="vr3-tY-xO8" secondAttribute="top" id="QUG-Sc-c1a"/>
+                            <constraint firstItem="c32-gv-eNY" firstAttribute="leading" secondItem="vr3-tY-xO8" secondAttribute="leading" id="okr-9I-y14"/>
+                            <constraint firstItem="vFN-xD-el9" firstAttribute="trailing" secondItem="vr3-tY-xO8" secondAttribute="trailing" id="s3f-yh-aB6"/>
+                            <constraint firstItem="vr3-tY-xO8" firstAttribute="trailing" secondItem="c32-gv-eNY" secondAttribute="trailing" id="u0q-js-SRa"/>
+                            <constraint firstAttribute="bottom" secondItem="vFN-xD-el9" secondAttribute="bottom" id="udh-p8-FHT"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="vr3-tY-xO8"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="maps" id="knA-Tm-v7d">
                         <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                <color key="value" red="0.0" green="0.59215686270000001" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </tabBarItem>
                     <navigationItem key="navigationItem" id="Gvs-PT-eiW"/>
                     <connections>
                         <outlet property="mapView" destination="vFN-xD-el9" id="gcu-NE-3a0"/>
                         <outlet property="recenterButtonView" destination="IQO-Fv-Iv1" id="3cg-56-faH"/>
+                        <outlet property="searchBar" destination="c32-gv-eNY" id="bBs-Aw-aRR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bD8-x2-8RH" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1328,6 +1349,14 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                <color key="value" red="1" green="0.88923918059999996" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="unselectedItemTintColor">
+                                <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </tabBar>
                     <connections>
                         <segue destination="ADl-fi-te6" kind="relationship" relationship="viewControllers" id="M3B-w0-weY"/>

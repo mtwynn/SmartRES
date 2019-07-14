@@ -10,13 +10,15 @@ import UIKit
 import MapKit
 import Parse
 
-class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
+class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UISearchBarDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
     
     @IBOutlet weak var recenterButtonView: UIButton!
     
     @IBOutlet weak var shadowButtonView: UIView!
+    
+    @IBOutlet weak var searchBar: UISearchBar!
     
     let locationManager = CLLocationManager()
     var properties = [Property]()
@@ -26,10 +28,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
-        
+        searchBar.delegate = self
         locationManager.requestAlwaysAuthorization()
-        
-        
+        let tapGesture = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
+        mapView.addGestureRecognizer(tapGesture)
+            
         recenterButtonView.layer.shadowColor = UIColor.black.cgColor
         recenterButtonView.layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
         recenterButtonView.layer.masksToBounds = false
@@ -76,9 +79,41 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     
-    func loadProperties() -> Void {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        let address = self.searchBar.text!
+        let geoCoder = CLGeocoder()
+        geoCoder.geocodeAddressString(address) { (placemarks, error) in
+            guard
+                let placemarks = placemarks,
+                let location = placemarks.first?.location
+                else {
+                    let alert = UIAlertController(title: "Error", message: "No location exists for this property. Please try again.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                    return
+            }
         
+            
+            
+            let lat = location.coordinate.latitude
+            let long = location.coordinate.longitude
+            let coordinates = CLLocationCoordinate2D(latitude: lat, longitude: long)
+            let searchSpan = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+            let region = MKCoordinateRegion(center: coordinates, span: searchSpan)
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = coordinates
+            annotation.title = address
+            self.mapView.addAnnotation(annotation)
+            self.mapView.animatedZoom(zoomRegion: region, duration: 3)
+        }
     }
-    
+}
 
+
+extension MKMapView {
+    func animatedZoom(zoomRegion:MKCoordinateRegion, duration:TimeInterval) {
+        MKMapView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 10, options: UIView.AnimationOptions.curveEaseIn, animations: {
+            self.setRegion(zoomRegion, animated: true)
+        }, completion: nil)
+    }
 }
