@@ -188,6 +188,8 @@
 				C60D9C7A22CC542800B0A2FF /* Property.swift */,
 				C6FB2CE822DB0FF20005CD50 /* CustomPointAnnotation.swift */,
 				C6FB2CEA22DB3CE50005CD50 /* OpenMapsUIButton.swift */,
+				C64A223C22C356590041C764 /* PropertyCell.swift */,
+				C67D60CF22CF43B5001C7149 /* TransitionTabBarController.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -220,21 +222,19 @@
 			children = (
 				C60D9C7922CC53ED00B0A2FF /* Models */,
 				C6E1DBA722D5AC7D0059C2C7 /* Assets.xcassets */,
-				C67D60CB22C96390001C7149 /* GoogleService-Info.plist */,
-				C645AE9D2282A56E006F2EF3 /* AppDelegate.swift */,
 				C645AEA12282A56E006F2EF3 /* Main.storyboard */,
-				C64A223C22C356590041C764 /* PropertyCell.swift */,
-				C64A223822C228400041C764 /* SignupViewController.swift */,
 				C645AEA62282A570006F2EF3 /* LaunchScreen.storyboard */,
-				C645AEA92282A570006F2EF3 /* Info.plist */,
+				C645AE9D2282A56E006F2EF3 /* AppDelegate.swift */,
 				C645AECB2282A668006F2EF3 /* LoginViewController.swift */,
-				C611FF402283603A00704CD3 /* MainViewController.swift */,
-				C611FF42228362EB00704CD3 /* ProfileViewController.swift */,
+				C64A223822C228400041C764 /* SignupViewController.swift */,
 				C666BB3022C3E26D006E76CF /* PropertiesViewController.swift */,
 				C666BB3222C43981006E76CF /* AddPropertyViewController.swift */,
-				C67D60CF22CF43B5001C7149 /* TransitionTabBarController.swift */,
 				C6E1DBA922D5B6FA0059C2C7 /* EditPropertyViewController.swift */,
 				C6A3ADEE22D69981009BE8C7 /* MapViewController.swift */,
+				C611FF42228362EB00704CD3 /* ProfileViewController.swift */,
+				C611FF402283603A00704CD3 /* MainViewController.swift */,
+				C645AEA92282A570006F2EF3 /* Info.plist */,
+				C67D60CB22C96390001C7149 /* GoogleService-Info.plist */,
 			);
 			path = SmartRES;
 			sourceTree = "<group>";
@@ -721,7 +721,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.smartres;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mtwynn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_VERSION = 5.0;
@@ -741,7 +741,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.smartres;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mtwynn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_VERSION = 5.0;

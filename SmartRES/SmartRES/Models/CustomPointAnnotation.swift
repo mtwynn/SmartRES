@@ -13,4 +13,10 @@ import MapKit
 class CustomPointAnnotation: MKPointAnnotation {
     var image: UIImage!
     var address: String!
+    var pinColor: UIColor
+    
+    init(pinColor: UIColor) {
+        self.pinColor = pinColor
+        super.init()
+    }
 }

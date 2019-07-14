@@ -43,13 +43,16 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            let locValue = locationManager.location
-            currentLoc.latitude = locValue!.coordinate.latitude
-            currentLoc.longitude = locValue!.coordinate.longitude
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            guard let locValue = locationManager.location else {
+                print("Error")
+                return
+            }
+            currentLoc.latitude = locValue.coordinate.latitude
+            currentLoc.longitude = locValue.coordinate.longitude
             let region = MKCoordinateRegion(center: currentLoc, span: mapSpan)
             mapView.setRegion(region, animated: false)
-            let annotation = CustomPointAnnotation()
+            let annotation = CustomPointAnnotation(pinColor: MKPinAnnotationView.greenPinColor())
             annotation.coordinate = currentLoc
             annotation.title = "Current Location"
             mapView.addAnnotation(annotation)
@@ -58,7 +61,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             print("\(property.address) has coordinates: \(property.latitude) \(property.longitude)")
             
             let coordinates = CLLocationCoordinate2D(latitude: CLLocationDegrees(property.latitude), longitude: CLLocationDegrees(property.longitude))
-            let annotation = CustomPointAnnotation()
+            let annotation = CustomPointAnnotation(pinColor: MKPinAnnotationView.redPinColor())
             annotation.image = property.image
             annotation.address = "\(property.address), \(property.city) \(property.state), \(property.zip)"
             annotation.coordinate = coordinates
@@ -112,15 +115,18 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let reuseID = "myAnnotationView"
+        let customAnnotation = annotation as! CustomPointAnnotation
         
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseID)
         if (annotationView == nil) {
-            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseID)
-            annotationView!.canShowCallout = true
-            annotationView!.leftCalloutAccessoryView = UIImageView(frame: CGRect(x:0, y:0, width: 60, height:60))
+            let view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseID)
+            view.pinTintColor = customAnnotation.pinColor
+            annotationView = view
+            annotationView?.canShowCallout = true
+            annotationView?.leftCalloutAccessoryView = UIImageView(frame: CGRect(x:0, y:0, width: 60, height:60))
         }
         
-        let customAnnotation = annotation as! CustomPointAnnotation
+        
         let rightCalloutButton = OpenMapsUIButton(type: .detailDisclosure)
         
         rightCalloutButton.address = customAnnotation.address
