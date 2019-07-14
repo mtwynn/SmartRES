@@ -76,8 +76,6 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     @objc func loadProperties() {
-        UIApplication.shared.beginIgnoringInteractionEvents()
-        
         let activityIndicator = UIActivityIndicatorView()
         activityIndicator.style = .gray
         activityIndicator.center = self.view.center
@@ -95,7 +93,6 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
         query.findObjectsInBackground{ (queryDict, error) in
             if let queryProperties = queryDict {
                 activityIndicator.stopAnimating()
-                UIApplication.shared.endIgnoringInteractionEvents()
                 self.properties.removeAll()
                 self.filteredProperties.removeAll()
                 for propertyDict in queryProperties {
@@ -115,20 +112,21 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
                     }
 
                     // Create a new Property object
-                    let property = Property(id: propertyDict.objectId as! String,
-                                            address: propertyDict["address"] as! String,
-                                            city:  propertyDict["city"] as! String,
-                                            state: propertyDict["state"] as! String,
-                                            zip: propertyDict["zip"] as! String,
-                                            type: propertyDict["type"] as! String,
-                                            bed: propertyDict["bed"] as! NSNumber,
-                                            bath: propertyDict["bath"] as! NSNumber,
-                                            price: propertyDict["price"] as! NSNumber,
-                                            image: pic!,
-                                            latitude: propertyDict["latitude"] as! NSNumber,
-                                            longitude: propertyDict["longitude"] as! NSNumber,
-                                            agent: propertyDict["agent"] as! PFUser
-                                            )
+                    let property = Property(
+                        id: propertyDict.objectId as! String,
+                        address: propertyDict["address"] as! String,
+                        city:  propertyDict["city"] as! String,
+                        state: propertyDict["state"] as! String,
+                        zip: propertyDict["zip"] as! String,
+                        type: propertyDict["type"] as! String,
+                        bed: propertyDict["bed"] as! NSNumber,
+                        bath: propertyDict["bath"] as! NSNumber,
+                        price: propertyDict["price"] as! NSNumber,
+                        latitude: propertyDict["latitude"] as! NSNumber,
+                        longitude: propertyDict["longitude"] as! NSNumber,
+                        image: pic!,
+                        agent: propertyDict["agent"] as! PFUser
+                    )
 
                     // Add property object to list of property objects
                     self.properties.append(property)

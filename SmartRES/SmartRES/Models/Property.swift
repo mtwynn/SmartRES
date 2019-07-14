@@ -20,8 +20,8 @@ struct Property {
     let bed: NSNumber
     let bath: NSNumber
     let price: NSNumber
-    var image: UIImage
     let latitude: NSNumber
     let longitude: NSNumber
+    var image: UIImage
     let agent: PFUser
 }

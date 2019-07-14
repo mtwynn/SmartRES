@@ -13,28 +13,44 @@ import Parse
 class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
+    
+    @IBOutlet weak var recenterButtonView: UIButton!
+    
+    @IBOutlet weak var shadowButtonView: UIView!
+    
     let locationManager = CLLocationManager()
     var properties = [Property]()
+    var currentLoc = CLLocationCoordinate2D()
+    var mapSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
-        let mapSpan = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+        
         locationManager.requestAlwaysAuthorization()
+        
+        
+        recenterButtonView.layer.shadowColor = UIColor.black.cgColor
+        recenterButtonView.layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
+        recenterButtonView.layer.masksToBounds = false
+        recenterButtonView.layer.shadowRadius = 3.0
+        recenterButtonView.layer.shadowOpacity = 0.5
+        recenterButtonView.layer.cornerRadius = recenterButtonView.frame.width / 2
+        
         
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             let locValue = locationManager.location
-            let coordinates = CLLocationCoordinate2D(latitude: locValue!.coordinate.latitude, longitude: locValue!.coordinate.longitude)
-            let region = MKCoordinateRegion(center: coordinates, span: mapSpan)
+            currentLoc.latitude = locValue!.coordinate.latitude
+            currentLoc.longitude = locValue!.coordinate.longitude
+            let region = MKCoordinateRegion(center: currentLoc, span: mapSpan)
             mapView.setRegion(region, animated: false)
             let annotation = MKPointAnnotation()
-            annotation.coordinate = coordinates
+            annotation.coordinate = currentLoc
             annotation.title = "Current Location"
             mapView.addAnnotation(annotation)
         }
-        
-        var addresses = [String]()
         for property in properties {
             print("\(property.address) has coordinates: \(property.latitude) \(property.longitude)")
             
@@ -44,7 +60,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             annotation.title = property.address
             mapView.addAnnotation(annotation)
         }
-        print(addresses)
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -54,6 +69,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         
     }
+    
+    @IBAction func reCenter(_ sender: Any) {
+        let region = MKCoordinateRegion(center: currentLoc, span: mapSpan)
+        mapView.setRegion(region, animated: true)
+    }
+    
     
     func loadProperties() -> Void {
         

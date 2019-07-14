@@ -57,6 +57,17 @@ class SignupViewController: UIViewController, UITextViewDelegate, UITextFieldDel
 
     @IBAction func createUser(_ sender: Any) {
         let user = PFUser()
+        let loadingAlert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
+        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
+        loadingIndicator.style = UIActivityIndicatorView.Style.gray
+        loadingIndicator.startAnimating();
+        
+        loadingAlert.view.addSubview(loadingIndicator)
+        loadingAlert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: { action in
+            loadingAlert.dismiss(animated: false, completion: nil)
+        }))
+        self.present(loadingAlert, animated: true, completion: nil)
+        
         if (usernameField.text == nil) {
             user.username = emailField.text
         } else {
@@ -68,14 +79,17 @@ class SignupViewController: UIViewController, UITextViewDelegate, UITextFieldDel
         let validEmail = isValidEmail(emailStr: emailField.text!)
         
         if (firstnameField!.text == "") || (lastnameField!.text == "") || (usernameField!.text == "") || (emailField!.text == "") || (phoneField!.text == "") || (passwordField!.text == "") || (pwConfirmField!.text == "") {
+            loadingAlert.dismiss(animated: false, completion: nil)
             let alert = UIAlertController(title: "Error", message: "Please fill out all the fields", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         } else if (passwordField.text != pwConfirmField.text) {
+            loadingAlert.dismiss(animated: false, completion: nil)
             let alert = UIAlertController(title: "Error", message: "Passwords do not match", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         } else if (!validEmail) {
+            loadingAlert.dismiss(animated: false, completion: nil)
             let alert = UIAlertController(title: "Error", message: "Please enter a valid email", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)

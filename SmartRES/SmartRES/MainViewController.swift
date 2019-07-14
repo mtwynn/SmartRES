@@ -85,14 +85,14 @@ class MainViewController: UIViewController, controlsPropertyRefresh {
         backButton.title = "Cancel"
         self.navigationItem.backBarButtonItem = backButton
         uploadButtonView.layer.cornerRadius = 0.5 * uploadButtonView.bounds.size.width
-        uploadButtonView.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
+        uploadButtonView.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.40).cgColor
         uploadButtonView.layer.shadowOffset = CGSize(width: 2.0, height: 3.0)
         uploadButtonView.layer.shadowOpacity = 1.0
         uploadButtonView.layer.shadowRadius = 3.0
         uploadButtonView.layer.masksToBounds = false
         uploadButtonView.imageEdgeInsets = UIEdgeInsets(top: 5, left: 7, bottom: 5, right: 3)
         deleteButtonView.layer.cornerRadius = 0.5 * uploadButtonView.bounds.size.width
-        deleteButtonView.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
+        deleteButtonView.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.40).cgColor
         deleteButtonView.layer.shadowOffset = CGSize(width: 2.0, height: 3.0)
         deleteButtonView.layer.shadowOpacity = 1.0
         deleteButtonView.layer.shadowRadius = 3.0

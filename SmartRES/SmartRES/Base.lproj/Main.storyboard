@@ -1283,19 +1283,25 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IQO-Fv-Iv1">
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IQO-Fv-Iv1">
                                 <rect key="frame" x="293" y="536" width="50" height="50"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="TyD-z2-Tt3"/>
-                                    <constraint firstAttribute="height" constant="50" id="cpG-gj-TqD"/>
+                                    <constraint firstAttribute="width" constant="50" id="5yE-X9-BY6"/>
+                                    <constraint firstAttribute="height" constant="50" id="xmD-HA-Hx1"/>
                                 </constraints>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" image="target-100">
+                                    <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="reCenter:" destination="wQD-Eg-SbZ" eventType="touchUpInside" id="2R6-BE-CYf"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="vr3-tY-xO8" firstAttribute="bottom" secondItem="IQO-Fv-Iv1" secondAttribute="bottom" constant="32" id="GoP-dk-Sn0"/>
-                            <constraint firstItem="vr3-tY-xO8" firstAttribute="trailing" secondItem="IQO-Fv-Iv1" secondAttribute="trailing" constant="32" id="sr6-Ra-kuc"/>
+                            <constraint firstItem="vr3-tY-xO8" firstAttribute="bottom" secondItem="IQO-Fv-Iv1" secondAttribute="bottom" constant="32" id="25P-9X-nVs"/>
+                            <constraint firstItem="vr3-tY-xO8" firstAttribute="trailing" secondItem="IQO-Fv-Iv1" secondAttribute="trailing" constant="32" id="Pv2-iz-F8R"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="vr3-tY-xO8"/>
                     </view>
@@ -1305,11 +1311,12 @@
                     <navigationItem key="navigationItem" id="Gvs-PT-eiW"/>
                     <connections>
                         <outlet property="mapView" destination="vFN-xD-el9" id="gcu-NE-3a0"/>
+                        <outlet property="recenterButtonView" destination="IQO-Fv-Iv1" id="3cg-56-faH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bD8-x2-8RH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1833" y="-683"/>
+            <point key="canvasLocation" x="1832.8" y="-683.20839580209895"/>
         </scene>
         <!--Transition Tab Bar Controller-->
         <scene sceneID="EsE-Ba-fbT">
@@ -1406,6 +1413,7 @@
         <image name="iTunesArtwork-1" width="512" height="512"/>
         <image name="maps" width="25" height="25"/>
         <image name="photo" width="512" height="512"/>
+        <image name="target-100" width="100" height="100"/>
         <image name="trash" width="25" height="25"/>
         <image name="user" width="25" height="25"/>
     </resources>
