@@ -12,7 +12,7 @@ import Alamofire
 import YPImagePicker
 import MapKit
 
-class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UINavigationBarDelegate {
     
     var delegate: controlsRefresh?
     
@@ -29,9 +29,12 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
     @IBOutlet weak var deleteThumbnailView: UIButton!
     @IBOutlet weak var addButtonView: UIButton!
     
+    var fromMaps = true
     var addressText = String("")
     var cityText = String("")
     var stateText = String("")
+    var zipText = String("")
+    var navBar = UINavigationBar()
     // States and their data
     var sortedStates = [String]()
     let stateDictionary = [ "Alabama": "AL",
@@ -107,10 +110,8 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
     override func viewDidLoad() {
         // Initialize all pickers 
         super.viewDidLoad()
+        print("Destination is: \(self)")
         
-        self.addressField.text = addressText
-        self.cityField.text = cityText
-        self.stateField.text = stateText
         
         self.statePicker = UIPickerView(frame: CGRect(x: 0, y: 40, width: 0, height: 0))
         self.typePicker = UIPickerView(frame: CGRect(x: 0, y: 40, width: 0, height: 0))
@@ -189,6 +190,19 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         //let ref = Database.database().reference()
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.addressField?.text = addressText
+        self.cityField?.text = cityText
+        self.stateField?.text = stateText
+        self.zipField?.text = zipText
+        self.view.addSubview(navBar)
+        // If this view controller instance was a destination from addPropertyFromMapsSegue, change button constraint here
+        if (fromMaps) {
+            self.view.addConstraint(NSLayoutConstraint(item: self.view.safeAreaLayoutGuide, attribute: NSLayoutConstraint.Attribute.bottom, relatedBy: NSLayoutConstraint.Relation.equal, toItem: addButtonView, attribute: NSLayoutConstraint.Attribute.bottom, multiplier: 1, constant: 32+49))
+        }
     }
     
     

@@ -13,6 +13,7 @@ import MapKit
 class CustomPointAnnotation: MKPointAnnotation {
     var image: UIImage!
     var address: String!
+    var zipCode: String!
     var pinColor: UIColor
     var isSearchResult: Bool
     

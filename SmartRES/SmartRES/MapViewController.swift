@@ -27,6 +27,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var properties = [Property]()
     var currentLoc = CLLocationCoordinate2D()
     var addressToAdd = String()
+    var zipToAdd = String()
     var mapSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
     
     override func viewDidLoad() {
@@ -115,7 +116,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         geoCoder.geocodeAddressString(address) { (placemarks, error) in
             guard
                 let placemarks = placemarks,
-                let location = placemarks.first?.location
+                let location = placemarks.first?.location,
+                let zipCode = placemarks.first?.postalCode
                 else {
                     let alert = UIAlertController(title: "Error", message: "No location exists for this property. Please try again.", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -133,6 +135,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             let annotation = CustomPointAnnotation(pinColor: MKPinAnnotationView.purplePinColor())
             annotation.coordinate = coordinates
             annotation.title = address
+            annotation.zipCode = zipCode
             annotation.isSearchResult = true
             self.mapView.addAnnotation(annotation)
             self.mapView.animatedZoom(zoomRegion: region, duration: 3)
@@ -156,6 +159,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let rightCalloutButton = OpenMapsUIButton(type: .detailDisclosure)
         
         rightCalloutButton.address = customAnnotation.address
+        rightCalloutButton.zipCode = customAnnotation.zipCode
         rightCalloutButton.shouldShowAddProperty = customAnnotation.isSearchResult
         rightCalloutButton.addTarget(self, action: #selector(openMaps), for: UIControl.Event.touchUpInside)
         annotationView?.rightCalloutAccessoryView = rightCalloutButton
@@ -171,11 +175,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     @objc func openMaps(sender: UIButton) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let customButton = sender as! OpenMapsUIButton
-        guard let address = customButton.address else {
+        guard
+            let address = customButton.address,
+            let zipCode = customButton.zipCode else {
             return
         }
         
         self.addressToAdd = address
+        self.zipToAdd = zipCode
         let formattedAddress = address.replacingOccurrences(of: " ", with: "+", options: .literal, range: nil)
         
         // Open Apple Maps with given lat/long coordinates
@@ -232,6 +239,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         searchBar.resignFirstResponder()
     }
     
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "addPropertyFromMapsSegue") {
             print("Segueing to add property with---")
@@ -241,18 +250,34 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             let city = String(separatedAddress.removeFirst()).trim()
             let state = String(separatedAddress.removeFirst()).trim()
             
-            print("Street: \(street), City: \(city), State: \(state)")
-            let navBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: 320, height: 44))
-            vc.view.addSubview(navBar)
+            print("Street: \(street), City: \(city), State: \(state), Zip: \(zipToAdd)")
             
+            let navBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: 320, height: 44))
+            navBar.backgroundColor = .clear
+            vc.view.addSubview(navBar)
             let navItem = UINavigationItem(title: "Add Property")
             let doneItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.cancel, target: nil, action: #selector(vc.dismissController))
             navItem.leftBarButtonItem = doneItem
             
             navBar.setItems([navItem], animated: false)
+            navBar.delegate = vc
+            
+            navBar.translatesAutoresizingMaskIntoConstraints = false
+            navBar.leftAnchor.constraint(equalTo: vc.view.leftAnchor).isActive = true
+            navBar.rightAnchor.constraint(equalTo: vc.view.rightAnchor).isActive = true
+            vc.view.addConstraint(NSLayoutConstraint(item: vc.addressField, attribute: NSLayoutConstraint.Attribute.top, relatedBy: NSLayoutConstraint.Relation.equal, toItem: vc.view, attribute: NSLayoutConstraint.Attribute.top, multiplier: 1, constant: 64+44))
+            if #available(iOS 11, *) {
+                navBar.topAnchor.constraint(equalTo: vc.view.safeAreaLayoutGuide.topAnchor).isActive = true
+            } else {
+                navBar.topAnchor.constraint(equalTo: vc.view.topAnchor).isActive = true
+            }
+            
+            vc.fromMaps = true
+            vc.navBar = navBar
             vc.addressText = street
             vc.cityText = city
             vc.stateText = state
+            vc.zipText = zipToAdd
         }
     }
 }
@@ -275,6 +300,7 @@ extension MapViewController: UISearchBarDelegate {
             self.searchTableView.isHidden = false
         }
         searchCompleter.region = MKCoordinateRegion(center: currentLoc, span: mapSpan)
+
         searchCompleter.queryFragment = searchText
         
     }
@@ -323,18 +349,19 @@ extension MapViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         let completion = searchResults[indexPath.row]
         let fullAddress = "\(completion.title), \(completion.subtitle)"
-        print(fullAddress)
         let searchRequest = MKLocalSearch.Request(completion: completion)
         let search = MKLocalSearch(request: searchRequest)
         search.start { (response, error) in
             self.searchTableView.isHidden = true
             self.searchBar.resignFirstResponder()
             let coordinates = response?.mapItems[0].placemark.coordinate
+            let zipCode = String((response?.mapItems[0].placemark.postalCode)!)
             let searchSpan = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
             let region = MKCoordinateRegion(center: coordinates!, span: searchSpan)
             let annotation = CustomPointAnnotation(pinColor: MKPinAnnotationView.purplePinColor())
             annotation.address = fullAddress
             annotation.isSearchResult = true
+            annotation.zipCode = zipCode
             annotation.coordinate = coordinates!
             annotation.title = completion.title
             self.mapView.addAnnotation(annotation)
