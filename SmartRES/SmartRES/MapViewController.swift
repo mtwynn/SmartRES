@@ -80,6 +80,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             annotation.address = "\(property.address), \(property.city) \(property.state), \(property.zip)"
             annotation.coordinate = coordinates
             annotation.title = property.address
+            annotation.zipCode = property.zip
             mapView.addAnnotation(annotation)
         }
     }
@@ -178,6 +179,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         guard
             let address = customButton.address,
             let zipCode = customButton.zipCode else {
+                print("returning")
             return
         }
         
@@ -198,7 +200,19 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 UIApplication.shared.open(URL(string:
                     "comgooglemaps://?q=\(formattedAddress)&zoom=14&views=traffic")!, options: [:], completionHandler: nil)
             } else {
-                print("Can't use comgooglemaps://");
+                let installGMapsAlert = UIAlertController(title: "Message", message: "Please install Google Maps first" , preferredStyle: .alert)
+                installGMapsAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                installGMapsAlert.addAction(UIAlertAction(title: "Open App Store", style: .default, handler: {action in
+                    let urlStr = "itms-apps://itunes.apple.com/app/apple-store/id585027354?mt=8"
+                    if #available(iOS 10.0, *) {
+                        UIApplication.shared.open(URL(string: urlStr)!, options: [:], completionHandler: nil)
+                        
+                    } else {
+                        UIApplication.shared.openURL(URL(string: urlStr)!)
+                    }
+                }))
+                
+                self.present(installGMapsAlert, animated: true, completion: nil)
             }
         }));
         

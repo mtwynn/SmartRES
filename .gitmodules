@@ -1,0 +1,3 @@
+[submodule "SmartRES/tools"]
+	path = SmartRES/tools
+	url = https://github.com/trojanfoe/xcodedevtools

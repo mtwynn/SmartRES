@@ -230,9 +230,9 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
     
     @IBAction func addThumbnail(_ sender: Any) {
         var config = YPImagePickerConfiguration()
-        config.screens = [.library, .photo]
+        config.screens = [.photo, .library]
         config.albumName = "SmartRES"
-        config.startOnScreen = YPPickerScreen.library
+        config.startOnScreen = YPPickerScreen.photo
         config.library.maxNumberOfItems = 1
         config.library.mediaType = YPlibraryMediaType.photo
         let picker = YPImagePicker(configuration: config)

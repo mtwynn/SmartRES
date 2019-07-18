@@ -163,6 +163,7 @@ class EditPropertyViewController: UIViewController, UITextFieldDelegate, UIPicke
         self.thumbnailView.layer.borderWidth = 2
         self.thumbnailView.layer.borderColor = UIColor.init(red: 0.0/255, green: 151/255, blue: 69/255, alpha: 0.8).cgColor
         self.thumbnailView.layer.cornerRadius = 5
+        self.thumbnailView.image = propertyThumbnail
         
         priceField.addTarget(self, action: #selector(priceAppend), for: UIControl.Event.editingDidEnd)
         // Add toolbar (Cancel/Done) to Pickers
