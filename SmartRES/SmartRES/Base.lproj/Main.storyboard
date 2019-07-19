@@ -1025,6 +1025,7 @@
                         <barButtonItem key="leftBarButtonItem" title="Edit Profile" image="edit" id="0iZ-Zk-0XO">
                             <connections>
                                 <action selector="editProfileButton:" destination="EuE-cP-ZQv" id="e70-qa-hX5"/>
+                                <segue destination="fZf-ly-Chf" kind="presentation" identifier="editProfileSegue" id="kvd-jr-rgh"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="exit" id="vLU-OY-RfH">
@@ -1108,7 +1109,7 @@
                                 <rect key="frame" x="64" y="383" width="247" height="231"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wY9-75-Mkt">
-                                <rect key="frame" x="158" y="622" width="59" height="29"/>
+                                <rect key="frame" x="64" y="622" width="59" height="29"/>
                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
                                 <state key="normal" title="Edit Logo"/>
                                 <connections>
@@ -1141,6 +1142,15 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qbt-tA-18x">
+                                <rect key="frame" x="235" y="622" width="76" height="29"/>
+                                <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
+                                <state key="normal" title="Delete Logo"/>
+                                <connections>
+                                    <action selector="deleteLogoButton:" destination="fZf-ly-Chf" eventType="touchUpInside" id="eFI-mB-PJ6"/>
+                                    <action selector="editLogoButton:" destination="fZf-ly-Chf" eventType="touchUpInside" id="skv-aU-u3z"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -1164,8 +1174,9 @@
                             <constraint firstItem="NKY-qH-rCB" firstAttribute="leading" secondItem="9is-FD-iKf" secondAttribute="leading" constant="32" id="X64-U5-HKH"/>
                             <constraint firstItem="1SK-Mc-byn" firstAttribute="top" secondItem="JHn-VP-j6c" secondAttribute="bottom" constant="8" id="YAY-k5-9o9"/>
                             <constraint firstItem="9is-FD-iKf" firstAttribute="trailing" secondItem="2mX-oG-uRB" secondAttribute="trailing" constant="32" id="YMW-Ka-WC6"/>
-                            <constraint firstItem="wY9-75-Mkt" firstAttribute="top" secondItem="zP9-gA-QJP" secondAttribute="bottom" constant="8" id="Z4n-2Q-ggR"/>
                             <constraint firstItem="9p9-DZ-RmE" firstAttribute="leading" secondItem="9is-FD-iKf" secondAttribute="leading" constant="32" id="apZ-sO-J3s"/>
+                            <constraint firstItem="wY9-75-Mkt" firstAttribute="top" secondItem="zP9-gA-QJP" secondAttribute="bottom" constant="8" id="bBe-bI-Yn4"/>
+                            <constraint firstItem="9is-FD-iKf" firstAttribute="trailing" secondItem="qbt-tA-18x" secondAttribute="trailing" constant="64" id="c1a-nG-Nd4"/>
                             <constraint firstItem="zP9-gA-QJP" firstAttribute="top" secondItem="7CW-by-0q4" secondAttribute="bottom" constant="16" id="cuX-NP-tda"/>
                             <constraint firstItem="Twc-fn-Aqs" firstAttribute="top" secondItem="9is-FD-iKf" secondAttribute="top" id="eOL-GP-m1o"/>
                             <constraint firstItem="wtX-DO-J6s" firstAttribute="width" secondItem="n8Q-d6-VfC" secondAttribute="width" id="goq-hg-fnK"/>
@@ -1173,12 +1184,14 @@
                             <constraint firstItem="9p9-DZ-RmE" firstAttribute="top" secondItem="1SK-Mc-byn" secondAttribute="bottom" constant="16" id="hJq-8E-Ccq"/>
                             <constraint firstItem="9is-FD-iKf" firstAttribute="trailing" secondItem="JHn-VP-j6c" secondAttribute="trailing" constant="32" id="iJn-Cz-bh2"/>
                             <constraint firstItem="9is-FD-iKf" firstAttribute="trailing" secondItem="1SK-Mc-byn" secondAttribute="trailing" constant="32" id="iks-j5-myx"/>
+                            <constraint firstItem="9is-FD-iKf" firstAttribute="bottom" secondItem="wY9-75-Mkt" secondAttribute="bottom" constant="16" id="kVC-Bh-NUd"/>
                             <constraint firstItem="Twc-fn-Aqs" firstAttribute="leading" secondItem="9is-FD-iKf" secondAttribute="leading" id="l62-5C-9ci"/>
+                            <constraint firstItem="wY9-75-Mkt" firstAttribute="leading" secondItem="9is-FD-iKf" secondAttribute="leading" constant="64" id="lk2-eD-Hu5"/>
                             <constraint firstItem="9is-FD-iKf" firstAttribute="trailing" secondItem="7CW-by-0q4" secondAttribute="trailing" constant="32" id="loD-f0-8fA"/>
                             <constraint firstItem="n8Q-d6-VfC" firstAttribute="top" secondItem="Twc-fn-Aqs" secondAttribute="bottom" constant="32" id="mNw-d7-0a2"/>
                             <constraint firstItem="7CW-by-0q4" firstAttribute="top" secondItem="e8L-Hp-oaE" secondAttribute="bottom" constant="16" id="nXv-hP-aHW"/>
-                            <constraint firstItem="wY9-75-Mkt" firstAttribute="centerX" secondItem="zP9-gA-QJP" secondAttribute="centerX" id="sfo-x9-Dq5"/>
-                            <constraint firstItem="9is-FD-iKf" firstAttribute="bottom" secondItem="wY9-75-Mkt" secondAttribute="bottom" constant="16" id="viA-6H-iTv"/>
+                            <constraint firstItem="9is-FD-iKf" firstAttribute="bottom" secondItem="qbt-tA-18x" secondAttribute="bottom" constant="16" id="sV7-pR-iPy"/>
+                            <constraint firstItem="qbt-tA-18x" firstAttribute="top" secondItem="zP9-gA-QJP" secondAttribute="bottom" constant="8" id="wle-0t-Fxl"/>
                             <constraint firstItem="NKY-qH-rCB" firstAttribute="width" secondItem="2mX-oG-uRB" secondAttribute="width" id="xHp-Vn-eEw"/>
                             <constraint firstItem="NKY-qH-rCB" firstAttribute="height" secondItem="2mX-oG-uRB" secondAttribute="height" id="z9g-ta-Vdv"/>
                         </constraints>
@@ -1207,7 +1220,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E3Q-Iv-Leu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4416.8000000000002" y="816.34182908545733"/>
+            <point key="canvasLocation" x="3566" y="817"/>
         </scene>
         <!--Signup View Controller-->
         <scene sceneID="V8h-Yz-h6a">

@@ -50,19 +50,32 @@ class ProfileViewController: UIViewController {
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor.init(red: 0.0/255, green: 151/255, blue: 69/255, alpha: 1)
         
         if let user = PFUser.current() {
-            guard let logo = user["logo"] else {
+            if let logo = user["logo"] {
+                let imageFile = logo as! PFFileObject
+                let url = URL(string: imageFile.url!)!
+                let data = try? Data(contentsOf: url)
+                logoView.image = UIImage(data: data!)
+            } else {
                 let logoUrl = URL(string: "https://cmkt-image-prd.global.ssl.fastly.net/0.1.0/ps/3652954/910/607/m1/fpnw/wm0/real-estate-logo-.png?1511872497&s=ed290198990284688a4f3afc2ffd7128")!
                 let logoData = try? Data(contentsOf: logoUrl)
                 let pic = UIImage(data: logoData!)
                 logoView.image = pic
                 return
             }
-            
-            let imageFile = logo as! PFFileObject
-            let url = URL(string: imageFile.url!)!
-            let data = try? Data(contentsOf: url)
-            logoView.image = UIImage(data: data!)
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        let user = PFUser.current()!
+        nameLabel.text = (user["firstName"] as! String) + " " + (user["lastName"] as! String)
+        emailLabel.text = user["email"] as! String
+        phoneLabel.text = user["phone"] as! String
+        bioLabel.text = user["bio"] as! String
+        let imageFile = user["logo"] as! PFFileObject
+        let url = URL(string: imageFile.url!)!
+        let data = try? Data(contentsOf: url)
+        logoView.image = UIImage(data: data!)
+        
     }
     
     

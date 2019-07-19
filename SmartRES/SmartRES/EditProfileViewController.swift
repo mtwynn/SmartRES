@@ -33,12 +33,12 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UITextVi
         editBio.layer.borderWidth = 1
         editBio.layer.borderColor = UIColor.init(red: 212/255, green: 212/255, blue: 212/255, alpha: 1).cgColor
         editBio.layer.cornerRadius = 5
-        
-        editFirstName.text = UserDefaults.standard.string(forKey: "firstName")!
-        editLastName.text = UserDefaults.standard.string(forKey: "lastName")!
-        editEmail.text = UserDefaults.standard.string(forKey: "email")!
-        editPhone.text = UserDefaults.standard.string(forKey: "phone")!
-        editBio.text = UserDefaults.standard.string(forKey: "bio")!
+        let user = PFUser.current()!
+        editFirstName.text = user["firstName"] as! String
+        editLastName.text = user["lastName"] as! String
+        editEmail.text = user["email"] as! String
+        editPhone.text = user["phone"] as! String
+        editBio.text = user["bio"] as! String
         editLogoView.image = logoImage
         
         
@@ -72,17 +72,18 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UITextVi
             
             user.saveInBackground() { (success, error) in
                 if (success) {
-                    let alert = UIAlertController(title: "Success", message: "Profile successfully added", preferredStyle: UIAlertController.Style.alert)
+                    let alert = UIAlertController(title: "Success", message: "Profile successfully updated!", preferredStyle: UIAlertController.Style.alert)
                     
                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
                 } else {
-                    let alert = UIAlertController(title: "Error", message: "Failed to add profile pic", preferredStyle: UIAlertController.Style.alert)
+                    let alert = UIAlertController(title: "Error", message: "Failed to update profile.", preferredStyle: UIAlertController.Style.alert)
                     
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
                 }
             }
         }
-        
     }
     
     
@@ -103,6 +104,44 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UITextVi
             picker.dismiss(animated: true, completion: nil)
         }
         present(picker, animated: true, completion: nil)
+    }
+    
+    
+    @IBAction func deleteLogoButton(_ sender: Any) {
+        let user = PFUser.current()!
+        if let logo = user["logo"] {
+            let alert = UIAlertController(title: "Delete Logo", message: "Would you like to delete your real estate logo?", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {action in
+                user.remove(forKey: "logo")
+                user.saveInBackground() {(success, error) in
+                    if (success) {
+                        let logoUrl = URL(string: "https://cmkt-image-prd.global.ssl.fastly.net/0.1.0/ps/3652954/910/607/m1/fpnw/wm0/real-estate-logo-.png?1511872497&s=ed290198990284688a4f3afc2ffd7128")!
+                        let logoData = try? Data(contentsOf: logoUrl)
+                        let pic = UIImage(data: logoData!)
+                        self.editLogoView.image = pic
+                        let alert = UIAlertController(title: "Success!", message: "Logo successfully deleted!", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    } else {
+                        let alert = UIAlertController(title: "Error.", message: "Failed to delete logo.", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                }
+            }))
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+            
+            self.present(alert, animated: true, completion: nil)
+        } else {
+            let alert = UIAlertController(title: "Delete Logo", message: "No logo to delete! You cannot remove the default logo.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true) {
+                return
+            }
+        }
+        
+       
     }
     
     func textViewDidBeginEditing(_ textView: UITextView)
