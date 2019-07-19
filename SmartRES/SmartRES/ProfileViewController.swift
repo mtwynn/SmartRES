@@ -95,6 +95,12 @@ class ProfileViewController: UIViewController {
     }
     
     
+    @IBAction func editProfileButton(_ sender: Any) {
+        self.performSegue(withIdentifier: "editProfileSegue", sender: self)
+        
+    }
+    
+    
     @IBAction func logoutButton(_ sender: Any) {
         PFUser.logOut()
         UserDefaults.standard.set(false, forKey: "userLoggedIn")

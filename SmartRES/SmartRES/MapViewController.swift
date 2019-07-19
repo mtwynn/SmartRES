@@ -54,7 +54,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         recenterButtonView.layer.shadowOpacity = 0.5
         recenterButtonView.layer.cornerRadius = recenterButtonView.frame.width / 2
         
-        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
