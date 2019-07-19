@@ -323,6 +323,7 @@ extension MapViewController: UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         self.searchTableView.isHidden = true
+        searchBar.text = ""
         searchBar.resignFirstResponder()
     }
 }
