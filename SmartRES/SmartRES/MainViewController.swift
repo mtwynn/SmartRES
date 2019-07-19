@@ -273,6 +273,7 @@ class MainViewController: UIViewController, controlsPropertyRefresh {
     
     // Refresh button
     @IBAction func editButton(_ sender: Any) {
+        
         self.performSegue(withIdentifier: "editPropertySegue", sender: self)
     }
     
