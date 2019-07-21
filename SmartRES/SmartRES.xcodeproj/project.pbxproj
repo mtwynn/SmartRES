@@ -22,7 +22,6 @@
 		C64A223D22C356590041C764 /* PropertyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64A223C22C356590041C764 /* PropertyCell.swift */; };
 		C666BB3122C3E26D006E76CF /* PropertiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C666BB3022C3E26D006E76CF /* PropertiesViewController.swift */; };
 		C666BB3322C43981006E76CF /* AddPropertyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C666BB3222C43981006E76CF /* AddPropertyViewController.swift */; };
-		C67D60CC22C96390001C7149 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C67D60CB22C96390001C7149 /* GoogleService-Info.plist */; };
 		C67D60D022CF43B5001C7149 /* TransitionTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67D60CF22CF43B5001C7149 /* TransitionTabBarController.swift */; };
 		C6950CB022E1498C0096A561 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6950CAF22E1498C0096A561 /* User.swift */; };
 		C69C3C7222BCB6D80056DE89 /* Lato-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69C3C6022BCB6D60056DE89 /* Lato-LightItalic.ttf */; };
@@ -44,6 +43,7 @@
 		C69C3C8222BCB6D80056DE89 /* Lato-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69C3C7022BCB6D80056DE89 /* Lato-Thin.ttf */; };
 		C69C3C8322BCB6D80056DE89 /* Lato-HairlineItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C69C3C7122BCB6D80056DE89 /* Lato-HairlineItalic.ttf */; };
 		C6A3ADEF22D69981009BE8C7 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A3ADEE22D69981009BE8C7 /* MapViewController.swift */; };
+		C6C163DC22E3F7C1000095DB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C6C163DB22E3F7C0000095DB /* GoogleService-Info.plist */; };
 		C6E1DBA822D5AC7E0059C2C7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C6E1DBA722D5AC7D0059C2C7 /* Assets.xcassets */; };
 		C6E1DBAA22D5B6FA0059C2C7 /* EditPropertyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6E1DBA922D5B6FA0059C2C7 /* EditPropertyViewController.swift */; };
 		C6ED370B22E134D3007FC128 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6A3ADEC22D6989B009BE8C7 /* CoreLocation.framework */; };
@@ -99,7 +99,6 @@
 		C64A223C22C356590041C764 /* PropertyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyCell.swift; sourceTree = "<group>"; };
 		C666BB3022C3E26D006E76CF /* PropertiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertiesViewController.swift; sourceTree = "<group>"; };
 		C666BB3222C43981006E76CF /* AddPropertyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPropertyViewController.swift; sourceTree = "<group>"; };
-		C67D60CB22C96390001C7149 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C67D60CF22CF43B5001C7149 /* TransitionTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionTabBarController.swift; sourceTree = "<group>"; };
 		C6950CAF22E1498C0096A561 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		C69C3C6022BCB6D60056DE89 /* Lato-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-LightItalic.ttf"; sourceTree = "<group>"; };
@@ -123,6 +122,7 @@
 		C6A3ADEA22D69892009BE8C7 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		C6A3ADEC22D6989B009BE8C7 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		C6A3ADEE22D69981009BE8C7 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		C6C163DB22E3F7C0000095DB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		C6E1DBA722D5AC7D0059C2C7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C6E1DBA922D5B6FA0059C2C7 /* EditPropertyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPropertyViewController.swift; sourceTree = "<group>"; };
 		C6ED373422E154E6007FC128 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
@@ -225,22 +225,14 @@
 		C645AE9C2282A56E006F2EF3 /* SmartRES */ = {
 			isa = PBXGroup;
 			children = (
+				C6C163DA22E3D8B1000095DB /* Controllers */,
 				C60D9C7922CC53ED00B0A2FF /* Models */,
 				C6E1DBA722D5AC7D0059C2C7 /* Assets.xcassets */,
 				C645AEA12282A56E006F2EF3 /* Main.storyboard */,
 				C645AEA62282A570006F2EF3 /* LaunchScreen.storyboard */,
 				C645AE9D2282A56E006F2EF3 /* AppDelegate.swift */,
-				C645AECB2282A668006F2EF3 /* LoginViewController.swift */,
-				C64A223822C228400041C764 /* SignupViewController.swift */,
-				C666BB3022C3E26D006E76CF /* PropertiesViewController.swift */,
-				C666BB3222C43981006E76CF /* AddPropertyViewController.swift */,
-				C6E1DBA922D5B6FA0059C2C7 /* EditPropertyViewController.swift */,
-				C6A3ADEE22D69981009BE8C7 /* MapViewController.swift */,
-				C611FF42228362EB00704CD3 /* ProfileViewController.swift */,
-				C6ED373422E154E6007FC128 /* EditProfileViewController.swift */,
-				C611FF402283603A00704CD3 /* MainViewController.swift */,
 				C645AEA92282A570006F2EF3 /* Info.plist */,
-				C67D60CB22C96390001C7149 /* GoogleService-Info.plist */,
+				C6C163DB22E3F7C0000095DB /* GoogleService-Info.plist */,
 			);
 			path = SmartRES;
 			sourceTree = "<group>";
@@ -286,6 +278,22 @@
 				C69C3C6522BCB6D60056DE89 /* Lato-ThinItalic.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		C6C163DA22E3D8B1000095DB /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C645AECB2282A668006F2EF3 /* LoginViewController.swift */,
+				C64A223822C228400041C764 /* SignupViewController.swift */,
+				C666BB3022C3E26D006E76CF /* PropertiesViewController.swift */,
+				C666BB3222C43981006E76CF /* AddPropertyViewController.swift */,
+				C6E1DBA922D5B6FA0059C2C7 /* EditPropertyViewController.swift */,
+				C6A3ADEE22D69981009BE8C7 /* MapViewController.swift */,
+				C611FF42228362EB00704CD3 /* ProfileViewController.swift */,
+				C6ED373422E154E6007FC128 /* EditProfileViewController.swift */,
+				C611FF402283603A00704CD3 /* MainViewController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -419,7 +427,7 @@
 				C69C3C7D22BCB6D80056DE89 /* Lato-HeavyItalic.ttf in Resources */,
 				C645AEA32282A56E006F2EF3 /* Main.storyboard in Resources */,
 				C69C3C8222BCB6D80056DE89 /* Lato-Thin.ttf in Resources */,
-				C67D60CC22C96390001C7149 /* GoogleService-Info.plist in Resources */,
+				C6C163DC22E3F7C1000095DB /* GoogleService-Info.plist in Resources */,
 				C69C3C7222BCB6D80056DE89 /* Lato-LightItalic.ttf in Resources */,
 				C69C3C7522BCB6D80056DE89 /* Lato-SemiboldItalic.ttf in Resources */,
 			);
@@ -748,7 +756,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mtwynn;
+				PRODUCT_BUNDLE_IDENTIFIER = com.smartres;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_VERSION = 5.0;
@@ -768,7 +776,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mtwynn;
+				PRODUCT_BUNDLE_IDENTIFIER = com.smartres;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_VERSION = 5.0;

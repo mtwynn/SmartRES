@@ -9,6 +9,7 @@
 import UIKit
 import Parse
 import Foundation
+import Firebase
 
 struct Property {
     let id: String
@@ -17,11 +18,30 @@ struct Property {
     let state: String
     let zip: String
     let type: String
-    let bed: NSNumber
-    let bath: NSNumber
-    let price: NSNumber
-    let latitude: NSNumber
-    let longitude: NSNumber
+    var bed: NSNumber
+    var bath: NSNumber
+    var price: NSNumber
+    var latitude: NSNumber
+    var longitude: NSNumber
     var image: UIImage
     let agent: PFUser
+    let ref: DatabaseReference?
+    let addedByUser: String
+    
+    func toAnyObject() -> Any {
+        return [
+            "address": address,
+            "city": city,
+            "state": state,
+            "zip": zip,
+            "type": type,
+            "bed": bed,
+            "bath": bath,
+            "price": price,
+            "agent": addedByUser,
+            "latitude": latitude,
+            "longitude": longitude,
+            "id": "123456789"
+        ]
+    }
 }
