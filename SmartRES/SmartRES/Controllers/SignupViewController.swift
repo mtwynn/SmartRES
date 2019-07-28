@@ -99,16 +99,41 @@ class SignupViewController: UIViewController, UITextViewDelegate, UITextFieldDel
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         } else {
-            print("reached")
             Auth.auth().createUser(withEmail: self.emailField.text!, password: password) { (user, error) in
                 if error == nil {
-                    Analytics.setUserProperty(self.firstnameField.text!, forName: "first_name")
-                    Analytics.setUserProperty(self.lastnameField.text!, forName: "last_name")
-                   
-                    Analytics.setUserProperty(self.usernameField.text!, forName: "username")
-                    Analytics.setUserProperty(self.phoneField.text!, forName: "phone")
-                    Analytics.setUserProperty(self.bioField.text!, forName: "bio")
-                    Auth.auth().signIn(withEmail: self.emailField.text!, password: self.passwordField.text!)
+                    let ref = Database.database().reference()
+                    
+                    guard let firstName = self.firstnameField.text,
+                        let lastName = self.lastnameField.text,
+                            let username = self.usernameField.text,
+                            let email = self.emailField.text,
+                            let phone = self.phoneField.text,
+                        let bio = self.bioField.text else {
+                            print("Failed")
+                            return
+                    }
+                    guard let uid = user?.user.uid else {
+                        return
+                    }
+                    let userRef = ref.child("users").child(uid)
+                    let values = ["firstName": firstName, "lastName": lastName, "username": username, "email": email, "phone": phone, "bio": bio]
+                    userRef.updateChildValues(values, withCompletionBlock: { (error, ref) in
+                        if error != nil {
+                            print(error?.localizedDescription)
+                            return
+                        }
+                        loadingAlert.dismiss(animated: true, completion: nil)
+                        let alert = UIAlertController(title: "Success", message: "Successfully signed up!", preferredStyle: UIAlertController.Style.alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: { action in
+                            self.dismiss(animated: true, completion: { () in
+                                Auth.auth().signIn(withEmail: self.emailField.text!, password: self.passwordField.text!)
+                            })
+                        }))
+                        self.present(alert, animated: true)
+                        
+                    })
+                    
+                    
                 } else {
                     let alert = UIAlertController(title: "Signup failed", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
