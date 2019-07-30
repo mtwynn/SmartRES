@@ -78,7 +78,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             
             let coordinates = CLLocationCoordinate2D(latitude: CLLocationDegrees(property.latitude), longitude: CLLocationDegrees(property.longitude))
             let annotation = CustomPointAnnotation(pinColor: MKPinAnnotationView.redPinColor())
-            annotation.image = property.image
+            annotation.image = property.thumbnail
             annotation.address = "\(property.address), \(property.city) \(property.state), \(property.zip)"
             annotation.coordinate = coordinates
             annotation.title = property.address

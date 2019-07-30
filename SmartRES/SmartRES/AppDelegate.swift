@@ -23,12 +23,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         Database.database().isPersistenceEnabled = true
         
-        Parse.initialize(
-            with: ParseClientConfiguration(block: { (configuration: ParseMutableClientConfiguration) -> Void in
-                configuration.applicationId = "SmartRES"
-                configuration.server = "http://smart-res.herokuapp.com/parse"
-            })
-        )
+        // If a user is currently logged in, skip log-in screen
+        Auth.auth().addStateDidChangeListener() { (auth, user) in
+            if user != nil {
+                let main = UIStoryboard(name: "Main", bundle: nil)
+                let mainViewController = main.instantiateViewController(withIdentifier: "TabBarViewController") as! UIViewController
+                
+                self.window?.rootViewController = mainViewController
+            }
+        }
         
         /*
         if PFUser.current() != nil {

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Parse
 import Alamofire
 import YPImagePicker
 import MapKit
@@ -16,7 +15,7 @@ import Firebase
 class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UINavigationBarDelegate {
     
     var delegate: controlsRefresh?
-    let ref = Database.database().reference(withPath: "properties")
+    let user = Auth.auth().currentUser
     
     @IBOutlet weak var addressField: UITextField!
     @IBOutlet weak var cityField: UITextField!
@@ -112,7 +111,6 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
     override func viewDidLoad() {
         // Initialize all pickers 
         super.viewDidLoad()
-        print("Destination is: \(self)")
         
         
         self.statePicker = UIPickerView(frame: CGRect(x: 0, y: 40, width: 0, height: 0))
@@ -196,10 +194,10 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
     
     
     override func viewWillAppear(_ animated: Bool) {
-        self.addressField?.text = addressText
+        /*self.addressField?.text = addressText
         self.cityField?.text = cityText
         self.stateField?.text = stateText
-        self.zipField?.text = zipText
+        self.zipField?.text = zipText*/
         self.view.addSubview(navBar)
         // If this view controller instance was a destination from addPropertyFromMapsSegue, change button constraint here
         if (fromMaps) {
@@ -263,34 +261,32 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
 
     @IBAction func addButton(_ sender: Any) {
         // Initialize new PFObject for property
-        let property = PFObject(className: "Property")
+        let ref = Database.database().reference(withPath: "users/\(user!.uid)/properties")
+        guard let address = self.addressField.text?.trim(),
+            let city = self.cityField.text?.trim(),
+                let state = self.stateField.text,
+            let zip = self.zipField.text?.trim(),
+            let type = self.typeField.text,
+            let agent = Auth.auth().currentUser?.uid else {
+                return
+        }
+        var firebaseProperty = Property.init(address: address, agent: agent, bath: 0, bed: 0, city: city, id: "", latitude: 0, longitude: 0, path: "", price: 0, state: state, type: type, zip: zip)
         
-        var firebaseProperty = Property(
-            id: "123456789",
-            address: self.addressField.text!.trim(),
-            city: self.cityField.text!.trim(),
-            state: self.stateField.text!,
-            zip: self.stateField.text!,
-            type: self.typeField.text!,
-            bed: 0,
-            bath: 0,
-            price: 1000,
-            latitude: 0,
-            longitude: 0,
-            image: UIImage(),
-            agent: PFUser(),
-            ref: nil,
-            addedByUser: "")
-        property["agent"] = PFUser.current()!
-        property["address"] = self.addressField.text!.trim()
-        property["city"] = self.cityField.text!.trim()
-        property["state"] = self.stateField.text!
-        property["zip"] = self.zipField.text!.trim()
-        property["type"] = self.typeField.text!
+        // Helper number formatter to convert strings to nums
+        let formatter = NumberFormatter()
+        formatter.generatesDecimalNumbers = true
         
+        // Data that needs to be converted
+        let bedNumber = formatter.number(from: self.bedField.text!) as? NSDecimalNumber ?? 0
+        let bathNumber = formatter.number(from: self.bathField.text!) as? NSDecimalNumber ?? 0
+        let priceNumber = formatter.number(from: self.priceField.text!) as? NSDecimalNumber ?? 0
         
+        firebaseProperty.bed = bedNumber
+        firebaseProperty.bath = bathNumber
+        firebaseProperty.price = priceNumber
+        
+        // Geocode address
         let propertyAddressString = "\(self.addressField.text!.trim()), \(self.cityField.text!.trim()) \(self.stateField.text!.trim()), \(self.zipField.text!.trim())"
-        
         let geoCoder = CLGeocoder()
         geoCoder.geocodeAddressString(propertyAddressString) { (placemarks, error) in
             guard
@@ -306,44 +302,48 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
             
             let lat = location.coordinate.latitude
             let long = location.coordinate.longitude
-            property["latitude"] = lat
-            property["longitude"] = long
             
             firebaseProperty.latitude = NSNumber(value: lat)
             firebaseProperty.longitude = NSNumber(value: long)
         }
-        // Helper number formatter to convert strings to nums
-        let formatter = NumberFormatter()
-        formatter.generatesDecimalNumbers = true
         
-        // Data that needs to be converted
-        let bedNumber = formatter.number(from: self.bedField.text!) as? NSDecimalNumber ?? 0
-        let bathNumber = formatter.number(from: self.bathField.text!) as? NSDecimalNumber ?? 0
-        let priceNumber = formatter.number(from: self.priceField.text!) as? NSDecimalNumber ?? 0
-        property["bed"] = bedNumber
-        property["bath"] = bathNumber
-        property["price"] = priceNumber
-        firebaseProperty.bed = bedNumber
-        firebaseProperty.bath = bathNumber
-        firebaseProperty.price = priceNumber
+        
         
         // Check if thumnail exists before trying to add it
         if (thumbnailView.image != nil) {
-            let imageData = thumbnailView.image?.jpeg(.lowest)
-            //let imageData = thumbnailView.image?.pngData()
-            let file = PFFileObject(data: imageData!)
-            property["thumbnail"] = file
+            
+            let imageName = NSUUID().uuidString
+            let storageRef = Storage.storage().reference().child("property_images").child(user!.uid).child("\(imageName).png")
+            
+            if let imageData = thumbnailView.image?.jpeg(.lowest) {
+                storageRef.putData(imageData, metadata: nil, completion: { (metadata, error) in
+                    if error != nil {
+                        print(error)
+                        return
+                    }
+                    
+                    if let propertyImageUrl = metadata?.path {
+                        firebaseProperty.path = propertyImageUrl
+                    }
+                })
+            }
+            
         }
         
+        
+        // Confirm the addition of this property
         let alert = UIAlertController(title: "Confirmation", message: "Would you like to add this property?", preferredStyle: UIAlertController.Style.alert)
         
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {action in
-                let text = self.addressField.text!.lowercased()
-                let propertyRef = self.ref.childByAutoId()
-            propertyRef.setValue(firebaseProperty.toAnyObject())
-            
-                property.saveInBackground() { (success, error) in
-                    if success {
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: { action in
+                //let text = self.addressField.text!.lowercased()
+                let propertyRef = ref.childByAutoId()
+                firebaseProperty.id = propertyRef.key!
+                propertyRef.setValue(firebaseProperty.toAnyObject(), withCompletionBlock: { (error, reference: DatabaseReference) in
+                    if error != nil {
+                        let alert = UIAlertController(title: "Error", message: "Adding property failed.", preferredStyle: UIAlertController.Style.alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    } else {
                         self.delegate?.loadProperties()
                         let alert = UIAlertController(title: "Success", message: "Property, \(self.addressField.text!) has been added! Please use the provided PropertyID to view your images on the sign slideshow.", preferredStyle: UIAlertController.Style.alert)
                         self.addressField.text = ""
@@ -359,12 +359,8 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
                         
                         alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
                         self.present(alert, animated: true, completion: nil)
-                    } else {
-                        let alert = UIAlertController(title: "Error", message: "Adding property failed.", preferredStyle: UIAlertController.Style.alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-                        self.present(alert, animated: true, completion: nil)
                     }
-                }
+                })
         }))
             
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: nil))

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Parse
 import ImageSlideshow
 import Firebase
 
@@ -24,8 +23,9 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
     var properties = [Property]()
     var filteredProperties = [Property]()
     var editButtonEnabled = false
-    let ref = Database.database().reference(withPath: "properties")
-    let usersRef = Database.database().reference(withPath: "online")
+    var user = Auth.auth().currentUser
+    
+    
     
     
     @IBOutlet weak var propertyCollectionView: UICollectionView!
@@ -68,7 +68,7 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = propertyCollectionView.dequeueReusableCell(withReuseIdentifier: "PropertyCell", for: indexPath) as! PropertyCell
         let property = filteredProperties[indexPath.item]
-        cell.propertyCellView.image = property.image
+        cell.propertyCellView.image = property.thumbnail
         cell.propertyLabel.text = property.address
         
         cell.deleteButtonView?.layer.setValue(indexPath.row, forKey: "index")
@@ -82,20 +82,46 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     @objc func loadProperties() {
-        let activityIndicator = UIActivityIndicatorView()
-        activityIndicator.style = .gray
-        activityIndicator.center = self.view.center
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.startAnimating()
+        let ref = Database.database().reference(withPath: "users/\(user!.uid)/properties")
         
-        self.propertyCollectionView.addSubview(activityIndicator)
+        
         
         
         // Search all Property objects for this current user
+        /*
         let query = PFQuery(className: "Property")
-        query.whereKey("agent", equalTo: PFUser.current()!)
+        query.whereKey("agent", equalTo: PFUser.current()!)*/
 
         // Async find in background
+        
+        //handleEmptyProperties(activityIndicator: activityIndicator)
+        
+        ref.observeSingleEvent(of: .value) { (snapshot) in
+            self.properties.removeAll()
+            self.filteredProperties.removeAll()
+            var pic : UIImage! = UIImage()
+            // Default image if no thumbnail was set
+            let url = URL(string: "https://suitabletech.com/images/HelpCenter/errors/Lenovo-Camera-Error.JPG")!
+            let data = try? Data(contentsOf: url)
+            pic = UIImage(data: data!)
+            snapshot.children.forEach({ (property) in
+                if let propertyObj = Property.init(snapshot: property as! DataSnapshot, image: pic) {
+                    
+                    self.properties.append(propertyObj)
+                    self.filteredProperties = self.properties
+                    let vc = self.tabBarController?.viewControllers![1] as! MapViewController
+                    vc.properties = self.properties
+                }
+                
+            })
+            self.propertyCollectionView.reloadData()
+            self.refreshControl.endRefreshing()
+           
+            
+        }
+        
+        self.handleEmptyProperties()
+        /*
         query.findObjectsInBackground{ (queryDict, error) in
             if let queryProperties = queryDict {
                 activityIndicator.stopAnimating()
@@ -143,24 +169,37 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
                     vc.properties = self.properties
                     
                 }
-                if self.properties.count == 0 {
-                    let rect = CGRect(origin: CGPoint(x: 0,y :0), size: CGSize(width: self.view.bounds.size.width, height: self.view.bounds.size.height))
-                    let messageLabel = UILabel(frame: rect)
-                    messageLabel.text = "You don't have any properties yet.\nPlease click the + sign to add one."
-                    messageLabel.textColor = UIColor(red: 0.0/255.0, green: 151.0/255.0, blue: 69.0/255.0, alpha: 0.5)
-                    messageLabel.numberOfLines = 0;
-                    messageLabel.textAlignment = .center;
-                    messageLabel.font = UIFont(name: "Lato", size: 15)
-                    messageLabel.sizeToFit()
-                    self.propertyCollectionView.backgroundView = messageLabel;
-                } else {
-                    self.propertyCollectionView.backgroundView = nil
-                }
+                
                 // Reload and refresh
                 
                 self.propertyCollectionView.reloadData()
                 self.refreshControl.endRefreshing()
             }
+        }*/
+    }
+    
+    func handleEmptyProperties() {
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.style = .gray
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.startAnimating()
+        
+        self.propertyCollectionView.addSubview(activityIndicator)
+        if self.properties.count == 0 {
+            activityIndicator.stopAnimating()
+            let rect = CGRect(origin: CGPoint(x: 0,y :0), size: CGSize(width: self.view.bounds.size.width, height: self.view.bounds.size.height))
+            let messageLabel = UILabel(frame: rect)
+            messageLabel.text = "You don't have any properties yet.\nPlease click the + sign to add one."
+            messageLabel.textColor = UIColor(red: 0.0/255.0, green: 151.0/255.0, blue: 69.0/255.0, alpha: 0.5)
+            messageLabel.numberOfLines = 0;
+            messageLabel.textAlignment = .center;
+            messageLabel.font = UIFont(name: "Lato", size: 15)
+            messageLabel.sizeToFit()
+            self.propertyCollectionView.backgroundView = messageLabel;
+        } else {
+            activityIndicator.stopAnimating()
+            self.propertyCollectionView.backgroundView = nil
         }
     }
     
@@ -228,6 +267,7 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
             let i : Int = (sender.layer.value(forKey: "index")) as! Int
             let toDelete = self.properties[i].id
             
+            /*
             let query = PFQuery(className:"Property")
             query.getObjectInBackground(withId: toDelete) { (property: PFObject?, error: Error?) in
                 if let error = error {
@@ -255,7 +295,7 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
                     }
                     self.loadProperties()
                 }
-            }
+            }*/
         }))
         
         

@@ -11,6 +11,7 @@ import Alamofire
 import ImageSlideshow
 import Parse
 import YPImagePicker
+import Firebase
 
 class ProfileViewController: UIViewController {
 
@@ -24,19 +25,20 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        /*
         if (PFUser.current()!["profilePic"] != nil) {
             let imageFile = PFUser.current()!["profilePic"] as! PFFileObject
             let url = URL(string: imageFile.url!)!
             
             let data = try? Data(contentsOf: url)
             self.profilePicView.image = UIImage(data: data!)
-        }
-        let firstName = UserDefaults.standard.string(forKey: "firstName")!
-        let lastName = UserDefaults.standard.string(forKey: "lastName")!
-        nameLabel.text = "\(firstName) \(lastName)"
-        emailLabel.text = UserDefaults.standard.string(forKey: "email")!
-        phoneLabel.text = UserDefaults.standard.string(forKey: "phone")!
-        bioLabel.text = UserDefaults.standard.string(forKey: "bio")!
+        }*/
+        
+        nameLabel.text = "Filler name"
+        emailLabel.text = "Filler email"//UserDefaults.standard.string(forKey: "email")!
+        phoneLabel.text = "Filler phone"//UserDefaults.standard.string(forKey: "phone")!
+        bioLabel.text = "Filler bio" //UserDefaults.standard.string(forKey: "bio")!
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(addProfilePic))
         profilePicView.addGestureRecognizer(tap)
@@ -52,6 +54,9 @@ class ProfileViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        
+        /*
+        
         let user = PFUser.current()!
         nameLabel.text = (user["firstName"] as! String) + " " + (user["lastName"] as! String)
         emailLabel.text = user["email"] as! String
@@ -67,7 +72,7 @@ class ProfileViewController: UIViewController {
             let logoData = try? Data(contentsOf: logoUrl)
             let pic = UIImage(data: logoData!)
             logoView.image = pic
-        }
+        }*/
         
     }
     
@@ -124,6 +129,12 @@ class ProfileViewController: UIViewController {
     
     @IBAction func logoutButton(_ sender: Any) {
         PFUser.logOut()
+        do {
+            try Auth.auth().signOut()
+        } catch {
+                print("Unable to sign out")
+        }
+        
         UserDefaults.standard.set(false, forKey: "userLoggedIn")
         let main = UIStoryboard(name: "Main", bundle: nil)
         let loginViewController = main.instantiateViewController(withIdentifier: "LoginViewController")

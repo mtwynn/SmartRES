@@ -7,11 +7,11 @@
 //
 
 import UIKit
-import Parse
 import Firebase
 
 class SignupViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate {
 
+    // Fields
     @IBOutlet weak var firstnameField: UITextField!
     @IBOutlet weak var lastnameField: UITextField!
     @IBOutlet weak var usernameField: UITextField!
@@ -41,6 +41,7 @@ class SignupViewController: UIViewController, UITextViewDelegate, UITextFieldDel
         bioField.layer.borderWidth = 1
         bioField.layer.borderColor = UIColor.init(red: 212/255, green: 212/255, blue: 212/255, alpha: 1).cgColor
         bioField.layer.cornerRadius = 5
+        
         // Keyboard dismissal functions
         let tapGesture = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
         self.view.addGestureRecognizer(tapGesture)
@@ -57,9 +58,8 @@ class SignupViewController: UIViewController, UITextViewDelegate, UITextFieldDel
     
 
     @IBAction func createUser(_ sender: Any) {
-        let user = PFUser()
         
-        
+        // Setup loading indicator
         let loadingAlert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
         let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
         loadingIndicator.style = UIActivityIndicatorView.Style.gray
@@ -70,53 +70,60 @@ class SignupViewController: UIViewController, UITextViewDelegate, UITextFieldDel
             loadingAlert.dismiss(animated: false, completion: nil)
         }))
         self.present(loadingAlert, animated: true, completion: nil)
-        var username = ""
-        var password = ""
         
-        if (usernameField.text == nil) {
-            username = emailField.text!
-        } else {
-            username = usernameField.text!
-        }
         
-        password = passwordField.text!
         
-        let validEmail = isValidEmail(emailStr: emailField.text!)
+        // Validate fields
+        let email = emailField.text!
+        let password = passwordField.text!
         
-        if (firstnameField!.text == "") || (lastnameField!.text == "") || (usernameField!.text == "") || (emailField!.text == "") || (phoneField!.text == "") || (passwordField!.text == "") || (pwConfirmField!.text == "") {
+        let validEmail = isValidEmail(emailStr: email)
+        
+        if (!handleValidateFields()) {
             loadingAlert.dismiss(animated: false, completion: nil)
             let alert = UIAlertController(title: "Error", message: "Please fill out all the fields", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         } else if (passwordField.text != pwConfirmField.text) {
+            // Passwords do not match
             loadingAlert.dismiss(animated: false, completion: nil)
             let alert = UIAlertController(title: "Error", message: "Passwords do not match", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         } else if (!validEmail) {
+            // Valid email not entered
             loadingAlert.dismiss(animated: false, completion: nil)
             let alert = UIAlertController(title: "Error", message: "Please enter a valid email", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         } else {
-            Auth.auth().createUser(withEmail: self.emailField.text!, password: password) { (user, error) in
+            
+            // All fields valid, sign user up
+            Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
+                // Successfully created user
                 if error == nil {
-                    let ref = Database.database().reference()
                     
+                    // Get user reference from database
+                    let ref = Database.database().reference()
+                    guard let uid = user?.user.uid else {
+                        return
+                    }
+                    let userRef = ref.child("users").child(uid)
+                    
+                    // Setup user properties as dictionary
                     guard let firstName = self.firstnameField.text,
                         let lastName = self.lastnameField.text,
                             let username = self.usernameField.text,
                             let email = self.emailField.text,
                             let phone = self.phoneField.text,
-                        let bio = self.bioField.text else {
-                            print("Failed")
-                            return
+                            let bio = self.bioField.text else {
+                                print("Failed")
+                                return
                     }
-                    guard let uid = user?.user.uid else {
-                        return
-                    }
-                    let userRef = ref.child("users").child(uid)
+                    
                     let values = ["firstName": firstName, "lastName": lastName, "username": username, "email": email, "phone": phone, "bio": bio]
+                    
+                    // Update user information
                     userRef.updateChildValues(values, withCompletionBlock: { (error, ref) in
                         if error != nil {
                             print(error?.localizedDescription)
@@ -133,7 +140,7 @@ class SignupViewController: UIViewController, UITextViewDelegate, UITextFieldDel
                         
                     })
                     
-                    
+                // Signup failed
                 } else {
                     let alert = UIAlertController(title: "Signup failed", message: error?.localizedDescription, preferredStyle: UIAlertController.Style.alert)
                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
@@ -143,7 +150,7 @@ class SignupViewController: UIViewController, UITextViewDelegate, UITextFieldDel
             
             
             
-            
+            /*
             user["firstName"] = firstnameField.text
             user["lastName"] = lastnameField.text
             user["email"] = emailField.text
@@ -166,12 +173,15 @@ class SignupViewController: UIViewController, UITextViewDelegate, UITextFieldDel
                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
                     self.present(alert, animated: true, completion: nil)
                 }
-            }
+            }*/
         }
     }
     
     // Field verification functions
     
+    func handleValidateFields() -> Bool {
+        return (firstnameField!.text == "") || (lastnameField!.text == "") || (usernameField!.text == "") || (emailField!.text == "") || (phoneField!.text == "") || (passwordField!.text == "") || (pwConfirmField!.text == "")
+    }
     func isValidEmail(emailStr:String) -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
         

@@ -12,7 +12,6 @@ import Firebase
 
 class LoginViewController: UIViewController {
     
-    var user : PFUser? = nil
     // User credentials
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
@@ -44,11 +43,10 @@ class LoginViewController: UIViewController {
         
         // Remember user information
         rememberMe.addTarget(self, action: #selector(self.stateChanged), for: .valueChanged)
-        let defaults: UserDefaults? = UserDefaults.standard
         rememberMe.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
         
-        // check if defaults already saved the details
-        
+        // check if "Remember Me" details are saved in UserDefaults
+         let defaults: UserDefaults? = UserDefaults.standard
         if (defaults?.bool(forKey: "ISRemember"))! {
             usernameField.text = (defaults?.value(forKey: "SavedUserName") as! String)
             passwordField.text = (defaults?.value(forKey: "SavedPassword") as! String)
@@ -58,17 +56,9 @@ class LoginViewController: UIViewController {
             self.rememberMe.setOn(false, animated: false)
         }
         
-        Auth.auth().addStateDidChangeListener() { (auth, user) in
-            if user != nil {
-                PFUser.logInWithUsername(inBackground: "aliencheez12@gmail.com", password: "test123")
-                self.performSegue(withIdentifier: "mainSegue", sender: nil)
-                self.usernameField.text = nil
-                self.passwordField.text = nil
-            }
-        }
         
         
-        // Set background styles
+        // Set background image
         let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
         backgroundImage.image = #imageLiteral(resourceName: "loginBG-1")
         backgroundImage.contentMode =  UIView.ContentMode.scaleAspectFill
@@ -97,7 +87,7 @@ class LoginViewController: UIViewController {
         let username = usernameField.text!
         let password = passwordField.text!
         
-        // Login load screen
+        // Login loading indicator
         let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
         let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
         loadingIndicator.style = UIActivityIndicatorView.Style.gray
@@ -122,31 +112,10 @@ class LoginViewController: UIViewController {
                 }
             }
         }
-        
-        // PF Login
-        
-        PFUser.logInWithUsername(inBackground: username, password: password) { (user, error) in
-            if user != nil { // User exists
-                self.user = user
-                UserDefaults.standard.set(username, forKey: "email")
-                self.dismiss(animated: true) {
-                    self.performSegue(withIdentifier: "mainSegue", sender: nil)
-                }
-                
-            } else { // Password incorrect, user nonexistent
-                self.dismiss(animated: true) {
-                    let alert = UIAlertController(title: "Message", message: "Incorrect username/password or no user exists", preferredStyle: UIAlertController.Style.alert)
-                    
-                    alert.addAction(UIAlertAction(title: "Sign up", style: UIAlertAction.Style.default, handler: self.signupButton))
-                    alert.addAction(UIAlertAction(title: "Try again", style: UIAlertAction.Style.cancel, handler: nil))
-                    
-                    
-                    self.present(alert, animated: true, completion: nil)
-                }
-            }
-        }
     }
     
+    
+    // Remember me switch
     @objc func stateChanged(_ switchState: UISwitch) {
         
         let defaults: UserDefaults? = UserDefaults.standard
@@ -161,11 +130,14 @@ class LoginViewController: UIViewController {
     }
     
     
+    // Sign up with "Don't have an account?"
     @IBAction func signupButton(_ sender: Any) {
         self.performSegue(withIdentifier: "signupSegue", sender: nil)
     }
     
     
+    
+    // Keyboard dismissal functions
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             if self.view.frame.origin.y == 0 {
@@ -180,22 +152,4 @@ class LoginViewController: UIViewController {
             self.view.frame.origin.y = 0
         }
     }
-    
-    /*
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier != "signupSegue") {
-            UserDefaults.standard.set(true, forKey: "userLoggedIn")
-            UserDefaults.standard.set(user!["firstName"], forKey: "firstName")
-            UserDefaults.standard.set(user!["lastName"], forKey: "lastName")
-            UserDefaults.standard.set(user!["email"], forKey: "email")
-            UserDefaults.standard.set(user!["phone"], forKey: "phone")
-            UserDefaults.standard.set(user!["bio"], forKey: "bio")
-            if (user!["profilePic"] != nil) {
-                let imageFile = user!["profilePic"] as! PFFileObject
-                let url = URL(string: imageFile.url!)!
-                UserDefaults.standard.set(url, forKey: "profilePic")
-            }
-        }
-    }*/
-    
 }

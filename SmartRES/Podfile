@@ -11,12 +11,12 @@ target 'SmartRES' do
   pod "YPImagePicker"
   pod "AlamofireImage"
   pod "Alamofire"
-  pod "Parse"
   pod "ImageSlideshow/Alamofire"
   pod "ImageSlideshow/Parse"
-  pod "Firebase"
-  pod "FirebaseDatabase"  
-  pod "FirebaseAuth"
+  pod 'Firebase'
+  pod 'Firebase/Database'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Storage'
 
   target 'SmartRESTests' do
     inherit! :search_paths
