@@ -17,6 +17,7 @@ target 'SmartRES' do
   pod 'Firebase/Database'
   pod 'Firebase/Auth'
   pod 'Firebase/Storage'
+  pod 'FirebaseUI/Storage'
 
   target 'SmartRESTests' do
     inherit! :search_paths

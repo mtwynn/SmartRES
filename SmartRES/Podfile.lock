@@ -50,6 +50,9 @@ PODS:
     - FirebaseAuthInterop (~> 1.0)
     - FirebaseCore (~> 6.0)
     - GTMSessionFetcher/Core (~> 1.1)
+  - FirebaseUI/Storage (8.0.2):
+    - FirebaseStorage (~> 3.2.0)
+    - SDWebImage (~> 5.0)
   - GoogleAppMeasurement (6.0.2):
     - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
     - GoogleUtilities/MethodSwizzler (~> 6.0)
@@ -95,6 +98,9 @@ PODS:
   - Parse/Core (1.17.2):
     - Bolts/Tasks (~> 1.9)
   - PryntTrimmerView (3.0.0)
+  - SDWebImage (5.0.6):
+    - SDWebImage/Core (= 5.0.6)
+  - SDWebImage/Core (5.0.6)
   - SteviaLayout (4.4.4)
   - YPImagePicker (4.0.0):
     - PryntTrimmerView (~> 3.0.0)
@@ -107,6 +113,7 @@ DEPENDENCIES:
   - Firebase/Auth
   - Firebase/Database
   - Firebase/Storage
+  - FirebaseUI/Storage
   - ImageSlideshow (~> 1.8)
   - ImageSlideshow/Alamofire
   - ImageSlideshow/Parse
@@ -125,6 +132,7 @@ SPEC REPOS:
     - FirebaseDatabase
     - FirebaseInstanceID
     - FirebaseStorage
+    - FirebaseUI
     - GoogleAppMeasurement
     - GoogleUtilities
     - GTMSessionFetcher
@@ -133,6 +141,7 @@ SPEC REPOS:
     - nanopb
     - Parse
     - PryntTrimmerView
+    - SDWebImage
     - SteviaLayout
     - YPImagePicker
 
@@ -148,6 +157,7 @@ SPEC CHECKSUMS:
   FirebaseDatabase: f48e067716864be2b855cf716b927ef375d6cfa0
   FirebaseInstanceID: f20243a1d828e0e9a3798b995174dedc16f1b32a
   FirebaseStorage: 926d41552072b9fee67aa645760f05f87b7ce604
+  FirebaseUI: 8734527e38959ba31b433b8115c21941d1b67ec8
   GoogleAppMeasurement: a35a645835bae31b6bdc0576396bc23908f12a22
   GoogleUtilities: 996e0db07153674fd1b54b220fda3a3dc3547cba
   GTMSessionFetcher: 61bb0f61a4cb560030f1222021178008a5727a23
@@ -156,9 +166,10 @@ SPEC CHECKSUMS:
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Parse: 3b31a3dd1777b07ee7f0caee32fafbff544483a5
   PryntTrimmerView: 53ac64053c7ce63cb3e27f54090f52da0734891d
+  SDWebImage: 920f1a2ff1ca8296ad34f6e0510a1ef1d70ac965
   SteviaLayout: 523469269059f2c6da02820bb2ff28a5fe0780aa
   YPImagePicker: 8039f89ad79281545fa868486f32d9bf5d65ede1
 
-PODFILE CHECKSUM: 967b89465b91043ff5b72d2ab941d1cf03b6a9f6
+PODFILE CHECKSUM: 262a06694f1e34e917cc8692739464f9bcfb6122
 
 COCOAPODS: 1.7.2

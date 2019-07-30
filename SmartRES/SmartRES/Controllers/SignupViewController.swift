@@ -79,30 +79,36 @@ class SignupViewController: UIViewController, UITextViewDelegate, UITextFieldDel
         
         let validEmail = isValidEmail(emailStr: email)
         
-        if (!handleValidateFields()) {
-            loadingAlert.dismiss(animated: false, completion: nil)
-            let alert = UIAlertController(title: "Error", message: "Please fill out all the fields", preferredStyle: UIAlertController.Style.alert)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+        if (emptyFields()) {
+            loadingAlert.dismiss(animated: true) {
+                let alert = UIAlertController(title: "Error", message: "Please fill out all the fields", preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+            
         } else if (passwordField.text != pwConfirmField.text) {
             // Passwords do not match
-            loadingAlert.dismiss(animated: false, completion: nil)
-            let alert = UIAlertController(title: "Error", message: "Passwords do not match", preferredStyle: UIAlertController.Style.alert)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+            loadingAlert.dismiss(animated: true) {
+                let alert = UIAlertController(title: "Error", message: "Passwords do not match", preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+            
         } else if (!validEmail) {
             // Valid email not entered
-            loadingAlert.dismiss(animated: false, completion: nil)
-            let alert = UIAlertController(title: "Error", message: "Please enter a valid email", preferredStyle: UIAlertController.Style.alert)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-        } else {
+            loadingAlert.dismiss(animated: true) {
+                let alert = UIAlertController(title: "Error", message: "Please enter a valid email", preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
             
+        } else {
+            print("All fields valid")
             // All fields valid, sign user up
             Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
                 // Successfully created user
                 if error == nil {
-                    
+                    print("Success")
                     // Get user reference from database
                     let ref = Database.database().reference()
                     guard let uid = user?.user.uid else {
@@ -179,9 +185,11 @@ class SignupViewController: UIViewController, UITextViewDelegate, UITextFieldDel
     
     // Field verification functions
     
-    func handleValidateFields() -> Bool {
+    func emptyFields() -> Bool {
         return (firstnameField!.text == "") || (lastnameField!.text == "") || (usernameField!.text == "") || (emailField!.text == "") || (phoneField!.text == "") || (passwordField!.text == "") || (pwConfirmField!.text == "")
     }
+    
+    
     func isValidEmail(emailStr:String) -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
         

@@ -58,7 +58,58 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
         
         
         // Async load properties
-        loadProperties()
+        let propertiesRef = Database.database().reference(withPath: "users/\(user!.uid)/properties")
+        propertiesRef.observe(.childAdded, with: { snap in
+            var pic : UIImage! = UIImage()
+            // Default image if no thumbnail was set
+            let url = URL(string: "https://suitabletech.com/images/HelpCenter/errors/Lenovo-Camera-Error.JPG")!
+            let data = try? Data(contentsOf: url)
+            pic = UIImage(data: data!)
+            
+            if let snapshotProperty = Property.init(snapshot: snap, image: pic) {
+                var propertyObj = snapshotProperty
+                let gsReference = Storage.storage().reference(forURL: "gs://smart-res.appspot.com/users/\(self.user!.uid)/properties/\(propertyObj.id)/thumbnail.jpg")
+                gsReference.getData(maxSize: 1 * 1024 * 1024) { data, error in
+                    if let error = error {
+                        print("Could not load image because storage not initiated yet")
+                    } else {
+                        let image = UIImage(data: data!)
+                        propertyObj.thumbnail = image!
+                        self.properties.append(propertyObj)
+                        self.filteredProperties = self.properties
+                        let vc = self.tabBarController?.viewControllers![1] as! MapViewController
+                        vc.properties = self.properties
+                        let row = self.properties.count - 1
+                        let indexPath = IndexPath(row: row, section: 0)
+                        self.propertyCollectionView.insertItems(at: [indexPath])
+                        self.propertyCollectionView.reloadData()
+                        self.refreshControl.endRefreshing()
+                    }
+                    
+                }
+            }
+            /*guard let email = snap.value as? String else { return }
+            self.currentUsers.append(email)
+            
+            let row = self.currentUsers.count - 1
+            let indexPath = IndexPath(row: row, section: 0)
+            
+            self.tableView.insertRows(at: [indexPath], with: .top)*/
+        })
+        
+        propertiesRef.observe(.childRemoved, with: { snap in
+            print("Just removed a property:")
+            print(snap)
+            /*guard let emailToFind = snap.value as? String else { return }
+            for (index, email) in self.currentUsers.enumerated() {
+                if email == emailToFind {
+                    let indexPath = IndexPath(row: index, section: 0)
+                    self.currentUsers.remove(at: index)
+                    self.tableView.deleteRows(at: [indexPath], with: .fade)
+                }
+            }*/
+        })
+        //loadProperties()
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -97,6 +148,13 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
         //handleEmptyProperties(activityIndicator: activityIndicator)
         
         ref.observeSingleEvent(of: .value) { (snapshot) in
+            let activityIndicator = UIActivityIndicatorView()
+            activityIndicator.style = .gray
+            activityIndicator.center = self.view.center
+            activityIndicator.hidesWhenStopped = true
+            activityIndicator.startAnimating()
+            
+            self.propertyCollectionView.addSubview(activityIndicator)
             self.properties.removeAll()
             self.filteredProperties.removeAll()
             var pic : UIImage! = UIImage()
@@ -105,22 +163,31 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
             let data = try? Data(contentsOf: url)
             pic = UIImage(data: data!)
             snapshot.children.forEach({ (property) in
-                if let propertyObj = Property.init(snapshot: property as! DataSnapshot, image: pic) {
-                    
-                    self.properties.append(propertyObj)
-                    self.filteredProperties = self.properties
-                    let vc = self.tabBarController?.viewControllers![1] as! MapViewController
-                    vc.properties = self.properties
+                if let snapshotProperty = Property.init(snapshot: property as! DataSnapshot, image: pic) {
+                    var propertyObj = snapshotProperty
+                    let gsReference = Storage.storage().reference(forURL: "gs://smart-res.appspot.com/users/\(self.user!.uid)/properties/\(propertyObj.id)/thumbnail.jpg")
+                    gsReference.getData(maxSize: 1 * 1024 * 1024) { data, error in
+                        if let error = error {
+                            print(error)
+                        } else {
+                            let image = UIImage(data: data!)
+                            propertyObj.thumbnail = image!
+                            self.properties.append(propertyObj)
+                            self.filteredProperties = self.properties
+                            let vc = self.tabBarController?.viewControllers![1] as! MapViewController
+                            vc.properties = self.properties
+                            self.propertyCollectionView.reloadData()
+                            self.refreshControl.endRefreshing()
+                            self.handleEmptyProperties()
+                            activityIndicator.stopAnimating()
+                        }
+                        
+                    }
                 }
                 
+                
             })
-            self.propertyCollectionView.reloadData()
-            self.refreshControl.endRefreshing()
-           
-            
         }
-        
-        self.handleEmptyProperties()
         /*
         query.findObjectsInBackground{ (queryDict, error) in
             if let queryProperties = queryDict {
@@ -179,15 +246,7 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     func handleEmptyProperties() {
-        let activityIndicator = UIActivityIndicatorView()
-        activityIndicator.style = .gray
-        activityIndicator.center = self.view.center
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.startAnimating()
-        
-        self.propertyCollectionView.addSubview(activityIndicator)
         if self.properties.count == 0 {
-            activityIndicator.stopAnimating()
             let rect = CGRect(origin: CGPoint(x: 0,y :0), size: CGSize(width: self.view.bounds.size.width, height: self.view.bounds.size.height))
             let messageLabel = UILabel(frame: rect)
             messageLabel.text = "You don't have any properties yet.\nPlease click the + sign to add one."
@@ -198,7 +257,6 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
             messageLabel.sizeToFit()
             self.propertyCollectionView.backgroundView = messageLabel;
         } else {
-            activityIndicator.stopAnimating()
             self.propertyCollectionView.backgroundView = nil
         }
     }
@@ -267,6 +325,25 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
             let i : Int = (sender.layer.value(forKey: "index")) as! Int
             let toDelete = self.properties[i].id
             
+            let gsReference = Storage.storage().reference(forURL: "gs://smart-res.appspot.com/users/\(self.user!.uid)/properties/\(toDelete)/thumbnail.jpg")
+            let propertyDataRef = Database.database().reference(withPath: "users/\(self.user!.uid)/properties/\(toDelete)")
+            gsReference.delete { error in
+                if let error = error {
+                    print(error)
+                } else {
+                    print("Thumbnail deleted")
+                }
+            }
+            propertyDataRef.removeValue(completionBlock: { (error, reference) in
+                if error != nil {
+                    print("Failed to delete")
+                } else {
+                    print("Data deleted")
+                }
+                
+            })
+            
+            
             /*
             let query = PFQuery(className:"Property")
             query.getObjectInBackground(withId: toDelete) { (property: PFObject?, error: Error?) in
@@ -309,7 +386,6 @@ class PropertiesViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print("Works")
         filteredProperties = searchText.isEmpty ? properties : properties.filter { (property: Property) -> Bool in
             
             let address = property.address

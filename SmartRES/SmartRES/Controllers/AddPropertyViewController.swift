@@ -309,26 +309,7 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
         
         
         
-        // Check if thumnail exists before trying to add it
-        if (thumbnailView.image != nil) {
-            
-            let imageName = NSUUID().uuidString
-            let storageRef = Storage.storage().reference().child("property_images").child(user!.uid).child("\(imageName).png")
-            
-            if let imageData = thumbnailView.image?.jpeg(.lowest) {
-                storageRef.putData(imageData, metadata: nil, completion: { (metadata, error) in
-                    if error != nil {
-                        print(error)
-                        return
-                    }
-                    
-                    if let propertyImageUrl = metadata?.path {
-                        firebaseProperty.path = propertyImageUrl
-                    }
-                })
-            }
-            
-        }
+        
         
         
         // Confirm the addition of this property
@@ -338,29 +319,51 @@ class AddPropertyViewController: UIViewController, UITextFieldDelegate, UIPicker
                 //let text = self.addressField.text!.lowercased()
                 let propertyRef = ref.childByAutoId()
                 firebaseProperty.id = propertyRef.key!
-                propertyRef.setValue(firebaseProperty.toAnyObject(), withCompletionBlock: { (error, reference: DatabaseReference) in
-                    if error != nil {
-                        let alert = UIAlertController(title: "Error", message: "Adding property failed.", preferredStyle: UIAlertController.Style.alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-                        self.present(alert, animated: true, completion: nil)
-                    } else {
-                        self.delegate?.loadProperties()
-                        let alert = UIAlertController(title: "Success", message: "Property, \(self.addressField.text!) has been added! Please use the provided PropertyID to view your images on the sign slideshow.", preferredStyle: UIAlertController.Style.alert)
-                        self.addressField.text = ""
-                        self.cityField.text = ""
-                        self.stateField.text = ""
-                        self.zipField.text = ""
-                        self.typeField.text = ""
-                        self.bedField.text = ""
-                        self.bathField.text = ""
-                        self.priceField.text = ""
-                        self.thumbnailView.isHidden = true
-                        self.addThumbnailView.isHidden = false
-                        
-                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-                        self.present(alert, animated: true, completion: nil)
+            
+                // Check if thumbnail exists before trying to add it
+            if (self.thumbnailView.image != nil) {
+                    
+                    //let imageName = NSUUID().uuidString
+                let storageRef = Storage.storage().reference(withPath: "users/\(self.user!.uid)/properties/\(propertyRef.key!)/thumbnail.jpg")
+                    
+                    if let imageData = self.thumbnailView.image?.jpeg(.lowest) {
+                        storageRef.putData(imageData, metadata: nil, completion: { (metadata, error) in
+                            if error != nil {
+                                print(error)
+                                return
+                            }
+                            
+                            if let propertyImageUrl = metadata?.path {
+                                firebaseProperty.path = propertyImageUrl
+                                propertyRef.setValue(firebaseProperty.toAnyObject(), withCompletionBlock: { (error, reference: DatabaseReference) in
+                                    if error != nil {
+                                        let alert = UIAlertController(title: "Error", message: "Adding property failed.", preferredStyle: UIAlertController.Style.alert)
+                                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                                        self.present(alert, animated: true, completion: nil)
+                                    } else {
+                                        //self.delegate?.loadProperties()
+                                        let alert = UIAlertController(title: "Success", message: "Property, \(self.addressField.text!) has been added! Please use the provided PropertyID to view your images on the sign slideshow.", preferredStyle: UIAlertController.Style.alert)
+                                        self.addressField.text = ""
+                                        self.cityField.text = ""
+                                        self.stateField.text = ""
+                                        self.zipField.text = ""
+                                        self.typeField.text = ""
+                                        self.bedField.text = ""
+                                        self.bathField.text = ""
+                                        self.priceField.text = ""
+                                        self.thumbnailView.isHidden = true
+                                        self.addThumbnailView.isHidden = false
+                                        
+                                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                                        self.present(alert, animated: true, completion: nil)
+                                    }
+                                })
+                            }
+                        })
                     }
-                })
+                    
+                }
+            
         }))
             
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: nil))
